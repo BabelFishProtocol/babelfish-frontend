@@ -1,11 +1,7 @@
 import React from "react";
 
 function App() {
-  return (
-    <div>
-      <h1>Bablefish</h1>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default App;
