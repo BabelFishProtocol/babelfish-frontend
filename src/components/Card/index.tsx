@@ -14,7 +14,7 @@ export const Card = () => {
 
 interface ICardTitle {
   title: string;
-  children: any;
+  children?: any;
 }
 
 export const CardTitle = ({ title, children }: ICardTitle) => {

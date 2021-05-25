@@ -13,16 +13,7 @@ export const Deposit = () => {
         </div>
       </div>
       <div className="col-9 m-0">
-        <CardTitle title="Example">
-          <div className="d-flex justify-content-center py-4">
-            <div className="w-50">
-              <TransactionCard
-                loading={true}
-                transactionData={{ Date: "12/10/09" }}
-              />
-            </div>
-          </div>
-        </CardTitle>
+        <CardTitle title="Example"></CardTitle>
       </div>
     </div>
   );
