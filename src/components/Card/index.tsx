@@ -20,9 +20,9 @@ interface ICardTitle {
 export const CardTitle = ({ title, children }: ICardTitle) => {
   return (
     <CardStyled>
-      <div className="p-2">{title}</div>
+      <div className="px-4 py-2">{title}</div>
       <LineBreak />
-      <div className="p-2">{children}</div>
+      <div>{children}</div>
     </CardStyled>
   );
 };
@@ -43,12 +43,12 @@ export const TransactionCard = ({
       <div className="d-flex flex-column align-items-center p-4">
         <CircleWave loading={loading} status={status} />
         {loading && (
-          <TransactionLoadingText className="my-2">
+          <TransactionLoadingText className="">
             Minting can take a couple of minutes…
           </TransactionLoadingText>
         )}
 
-        <div id="transaction-data" className="row my-4">
+        <div id="transaction-data" className="row">
           <div className="col-6 text-right">
             {Object.keys(transactionData).map((key) => (
               <span>{key}:</span>

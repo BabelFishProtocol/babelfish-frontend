@@ -4,7 +4,6 @@ export const CardStyled = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  overflow: hidden;
   background: ${(props) => props.theme.card.background};
   color: ${(props) => props.theme.color};
 `;
@@ -49,6 +48,5 @@ export const TransactionData = styled.div`
 export const LineBreak = styled.div`
   width: 100%;
   height: 2px;
-  background-color: white;
-  opacity: 20%;
+  background-color: rgba(255, 255, 255, 0.4);
 `;
