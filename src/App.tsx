@@ -5,8 +5,8 @@ import { Body } from "./styles";
 
 function App() {
   return (
-    <Body>
-      <div style={{ height: "100%" }} className="row g-0 p-5">
+    <Body className="constainer d-flex justify-content-center align-items-center">
+      <div style={{ height: "80%", width: "80%" }} className="row g-0 p-5 ">
         <Deposit />
       </div>
     </Body>

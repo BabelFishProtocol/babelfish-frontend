@@ -13,7 +13,7 @@ export const Steps = ({ steps }: IStepsProps) => {
     steps[currentStep].onClick();
   }, [currentStep]);
   return (
-    <Card className="d-flex flex-column align-items-end">
+    <>
       {steps.map((step, index) => {
         const isActive = currentStep === index ? true : false;
         return (
@@ -27,6 +27,6 @@ export const Steps = ({ steps }: IStepsProps) => {
           </StepRow>
         );
       })}
-    </Card>
+    </>
   );
 };
