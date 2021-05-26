@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Steps } from "../../components/steps";
 import { Card, CardTitled, TransactionCard } from "../../lib/components";
 
 export const Deposit = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const steps = [
-    { text: "Select Deposit Network", onClick: () => console.log("first") },
-    { text: "Deposit to sovryn", onClick: () => console.log("first") },
-    { text: "Minting Process", onClick: () => console.log("first") },
-    { text: "Minting Complete", onClick: () => console.log("first") },
+    "Select Deposit Network",
+    "Deposit to sovryn",
+    "Minting Process",
+    "Minting Complete",
   ];
   return (
     <div className="row g-3 m-0">
       <div className="col-3 m-0">
         <div className="pb-1">
           <Card className="py-3 d-flex flex-column">
-            <Steps steps={steps} />
+            <Steps
+              steps={steps}
+              currentStep={currentStep}
+              onStepChange={(index: number) => setCurrentStep(index)}
+            />
           </Card>
         </div>
       </div>
