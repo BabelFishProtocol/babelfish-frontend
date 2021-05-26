@@ -1,43 +1,50 @@
 import React from "react";
-import { Button } from "../Button";
+import { ButtonPrimary } from "../Button";
 import { CircleWave } from "../Loader";
 import {
   CardStyled,
   LineBreak,
+  TitledBody,
+  TitledHeader,
   TransactionCardStyled,
   TransactionLoadingText,
 } from "./styles";
 
-export const Card = () => {
-  return <CardStyled></CardStyled>;
+interface ICardProps {
+  props?: any;
+  children?: React.ReactNode;
+}
+
+export const Card = ({ props, children }: ICardProps) => {
+  return <CardStyled {...props}>{children}</CardStyled>;
 };
 
-interface ICardTitle {
+interface ICardTitledProps {
   title: string;
   children?: any;
 }
 
-export const CardTitle = ({ title, children }: ICardTitle) => {
+export const CardTitled = ({ title, children }: ICardTitledProps) => {
   return (
     <CardStyled>
-      <div className="px-4 py-2">{title}</div>
+      <TitledHeader className="px-4 py-2">{title}</TitledHeader>
       <LineBreak />
-      <div>{children}</div>
+      <TitledBody>{children}</TitledBody>
     </CardStyled>
   );
 };
 
-interface ITransactionCard {
+interface ITransactionCardProps {
   transactionData: any;
   loading: boolean;
   status?: "success" | "failed" | "unknown";
 }
-
+//To Do move styles to styled component
 export const TransactionCard = ({
   transactionData,
   loading,
   status = "unknown",
-}: ITransactionCard) => {
+}: ITransactionCardProps) => {
   return (
     <TransactionCardStyled>
       <div className="d-flex flex-column align-items-center p-4">
@@ -62,7 +69,7 @@ export const TransactionCard = ({
         </div>
 
         {loading && (
-          <Button
+          <ButtonPrimary
             text="view on etherescan"
             onClick={() => console.log("click")}
           />

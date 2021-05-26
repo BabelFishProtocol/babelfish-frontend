@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+//Default Card Styles
 export const CardStyled = styled.div`
   width: 100%;
   height: 100%;
@@ -8,6 +9,18 @@ export const CardStyled = styled.div`
   color: ${(props) => props.theme.color};
 `;
 
+//Titled Card Styles
+export const TitledHeader = styled.div``;
+
+export const TitledBody = styled.div``;
+
+export const LineBreak = styled.div`
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.4);
+`;
+
+//Transaction Card Styles
 export const TransactionCardStyled = styled(CardStyled)`
   border-style: solid;
   border-width: 1px;
@@ -43,10 +56,4 @@ export const TransactionData = styled.div`
     font-size: 16px;
     font-weight: normal;
   }
-`;
-
-export const LineBreak = styled.div`
-  width: 100%;
-  height: 2px;
-  background-color: rgba(255, 255, 255, 0.4);
 `;

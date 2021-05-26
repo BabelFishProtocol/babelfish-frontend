@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TransactionCard } from "./components";
+import { Card, TransactionCard } from "./lib/components";
 import { Deposit } from "./containers";
 import { Body } from "./styles";
 

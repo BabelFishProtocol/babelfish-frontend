@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardTitle, TransactionCard } from "../../components";
+import { Card, CardTitled, TransactionCard } from "../../lib/components";
 
 export const Deposit = () => {
   return (
@@ -13,7 +13,7 @@ export const Deposit = () => {
         </div>
       </div>
       <div className="col-9 m-0">
-        <CardTitle title="Example"></CardTitle>
+        <CardTitled title="Example"></CardTitled>
       </div>
     </div>
   );
