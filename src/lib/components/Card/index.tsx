@@ -35,7 +35,7 @@ export const CardTitled = ({ title, children }: ICardTitledProps) => {
 };
 
 interface ITransactionCardProps {
-  transactionData: any;
+  transactionData: { name: string; value: string }[];
   loading: boolean;
   status?: "success" | "failed" | "unknown";
 }
@@ -57,13 +57,17 @@ export const TransactionCard = ({
 
         <div id="transaction-data" className="row">
           <div className="col-6 text-right">
-            {Object.keys(transactionData).map((key) => (
-              <span>{key}:</span>
+            {transactionData.map((element) => (
+              <span key={`transactionTextRight-${element.name}`}>
+                {element.name}:
+              </span>
             ))}
           </div>
           <div className="col-6 text-left">
-            {Object.keys(transactionData).map((key) => (
-              <span>{transactionData[key]}</span>
+            {transactionData.map((element) => (
+              <span key={`transactionTextLeft-${element.name}`}>
+                {element.value}:
+              </span>
             ))}
           </div>
         </div>
