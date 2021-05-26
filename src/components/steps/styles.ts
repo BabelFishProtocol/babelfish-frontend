@@ -7,7 +7,7 @@ export const StepRow = styled.div<{ active: boolean }>`
   padding: 0 20px;
   display: flex;
   align-items: center;
-
+  cursor: pointer;
   &:after {
     content: "";
     background-color: ${(props) =>
