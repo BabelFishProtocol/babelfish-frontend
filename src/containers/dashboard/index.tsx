@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Steps } from "../../components/steps";
-import { Card, CardTitled } from "../../lib/components";
+import { Card, CardTitled, Table } from "../../lib/components";
+import tableColumns from "./table/columns.json";
+import tableData from "./table/data.json";
 
 export const Dashboard = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -11,8 +13,8 @@ export const Dashboard = () => {
     "Minting Complete",
   ];
   return (
-    <div className="row g-3 m-0">
-      <div className="col-3 m-0">
+    <div className="row g-3 align-items-start">
+      <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
         <div className="pb-1">
           <Card className="py-3 d-flex flex-column">
             <Steps
@@ -23,8 +25,13 @@ export const Dashboard = () => {
           </Card>
         </div>
       </div>
-      <div className="col-9 m-0">
-        <CardTitled title="Example"></CardTitled>
+      <div
+        style={{ height: "fitContent" }}
+        className="col-12 col-md-7 col-lg-8 col-xl-9 m-0"
+      >
+        <Card>
+          <Table columns={tableColumns} data={tableData} />
+        </Card>
       </div>
     </div>
   );

@@ -1,0 +1,27 @@
+[
+  {
+    "Header": "Transactions",
+    "columns": [
+      {
+        "Header": "Event",
+        "accessor": "event"
+      },
+      {
+        "Header": "Asset",
+        "accessor": "asset"
+      },
+      {
+        "Header": "Amount",
+        "accessor": "amount"
+      },
+      {
+        "Header": "Date",
+        "accessor": "date"
+      },
+      {
+        "Header": "Status",
+        "accessor": "status"
+      }
+    ]
+  }
+]

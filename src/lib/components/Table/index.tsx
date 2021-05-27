@@ -2,7 +2,7 @@ import React from "react";
 import { useTable } from "react-table";
 import { TableStyles } from "./styles";
 
-function Table({ columns, data }: any) {
+export const Table = ({ columns, data }: any) => {
   // Use the state and functions returned from useTable to build your UI
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -40,4 +40,4 @@ function Table({ columns, data }: any) {
       </table>
     </TableStyles>
   );
-}
+};
