@@ -7,6 +7,13 @@ export const Icon = styled.img`
   object-fit: cover;
 `;
 
+export const BarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  width: 100%;
+`;
+
 export const Label = styled.label`
   margin-top: 0;
   font-size: 12px;

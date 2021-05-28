@@ -1,6 +1,6 @@
 import React from "react";
 import { ProgressBar } from "../../lib/components/ProgressBar";
-import { Icon, Label } from "./styles";
+import { BarContainer, Icon, Label } from "./styles";
 import { tokensArray } from "../../config/Tokens";
 
 interface ITokenBarProps {
@@ -14,17 +14,17 @@ export const TokenBar = ({ name, icon, value, totalValue }: ITokenBarProps) => {
   return (
     <div className="d-flex py-2 w-100">
       <Icon src={icon} />
-      <div className="d-flex flex-column px-2 w-100">
+      <BarContainer>
         <Label className="mb-1">{name}</Label>
         <ProgressBar value={50} totalValue={100} />
-      </div>
+      </BarContainer>
     </div>
   );
 };
 
 export const AllTokensBar = () => {
   return (
-    <div className="px-2">
+    <div>
       {tokensArray.map((token, index) => {
         return (
           <TokenBar

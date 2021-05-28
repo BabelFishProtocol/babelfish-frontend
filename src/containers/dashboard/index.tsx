@@ -55,7 +55,7 @@ export const Dashboard = () => {
           </Card>
         </div>
         <div className="mt-3">
-          <Card className="py-3 px-2 d-flex flex-column">
+          <Card className="py-3 px-3 d-flex flex-column">
             <AllTokensBar />
           </Card>
         </div>
