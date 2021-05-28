@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonPill} from './styles';
+import {ButtonPill, TextButtonPill} from './styles';
 
 const ButtonPillGroup = ({
   selected,
@@ -16,7 +16,7 @@ const ButtonPillGroup = ({
         key={value}
         selected={selected === value}
         onClick={() => onChangeSelected(selected !== value ? value : null)}>
-        <span>{value} %</span>
+        <TextButtonPill>{value}%</TextButtonPill>
       </ButtonPill>
     ))}
   </>
