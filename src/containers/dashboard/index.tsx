@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Steps } from "../../components/steps";
-import { Card, CardTitled, Table } from "../../lib/components";
+import { Card, Table } from "../../lib/components";
 import { dataTable } from "./table/data";
 
 const steps = [

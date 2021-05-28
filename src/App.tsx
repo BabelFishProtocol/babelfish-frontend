@@ -5,7 +5,7 @@ import { Dashboard } from "./containers/dashboard";
 
 function App() {
   return (
-    <Body className="constainer ">
+    <Body className="container">
       <div style={{ width: "80%" }} className="row g-0 p-5 ">
         <Dashboard />
       </div>
