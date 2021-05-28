@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Steps } from "../../components/steps";
-import { Card, CardTitled, TransactionCard } from "../../lib/components";
+import { Card, CardTitled } from "../../lib/components";
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState(0);

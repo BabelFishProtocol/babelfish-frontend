@@ -27,11 +27,11 @@ interface ICardTitledProps {
 
 export const CardTitled = ({ title, children }: ICardTitledProps) => {
   return (
-    <CardStyled>
+    <Card>
       <TitledHeader className="px-4 py-2">{title}</TitledHeader>
       <LineBreak />
       <TitledBody>{children}</TitledBody>
-    </CardStyled>
+    </Card>
   );
 };
 
