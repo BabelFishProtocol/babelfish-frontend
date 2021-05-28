@@ -18,7 +18,7 @@ export const Deposit = () => {
             <Steps
               steps={steps}
               currentStep={currentStep}
-              onStepChange={(index: number) => setCurrentStep(index)}
+              onStepChange={setCurrentStep}
             />
           </Card>
         </div>

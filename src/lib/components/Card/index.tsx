@@ -10,15 +10,7 @@ import {
   TransactionLoadingText,
 } from "./styles";
 
-interface ICardProps {
-  children?: React.ReactNode;
-  [x: string]: any;
-}
-
-export const Card = (props: ICardProps) => {
-  const { children, ...rest } = props;
-  return <CardStyled {...rest}>{children}</CardStyled>;
-};
+export const Card = CardStyled;
 
 interface ICardTitledProps {
   title: string;

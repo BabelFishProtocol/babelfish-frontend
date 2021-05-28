@@ -3,6 +3,13 @@ import { Steps } from "../../components/steps";
 import { Card, CardTitled, Table } from "../../lib/components";
 import { dataTable } from "./table/data";
 
+const steps = [
+  "Select Deposit Network",
+  "Deposit to sovryn",
+  "Minting Process",
+  "Minting Complete",
+];
+
 const columns = [
   {
     Header: "Transactions",
@@ -33,12 +40,7 @@ const columns = [
 
 export const Dashboard = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const steps = [
-    "Select Deposit Network",
-    "Deposit to sovryn",
-    "Minting Process",
-    "Minting Complete",
-  ];
+
   return (
     <div className="row g-3 align-items-start">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
