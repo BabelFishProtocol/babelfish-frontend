@@ -45,7 +45,7 @@ export const Dashboard = () => {
   return (
     <div className="row g-3 align-items-start">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
-        <div className="pb-1">
+        <div>
           <Card className="py-3 d-flex flex-column">
             <Steps
               steps={steps}
@@ -54,8 +54,8 @@ export const Dashboard = () => {
             />
           </Card>
         </div>
-        <div className="pt-1">
-          <Card className="py-3 d-flex flex-column">
+        <div className="mt-3">
+          <Card className="py-3 px-2 d-flex flex-column">
             <AllTokensBar />
           </Card>
         </div>
