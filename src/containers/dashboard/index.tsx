@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Steps } from "../../components/steps";
+import { AllTokensBar } from "../../components/TokenPercentage";
 import { Card, Table } from "../../lib/components";
 import { dataTable } from "./table/data";
 
@@ -51,6 +52,11 @@ export const Dashboard = () => {
               currentStep={currentStep}
               onStepChange={(index: number) => setCurrentStep(index)}
             />
+          </Card>
+        </div>
+        <div className="pt-1">
+          <Card className="py-3 d-flex flex-column">
+            <AllTokensBar />
           </Card>
         </div>
       </div>
