@@ -1,3 +1,6 @@
-import React from "react";
-
-export { ButtonPrimary, ButtonSecondary, ButtonDefault } from "./styles";
+export {
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonDefault,
+  ButtonPill,
+} from './styles';
