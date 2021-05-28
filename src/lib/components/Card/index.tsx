@@ -11,12 +11,13 @@ import {
 } from "./styles";
 
 interface ICardProps {
-  props?: any;
   children?: React.ReactNode;
+  [x: string]: any;
 }
 
-export const Card = ({ props, children }: ICardProps) => {
-  return <CardStyled {...props}>{children}</CardStyled>;
+export const Card = (props: ICardProps) => {
+  const { children, ...rest } = props;
+  return <CardStyled {...rest}>{children}</CardStyled>;
 };
 
 interface ICardTitledProps {
