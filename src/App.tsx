@@ -5,7 +5,7 @@ import { Dashboard } from "./containers/dashboard";
 
 function App() {
   return (
-    <Body className="constainer d-flex justify-content-center align-items-center">
+    <Body className="constainer ">
       <div style={{ width: "80%" }} className="row g-0 p-5 ">
         <Dashboard />
       </div>
