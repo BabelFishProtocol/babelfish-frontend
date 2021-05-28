@@ -1,25 +1,27 @@
 import React, {useState} from 'react';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import MaskedInput from 'react-text-mask';
+
+const numberMask = createNumberMask({
+  prefix: '',
+  suffix: ' $', // This will put the dollar sign at the end, with a space.
+});
 
 interface IInputProps {
-  placeholder?: string;
   onChange: Function;
-  value: number | string;
+  value: number | null;
 }
 
-export const Input = ({placeholder, onChange, value}: IInputProps) => {
-  const handleChange = (e: any) => {
-    const value = e.target.value;
-    const re = /^[0-9\b]+$/;
-    if (value === '' || re.test(value)) {
-      onChange(value);
-    }
+export const Input = (props: IInputProps) => {
+  const handleChange = (value: string) => {
+    const newValue = value && value.replace(/,/g, '');
+    props.onChange(newValue ? parseFloat(newValue) : null);
   };
-
   return (
-    <input
-      value={value}
-      placeholder={placeholder}
-      onChange={(text) => handleChange(text)}
+    <MaskedInput
+      mask={numberMask}
+      value={props.value ? props.value?.toFixed() : ''}
+      onChange={(e) => handleChange(e.target.value)}
     />
   );
 };

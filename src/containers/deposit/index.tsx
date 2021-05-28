@@ -1,12 +1,7 @@
 import React, {useState} from 'react';
 import {Steps} from '../../components/steps';
-import {
-  Card,
-  CardTitled,
-  ButtonDefault,
-  Input,
-  ButtonPill,
-} from '../../lib/components';
+import {Card, CardTitled} from '../../lib/components';
+import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -16,7 +11,6 @@ export const Deposit = () => {
     'Minting Process',
     'Minting Complete',
   ];
-  const [value, setValue] = useState<number>(0);
 
   return (
     <div className="row g-3 m-0">
@@ -33,8 +27,7 @@ export const Deposit = () => {
       </div>
       <div className="col-9 m-0">
         <CardTitled title="Example">
-          <Input onChange={setValue} value={value} />
-          <ButtonPill />
+          <InputButtonPillGroup />
         </CardTitled>
       </div>
     </div>

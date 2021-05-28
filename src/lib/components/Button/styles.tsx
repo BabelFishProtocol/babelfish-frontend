@@ -25,11 +25,13 @@ export const ButtonSecondary = (props: any) => (
   <ButtonStyled {...props} color={props.theme.secondary} />
 );
 
-// export const ButtonPillStyled = styled.button<{ selected?: string }>`
-//   width: 100%;
-//   padding: 20px 20px;
-//   border: none;
-//   border-radius: 8px;
-// `;
+export const ButtonPillStyled = styled.button<{selected?: string}>`
+  width: 58px;
+  border-radius: 12.5px;
+  border: solid 1px #979797;
+  background-color: ${(props) =>
+    props.selected ? 'green' : 'rgba(255, 255, 255, 0.2)'};
+`;
 
-export const ButtonPill = (props: any) => ButtonStyled(props);
+export const ButtonPill = (props: any) => <ButtonPillStyled {...props} />;
+

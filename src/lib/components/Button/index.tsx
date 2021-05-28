@@ -2,5 +2,6 @@ export {
   ButtonPrimary,
   ButtonSecondary,
   ButtonDefault,
-  ButtonPill,
 } from './styles';
+
+export * as ButtonPillGroup from './buttonPillGroup';
