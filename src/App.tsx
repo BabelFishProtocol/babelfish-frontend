@@ -5,34 +5,29 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import {Card, TransactionCard} from './lib/components';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
 import {Body} from './styles';
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/dashboard">
-          <Body>
-            <div style={{width: '80%'}} className="row g-0 p-5 ">
+    <Body>
+      <div style={{width: '80%'}} className="row g-0 p-5 ">
+        <Router>
+          <Switch>
+            <Route path="/dashboard">
               <Dashboard />
-            </div>
-          </Body>
-        </Route>
-        <Route path="/deposit">
-          <Body>
-            <div style={{width: '80%'}} className="row g-0 p-5 ">
+            </Route>
+            <Route path="/deposit">
               <Deposit />
-            </div>
-          </Body>
-        </Route>
-        <Route path="/">
-          <Redirect to="/dashboard" />
-        </Route>
-      </Switch>
-    </Router>
+            </Route>
+            <Route path="/">
+              <Redirect to="/dashboard" />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
+    </Body>
   );
 }
 
