@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
+import {Icon} from '../../../components/TokenPercentage/styles';
 import {
   DropdownContainer,
   DropdownItem,
   DropdownItemsGroup,
   DropdownText,
-} from "./styles";
+} from './styles';
 
 interface IDropdownProps {
   name: string;
@@ -12,15 +13,31 @@ interface IDropdownProps {
   items: {}[];
 }
 
-export const Dropdown = ({ name, items }: IDropdownProps) => {
-  const [selected, setSelected] = useState(false);
+export const Dropdown = ({name, items}: IDropdownProps) => {
+  const [displayDropdown, setDisplayDropdown] = useState(false);
+  const [selectedItem, setSelectedItem] = useState() as any;
   return (
     <DropdownContainer>
-      <DropdownText>{name}</DropdownText>
-      {selected && (
+      <DropdownText onClick={() => setDisplayDropdown(!displayDropdown)}>
+        {selectedItem ? (
+          <>
+            <Icon src={selectedItem.icon} /> <span>{selectedItem.name}</span>
+          </>
+        ) : (
+          name
+        )}
+      </DropdownText>
+      {displayDropdown && (
         <DropdownItemsGroup>
           {items.map((item: any) => (
-            <DropdownItem>{item.name}</DropdownItem>
+            <DropdownItem
+              onClick={() => {
+                setSelectedItem(item);
+                setDisplayDropdown(false);
+              }}>
+              <Icon src={item.icon} />
+              <span>{item.name}</span>
+            </DropdownItem>
           ))}
         </DropdownItemsGroup>
       )}

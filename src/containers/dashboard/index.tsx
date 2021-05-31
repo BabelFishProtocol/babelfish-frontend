@@ -1,41 +1,43 @@
-import React, { useState } from "react";
-import { Steps } from "../../components/steps";
-import { AllTokensBar } from "../../components/TokenPercentage";
-import { tokens } from "../../config/Tokens";
-import { Card, Table } from "../../lib/components";
-import { Dropdown } from "../../lib/components/Dropdown";
-import { dataTable } from "./table/data";
+import BigNumber from 'bignumber.js';
+import React, {useState} from 'react';
+import {Steps} from '../../components/steps';
+import {AllTokensBar} from '../../components/TokenPercentage';
+import {tokenEnum, tokens} from '../../config/Tokens';
+import {Card, Table} from '../../lib/components';
+import {Dropdown} from '../../lib/components/Dropdown';
+import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
+import {dataTable} from './table/data';
 
 const steps = [
-  "Select Deposit Network",
-  "Deposit to sovryn",
-  "Minting Process",
-  "Minting Complete",
+  'Select Deposit Network',
+  'Deposit to sovryn',
+  'Minting Process',
+  'Minting Complete',
 ];
 
 const columns = [
   {
-    Header: "Transactions",
+    Header: 'Transactions',
     columns: [
       {
-        Header: "Event",
-        accessor: "event",
+        Header: 'Event',
+        accessor: 'event',
       },
       {
-        Header: "Asset",
-        accessor: "asset",
+        Header: 'Asset',
+        accessor: 'asset',
       },
       {
-        Header: "Amount",
-        accessor: "amount",
+        Header: 'Amount',
+        accessor: 'amount',
       },
       {
-        Header: "Date",
-        accessor: "date",
+        Header: 'Date',
+        accessor: 'date',
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: 'Status',
+        accessor: 'status',
       },
     ],
   },
@@ -58,21 +60,33 @@ export const Dashboard = () => {
         </div>
         <div className="mt-3">
           <Card className="py-3 px-3 d-flex flex-column">
-            <AllTokensBar />
+            <AllTokensBar
+              balances={[
+                {id: tokenEnum.USDT, value: 75, totalValue: 100},
+                {id: tokenEnum.USDC, value: 45, totalValue: 100},
+                {id: tokenEnum.BUSD, value: 20, totalValue: 100},
+                {id: tokenEnum.PAX, value: 90, totalValue: 100},
+                {id: tokenEnum.DAI, value: 39, totalValue: 100},
+              ]}
+            />
           </Card>
         </div>
       </div>
       <div
-        style={{ height: "fitContent" }}
-        className="col-12 col-md-7 col-lg-8 col-xl-9 m-0"
-      >
+        style={{height: 'fitContent'}}
+        className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
         <Card className="p-4 mb-3">
           <div className="row justify-content-between">
             <div className="col-5">
               <Dropdown name="Select Token" items={tokens} />
             </div>
             <div className="col-5">
-              <Dropdown name="Select Token" items={tokens} />
+              <InputButtonPillGroup
+                currency="USDT"
+                totalAmount={new BigNumber(150)}
+                defaultValue={new BigNumber(0.0)}
+                availablePercentValues={[10, 15, 30, 60, 100]}
+              />
             </div>
           </div>
         </Card>
