@@ -1,7 +1,7 @@
 import React from "react";
 import { ProgressBar } from "../../lib/components/ProgressBar";
 import { BarContainer, Icon, Label } from "./styles";
-import { tokensArray } from "../../config/Tokens";
+import { tokenEnum, tokens } from "../../config/Tokens";
 
 interface ITokenBarProps {
   name: string;
@@ -16,23 +16,28 @@ export const TokenBar = ({ name, icon, value, totalValue }: ITokenBarProps) => {
       <Icon src={icon} />
       <BarContainer>
         <Label className="mb-1">{name}</Label>
-        <ProgressBar value={50} totalValue={100} />
+        <ProgressBar value={value} totalValue={totalValue} />
       </BarContainer>
     </div>
   );
 };
 
-export const AllTokensBar = () => {
+interface IAllTokensBarProps {
+  balances?: { value: number; totalValue: number; id: tokenEnum }[];
+}
+
+export const AllTokensBar = ({ balances = [] }: IAllTokensBarProps) => {
   return (
     <div>
-      {tokensArray.map((token, index) => {
+      {tokens.map((token) => {
+        const foundToken = balances.find((balance) => balance.id === token.id);
         return (
           <TokenBar
-            key={token.name}
+            key={token.id}
             name={token.name}
             icon={token.icon}
-            value={0}
-            totalValue={100}
+            value={foundToken?.value || 0}
+            totalValue={foundToken?.totalValue || 1}
           />
         );
       })}

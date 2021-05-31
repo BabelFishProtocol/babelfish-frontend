@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Steps } from "../../components/steps";
 import { AllTokensBar } from "../../components/TokenPercentage";
+import { tokens } from "../../config/Tokens";
 import { Card, Table } from "../../lib/components";
+import { Dropdown } from "../../lib/components/Dropdown";
 import { dataTable } from "./table/data";
 
 const steps = [
@@ -64,6 +66,16 @@ export const Dashboard = () => {
         style={{ height: "fitContent" }}
         className="col-12 col-md-7 col-lg-8 col-xl-9 m-0"
       >
+        <Card className="p-4 mb-3">
+          <div className="row justify-content-between">
+            <div className="col-5">
+              <Dropdown name="Select Token" items={tokens} />
+            </div>
+            <div className="col-5">
+              <Dropdown name="Select Token" items={tokens} />
+            </div>
+          </div>
+        </Card>
         <Card>
           <Table columns={columns} data={dataTable} />
         </Card>
