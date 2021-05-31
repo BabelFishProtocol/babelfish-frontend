@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled} from '../../lib/components';
 import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
+import {BigNumber} from 'bignumber.js';
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -13,7 +14,7 @@ export const Deposit = () => {
   ];
 
   const availablePercentValues = [10, 15, 30, 60, 100];
-  const amount = 150;
+  const totalAmount = new BigNumber(150);
   const title = 'Deposit Amount';
   const currency = 'USTD';
 
@@ -34,9 +35,10 @@ export const Deposit = () => {
         <CardTitled title="Example">
           <InputButtonPillGroup
             availablePercentValues={availablePercentValues}
-            amount={amount}
+            totalAmount={totalAmount}
             title={title}
             currency={currency}
+            defaultValue={new BigNumber(0.0)}
           />
         </CardTitled>
       </div>

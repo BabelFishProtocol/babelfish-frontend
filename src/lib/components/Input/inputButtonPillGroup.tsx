@@ -1,38 +1,40 @@
+import BigNumber from 'bignumber.js';
 import React, {useState} from 'react';
 import ButtonPillGroup from '../Button/buttonPillGroup';
 import {CurrencyInput} from './';
 
 interface IInputButtonPillGroupProps {
-  title: string;
+  title?: string;
   currency: string;
-  amount: number;
+  totalAmount: BigNumber;
   availablePercentValues: number[];
-  disabled?: boolean;
+  defaultValue: BigNumber;
 }
 
 const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
-  const [inputValue, setInputValue] = useState<number>(0);
+  const [inputValue, setInputValue] = useState<BigNumber>(props.defaultValue);
   const [percentSelected, setPercentSelected] = useState<number | null>(null);
+  const {totalAmount, availablePercentValues, currency, ...inputProps} = props;
   return (
     <div className="d-flex">
       <div className="flex-column d-flex" style={{flex: 1}}>
         <CurrencyInput
+          {...inputProps}
           title={props.title}
-          onChange={(value: number) => {
+          onChange={(value: BigNumber) => {
             setPercentSelected(null);
             setInputValue(value);
           }}
           value={inputValue}
-          currencyText={props.currency}
-          disabled={props.disabled}
+          currencyText={currency}
         />
         <ButtonPillGroup
-          availableValues={props.availablePercentValues}
+          availableValues={availablePercentValues}
           selected={percentSelected}
           onChangeSelected={(percent: number) => {
             setPercentSelected(percent);
             if (percent) {
-              setInputValue((props.amount * percent) / 100);
+              setInputValue(totalAmount.times(percent).dividedBy(100));
             }
           }}
         />

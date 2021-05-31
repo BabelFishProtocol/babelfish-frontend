@@ -14,6 +14,7 @@
     "@types/react-table": "^7.7.1",
     "@types/react-text-mask": "^5.4.7",
     "@types/styled-components": "^5.1.9",
+    "bignumber.js": "^9.0.1",
     "bootstrap": "^5.0.1",
     "popper.js": "^1.16.1",
     "react": "^17.0.2",

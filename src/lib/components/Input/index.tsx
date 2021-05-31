@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import {BigNumber} from 'bignumber.js';
 import {
   InputMaskedContainer,
   InputMaskedStyled,
@@ -9,21 +10,24 @@ import {
 
 const numberMask = createNumberMask({
   prefix: '',
-  suffix: ' $', // This will put the dollar sign at the end, with a space.
+  suffix: ' $',
+  allowDecimal: true,
+  decimalLimit: 2,
 });
 
 interface IInputProps {
   onChange: Function;
-  value: number | null;
+  value: BigNumber;
   currencyText: string;
   title?: string;
   disabled?: boolean;
 }
 
 export const CurrencyInput = (props: IInputProps) => {
-  const handleChange = (value: string) => {
-    const newValue = value && value.replace(/,/g, '');
-    props.onChange(newValue ? parseFloat(newValue) : null);
+  const handleChange = (inputValue: string) => {
+    const newValue = inputValue && inputValue.replace(/[, \\$]/g, '');
+    const parseValue = newValue ? new BigNumber(newValue): new BigNumber('0');
+    props.onChange(parseValue || null);
   };
   return (
     <>
@@ -31,7 +35,7 @@ export const CurrencyInput = (props: IInputProps) => {
       <InputMaskedContainer>
         <InputMaskedStyled
           mask={numberMask}
-          value={props.value ? props.value?.toFixed() : ''}
+          value={props.value ? props.value?.toFixed(2) : ''}
           disabled={props.disabled}
           onChange={(e) => handleChange(e.target.value)}
         />
