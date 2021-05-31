@@ -25,20 +25,33 @@ export const ButtonSecondary = (props: any) => (
   <ButtonStyled {...props} color={props.theme.secondary} />
 );
 
-export const ButtonPillStyled = styled.button<{selected?: string}>`
-  min-width: 60px;
+export const GroupButtonPillContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  button {
+    margin-right: 5px;
+    :last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+export const ButtonPill = styled.button<{selected?: boolean}>`
+  width: 60px;
   border-radius: 12.5px;
-  margin: 13px 5px 0 0;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: ${(props) =>
     props.selected ? 'solid 1px #32f05f' : 'solid 1px #979797'};
   background-color: ${(props) =>
     props.selected ? 'rgba(50, 240, 95, 0.2)' : 'rgba(255, 255, 255, 0.2)'};
 `;
 
-export const ButtonPill = (props: any) => <ButtonPillStyled {...props} />;
-
-export const TextStyled = styled.span`
-  font-family: ArbelHagilda;
+export const TextButtonPill = styled.span`
   font-size: 12px;
   font-weight: normal;
   font-stretch: normal;
@@ -48,5 +61,3 @@ export const TextStyled = styled.span`
   text-align: center;
   color: #ffffff;
 `;
-
-export const TextButtonPill = (props: any) => <TextStyled {...props} />;

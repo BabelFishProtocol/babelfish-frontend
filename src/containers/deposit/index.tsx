@@ -12,6 +12,11 @@ export const Deposit = () => {
     'Minting Complete',
   ];
 
+  const availablePercentValues = [10, 15, 30, 60, 100];
+  const amount = 150;
+  const title = 'Deposit Amount';
+  const currency = 'USTD';
+
   return (
     <div className="row g-3 m-0">
       <div className="col-3 m-0">
@@ -27,7 +32,12 @@ export const Deposit = () => {
       </div>
       <div className="col-9 m-0">
         <CardTitled title="Example">
-          <InputButtonPillGroup />
+          <InputButtonPillGroup
+            availablePercentValues={availablePercentValues}
+            amount={amount}
+            title={title}
+            currency={currency}
+          />
         </CardTitled>
       </div>
     </div>

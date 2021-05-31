@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonPill, TextButtonPill} from './styles';
+import {ButtonPill, TextButtonPill, GroupButtonPillContainer} from './styles';
 
 const ButtonPillGroup = ({
   selected,
@@ -10,7 +10,7 @@ const ButtonPillGroup = ({
   availableValues: any[];
   onChangeSelected: Function;
 }) => (
-  <>
+  <GroupButtonPillContainer>
     {availableValues.map((value) => (
       <ButtonPill
         key={value}
@@ -19,6 +19,6 @@ const ButtonPillGroup = ({
         <TextButtonPill>{value}%</TextButtonPill>
       </ButtonPill>
     ))}
-  </>
+  </GroupButtonPillContainer>
 );
 export default ButtonPillGroup;
