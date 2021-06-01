@@ -4,6 +4,7 @@ import {Steps} from '../../components/steps';
 import {AllTokensBar} from '../../components/TokenPercentage';
 import {tokenEnum, tokens} from '../../config/Tokens';
 import {Card, Table} from '../../lib/components';
+import {Banner} from '../../lib/components/Banner';
 import {Dropdown} from '../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
 import {dataTable} from './table/data';
@@ -48,6 +49,7 @@ export const Dashboard = () => {
 
   return (
     <div className="row g-3 align-items-start">
+      <Banner children={<span>Test</span>} />
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
         <div>
           <Card className="py-3 d-flex flex-column">
