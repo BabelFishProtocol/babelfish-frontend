@@ -5,7 +5,13 @@ export const CardStyled = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  background: ${(props) => props.theme.card.background};
+  background-image: linear-gradient(
+    223deg,
+    #32f05f 0%,
+    #425b47 0%,
+    #424040 30%,
+    #272626 100%
+  );
   color: ${(props) => props.theme.color};
 `;
 

@@ -4,8 +4,9 @@ import styled from 'styled-components';
 export const InputMaskedContainer = styled.div`
   height: 45px;
   display: flex;
+  width: 100%;
   padding: 15px 15px 14px 20px;
-  border: solid 1px rgba(255, 255, 255, 0.6);
+  border: solid 1px ${(props) => props.theme.primary};
   align-items: center;
 `;
 

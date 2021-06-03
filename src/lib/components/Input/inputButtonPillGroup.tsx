@@ -16,8 +16,8 @@ const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
   const [percentSelected, setPercentSelected] = useState<number | null>(null);
   const {totalAmount, availablePercentValues, currency, ...inputProps} = props;
   return (
-    <div className="d-flex">
-      <div className="flex-column d-flex" style={{flex: 1}}>
+    <div>
+      <div>
         <CurrencyInput
           {...inputProps}
           title={props.title}

@@ -1,32 +1,55 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from 'react-router-dom';
+import {Header} from './components/Header';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
-import {Body} from './styles';
+import {Landing} from './containers/landing';
+import {Banner} from './lib/components/Banner';
+import {Body, Content} from './styles';
 
 function App() {
+  const [showBanner, setShowBanner] = useState(true);
   return (
     <Body>
-      <div style={{width: '80%'}} className="row g-0 p-5 ">
+      {showBanner && (
+        <Banner
+          onClose={() => setShowBanner(!showBanner)}
+          children={
+            <span>
+              Alpha 0.1: Deposit/withdraw stablecoins from Ethereum and
+              mint/burn meta-stablecoins on Rootstock. Visit our Discord for
+              more information.
+              <br />
+              WARNING: This is an early experiment and there is risk of loss of
+              funds. DON'T PANIC!.
+            </span>
+          }
+        />
+      )}
+      <Header />
+      <Content className="row g-0">
         <Router>
           <Switch>
-            <Route path="/dashboard">
+            <Route path="/landing" exact>
+              <Landing />
+            </Route>
+            <Route path="/dashboard" exact>
               <Dashboard />
             </Route>
-            <Route path="/deposit">
+            <Route path="/deposit" exact>
               <Deposit />
             </Route>
-            <Route path="/">
-              <Redirect to="/dashboard" />
+            <Route path="/" exact>
+              <Redirect to="/landing" />
             </Route>
           </Switch>
         </Router>
-      </div>
+      </Content>
     </Body>
   );
 }

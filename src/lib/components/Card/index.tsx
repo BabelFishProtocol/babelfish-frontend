@@ -1,6 +1,6 @@
-import React from "react";
-import { ButtonPrimary } from "../Button";
-import { CircleWave } from "../Loader";
+import React from 'react';
+import {ButtonPrimary} from '../Button';
+import {CircleWave} from '../Loader';
 import {
   CardStyled,
   LineBreak,
@@ -8,7 +8,7 @@ import {
   TitledHeader,
   TransactionCardStyled,
   TransactionLoadingText,
-} from "./styles";
+} from './styles';
 
 export const Card = CardStyled;
 
@@ -17,7 +17,7 @@ interface ICardTitledProps {
   children?: any;
 }
 
-export const CardTitled = ({ title, children }: ICardTitledProps) => {
+export const CardTitled = ({title, children}: ICardTitledProps) => {
   return (
     <Card>
       <TitledHeader className="px-4 py-2">{title}</TitledHeader>
@@ -28,15 +28,15 @@ export const CardTitled = ({ title, children }: ICardTitledProps) => {
 };
 
 interface ITransactionCardProps {
-  transactionData: { name: string; value: string }[];
+  transactionData: {name: string; value: string}[];
   loading: boolean;
-  status?: "success" | "failed" | "unknown";
+  status?: 'success' | 'failed' | 'unknown';
 }
 //To Do move styles to styled component
 export const TransactionCard = ({
   transactionData,
   loading,
-  status = "unknown",
+  status = 'unknown',
 }: ITransactionCardProps) => {
   return (
     <TransactionCardStyled>
@@ -66,10 +66,9 @@ export const TransactionCard = ({
         </div>
 
         {loading && (
-          <ButtonPrimary
-            text="view on etherescan"
-            onClick={() => console.log("click")}
-          />
+          <ButtonPrimary onClick={() => console.log('click')}>
+            view on etherescan
+          </ButtonPrimary>
         )}
       </div>
     </TransactionCardStyled>
