@@ -45,7 +45,7 @@ function App() {
               <Deposit />
             </Route>
             <Route path="/" exact>
-              <Redirect to="/landing" />
+              <Redirect to="/dashboard" />
             </Route>
           </Switch>
         </Router>

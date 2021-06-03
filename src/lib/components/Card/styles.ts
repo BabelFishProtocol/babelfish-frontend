@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 //Default Card Styles
 export const CardStyled = styled.div`
@@ -13,6 +13,21 @@ export const CardStyled = styled.div`
     #272626 100%
   );
   color: ${(props) => props.theme.color};
+`;
+
+//Card Neumorphism
+export const CardNeum = styled.div`
+  color: white;
+  border-radius: 35px;
+  background: transparent;
+  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.7),
+    3px -3px 10px rgba(255, 255, 255, 0.2);
+  transition: 0.3s;
+  border: 2px solid rgba(50, 240, 95, 0.4);
+  cursor: pointer;
+  :hover {
+    border: 2px solid rgba(50, 240, 95, 0.7);
+  }
 `;
 
 //Titled Card Styles

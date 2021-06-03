@@ -1,13 +1,8 @@
-import BigNumber from 'bignumber.js';
 import React, {useState} from 'react';
+import {CoinsDeposited} from '../../components/CoinsDeposited';
 import {ChainGroup} from '../../components/SelectChain';
 import {Steps} from '../../components/steps';
-import {AllTokensBar} from '../../components/TokenPercentage';
-import {tokenEnum, tokens} from '../../config/Tokens';
 import {Card, Table} from '../../lib/components';
-import {Banner} from '../../lib/components/Banner';
-import {Dropdown} from '../../lib/components/Dropdown';
-import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
 import {dataTable} from './table/data';
 
 const steps = [
@@ -62,9 +57,9 @@ export const Dashboard = () => {
         </div>
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
-        <Card className="p-4 mb-3">
+        <Card className="px-2 py-4 mb-3">
           <div className="d-flex justify-content-center">
-            <ChainGroup />
+            <CoinsDeposited />
           </div>
         </Card>
         <Card>
