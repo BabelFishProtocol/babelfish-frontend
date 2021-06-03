@@ -11,6 +11,9 @@ export enum tokenEnum {
   PAX = 'PAX',
   DAI = 'DAI',
 }
+
+export type tokenType = {name: string; id: tokenEnum; icon: string};
+
 export const tokens = [
   {name: 'USDT', id: tokenEnum.USDT, icon: usdtIcon},
   {name: 'USDC', id: tokenEnum.USDC, icon: usdcIcon},

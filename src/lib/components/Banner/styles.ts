@@ -10,18 +10,23 @@ export const BannerContainer = styled.div`
   font-style: normal;
   line-height: 1.33;
   letter-spacing: normal;
-  text-align: center;
   color: #000000;
   padding: 20px 40px;
   position: fixed;
   bottom: 0;
   left: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  span {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 export const Close = styled.img`
   height: 10px;
   width: 10px;
+  justify-self: flex-end;
+  cursor: pointer;
 `;

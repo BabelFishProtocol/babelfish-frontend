@@ -1,7 +1,7 @@
-import React from "react";
-import { ProgressBar } from "../../lib/components/ProgressBar";
-import { BarContainer, Icon, Label } from "./styles";
-import { tokenEnum, tokens } from "../../config/Tokens";
+import React from 'react';
+import {ProgressBar} from '../../lib/components/ProgressBar';
+import {BarContainer, Icon, Label} from './styles';
+import {tokenEnum, tokens, tokenType} from '../../config/Tokens';
 
 interface ITokenBarProps {
   name: string;
@@ -10,7 +10,7 @@ interface ITokenBarProps {
   totalValue: number;
 }
 
-export const TokenBar = ({ name, icon, value, totalValue }: ITokenBarProps) => {
+export const TokenBar = ({name, icon, value, totalValue}: ITokenBarProps) => {
   return (
     <div className="d-flex py-2 w-100">
       <Icon src={icon} />
@@ -23,13 +23,13 @@ export const TokenBar = ({ name, icon, value, totalValue }: ITokenBarProps) => {
 };
 
 interface IAllTokensBarProps {
-  balances?: { value: number; totalValue: number; id: tokenEnum }[];
+  balances?: {value: number; totalValue: number; id: tokenEnum}[];
 }
 
-export const AllTokensBar = ({ balances = [] }: IAllTokensBarProps) => {
+export const AllTokensBar = ({balances = []}: IAllTokensBarProps) => {
   return (
     <div>
-      {tokens.map((token) => {
+      {tokens.map((token: tokenType) => {
         const foundToken = balances.find((balance) => balance.id === token.id);
         return (
           <TokenBar

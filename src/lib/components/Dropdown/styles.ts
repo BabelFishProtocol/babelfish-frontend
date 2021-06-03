@@ -59,8 +59,4 @@ export const DropdownItem = styled.div`
   }
 `;
 
-export const Icon = styled.img`
-  border-radius: 50%;
-  height: 15px;
-  width: 15px;
-`;
+export const Icon = styled.img``;

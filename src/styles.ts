@@ -1,9 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Body = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   width: 100vw;
   background-color: ${(props) => props.theme.background};
@@ -14,4 +11,10 @@ export const Body = styled.div`
   font-smooth: 2em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 0 10vw;
 `;

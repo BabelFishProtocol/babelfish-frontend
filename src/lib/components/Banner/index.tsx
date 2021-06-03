@@ -3,14 +3,15 @@ import closeIcon from '../../../resources/svgs/cross.svg';
 import {BannerContainer, Close} from './styles';
 
 interface IBannerProps {
+  onClose: any;
   children: React.ReactNode;
 }
 
-export const Banner = ({children}: IBannerProps) => {
+export const Banner = ({onClose, children}: IBannerProps) => {
   return (
     <BannerContainer>
-      {children}
-      <Close src={closeIcon} />
+      <span>{children}</span>
+      <Close src={closeIcon} onClick={() => onClose()} />
     </BannerContainer>
   );
 };

@@ -9,7 +9,6 @@ import {
 
 interface IDropdownProps {
   name: string;
-
   items: {}[];
 }
 

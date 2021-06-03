@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import React, {useState} from 'react';
+import {ChainGroup} from '../../components/SelectChain';
 import {Steps} from '../../components/steps';
 import {AllTokensBar} from '../../components/TokenPercentage';
 import {tokenEnum, tokens} from '../../config/Tokens';
@@ -49,7 +50,6 @@ export const Dashboard = () => {
 
   return (
     <div className="row g-3 align-items-start">
-      <Banner children={<span>Test</span>} />
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
         <div>
           <Card className="py-3 d-flex flex-column">
@@ -60,36 +60,11 @@ export const Dashboard = () => {
             />
           </Card>
         </div>
-        <div className="mt-3">
-          <Card className="py-3 px-3 d-flex flex-column">
-            <AllTokensBar
-              balances={[
-                {id: tokenEnum.USDT, value: 75, totalValue: 100},
-                {id: tokenEnum.USDC, value: 45, totalValue: 100},
-                {id: tokenEnum.BUSD, value: 20, totalValue: 100},
-                {id: tokenEnum.PAX, value: 90, totalValue: 100},
-                {id: tokenEnum.DAI, value: 39, totalValue: 100},
-              ]}
-            />
-          </Card>
-        </div>
       </div>
-      <div
-        style={{height: 'fitContent'}}
-        className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
+      <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
         <Card className="p-4 mb-3">
-          <div className="row justify-content-between">
-            <div className="col-5">
-              <Dropdown name="Select Token" items={tokens} />
-            </div>
-            <div className="col-5">
-              <InputButtonPillGroup
-                currency="USDT"
-                totalAmount={new BigNumber(150)}
-                defaultValue={new BigNumber(0.0)}
-                availablePercentValues={[10, 15, 30, 60, 100]}
-              />
-            </div>
+          <div className="d-flex justify-content-center">
+            <ChainGroup />
           </div>
         </Card>
         <Card>
