@@ -7,7 +7,7 @@ import {
   CurrencyInput,
   TransactionCard,
 } from '../../lib/components';
-import {DepositContent} from './styles';
+import {DepositContent, Link} from './styles';
 import {SendDeposit} from './steps/sendDeposit';
 import {ChainGroup} from '../../components/SelectChain';
 
@@ -19,7 +19,20 @@ export const Deposit = () => {
     'Minting Process',
     'Minting Complete',
   ];
-  const transactionData = [{name: 'eth', value: '200'}];
+  const transactionData = [
+    {name: 'Date/Time', value: '21/01/21'},
+    {name: 'Amount Sent', value: '50.00 USDT'},
+    {name: 'Amount Minted', value: '50.00 XUSD'},
+    {name: 'Gas Fee', value: 'XX ETH'},
+    {
+      name: 'ETH Deposit',
+      value: <Link>0X413.89054</Link>,
+    },
+    {
+      name: 'RSK Relay Hash',
+      value: <Link>0X413.89054</Link>,
+    },
+  ];
   return (
     <div className="row g-3 align-items-start h-100">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0 h-100">
@@ -39,7 +52,23 @@ export const Deposit = () => {
                 {
                   0: <ChainGroup />,
                   1: <SendDeposit />,
-                  2: <TransactionCard transactionData={transactionData} />,
+                  2: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={true}
+                      />
+                    </div>
+                  ),
+                  3: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={false}
+                        status="success"
+                      />
+                    </div>
+                  ),
                 }[currentStep]
               }
             </DepositContent>

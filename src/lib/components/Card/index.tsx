@@ -7,6 +7,7 @@ import {
   TitledBody,
   TitledHeader,
   TransactionCardStyled,
+  TransactionData,
   TransactionLoadingText,
 } from './styles';
 
@@ -28,7 +29,7 @@ export const CardTitled = ({title, children}: ICardTitledProps) => {
 };
 
 interface ITransactionCardProps {
-  transactionData: {name: string; value: string}[];
+  transactionData: {name: string; value: any}[];
   loading?: boolean;
   status?: 'success' | 'failed' | 'unknown';
 }
@@ -40,7 +41,7 @@ export const TransactionCard = ({
 }: ITransactionCardProps) => {
   return (
     <TransactionCardStyled>
-      <div className="d-flex flex-column align-items-center p-4">
+      <div className="d-flex flex-column align-items-center px-4 py-5">
         <CircleWave loading={loading} status={status} />
         {loading && (
           <TransactionLoadingText className="">
@@ -48,25 +49,27 @@ export const TransactionCard = ({
           </TransactionLoadingText>
         )}
 
-        <div id="transaction-data" className="row">
-          <div className="col-6 text-right">
+        <div id="transaction-data" className="row mt-2">
+          <TransactionData className="col-6 text-right d-flex flex-column flex-wrap">
             {transactionData.map((element) => (
-              <span key={`transactionTextRight-${element.name}`}>
+              <span
+                className="left"
+                key={`transactionTextRight-${element.name}`}>
                 {element.name}:
               </span>
             ))}
-          </div>
-          <div className="col-6 text-left">
+          </TransactionData>
+          <TransactionData className="col-6 text-left d-flex flex-column">
             {transactionData.map((element) => (
               <span key={`transactionTextLeft-${element.name}`}>
-                {element.value}:
+                {element.value}
               </span>
             ))}
-          </div>
+          </TransactionData>
         </div>
 
-        {loading && (
-          <ButtonPrimary onClick={() => console.log('click')}>
+        {!loading && (
+          <ButtonPrimary className="mt-4" onClick={() => console.log('click')}>
             view on etherescan
           </ButtonPrimary>
         )}
