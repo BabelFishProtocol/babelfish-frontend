@@ -7,7 +7,7 @@ export const Header = () => {
   const history = useHistory();
   return (
     <HeaderContainer className="px-4">
-      <HeaderTitle onClick={() => history.push('/dashboard')}>
+      <HeaderTitle onClick={() => history.push('/landing')}>
         BabelFish.Money
       </HeaderTitle>
       <WalletConnect />

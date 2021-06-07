@@ -36,20 +36,12 @@ function App() {
       <Content className="row g-0">
         <Router>
           <Switch>
-            <Route path="/landing" exact>
-              <Landing />
-            </Route>
-            <Route path="/dashboard" exact>
-              <Dashboard />
-            </Route>
-            <Route path="/deposit" exact>
-              <Deposit />
-            </Route>
-            <Route path="/redeem" exact>
-              <Redeem />
-            </Route>
+            <Route path="/landing" exact render={() => <Landing />}></Route>
+            <Route path="/dashboard" exact render={() => <Dashboard />}></Route>
+            <Route path="/deposit" exact render={() => <Deposit />}></Route>
+            <Route path="/redeem" exact render={() => <Redeem />}></Route>
             <Route path="/" exact>
-              <Redirect to="/dashboard" />
+              <Redirect to="/landing" />
             </Route>
           </Switch>
         </Router>
