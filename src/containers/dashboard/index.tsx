@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {CoinsDeposited} from '../../components/CoinsDeposited';
-import {ChainGroup} from '../../components/SelectChain';
-import {Steps} from '../../components/steps';
-import {Card, Table} from '../../lib/components';
-import {CardFishBalance, CardUsdBalance} from './styles';
+import {
+  ButtonPrimary,
+  ButtonSecondary,
+  Card,
+  Table,
+} from '../../lib/components';
+import {CardDepositRedeem, CardFishBalance, CardUsdBalance} from './styles';
 import {dataTable} from './table/data';
-
-const steps = [
-  'Select Deposit Network',
-  'Deposit to sovryn',
-  'Minting Process',
-  'Minting Complete',
-];
 
 const columns = [
   {
@@ -42,20 +38,14 @@ const columns = [
 ];
 
 export const Dashboard = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-
   return (
     <div className="row g-3 align-items-start">
-      <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0">
-        <div>
-          <Card className="py-3 d-flex flex-column">
-            <Steps
-              steps={steps}
-              currentStep={currentStep}
-              onStepChange={(index: number) => setCurrentStep(index)}
-            />
-          </Card>
-        </div>
+      <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0 h-100">
+        <CardDepositRedeem className="px-3 py-4">
+          <span className="mb-3">You can deposit or redeem anytime</span>
+          <ButtonPrimary className="w-100 mb-3">Deposit</ButtonPrimary>
+          <ButtonSecondary className="w-100">Redeem</ButtonSecondary>
+        </CardDepositRedeem>
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
         <div className="row mb-3 g-3">
