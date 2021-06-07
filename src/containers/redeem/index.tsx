@@ -56,8 +56,12 @@ export const Redeem = () => {
               <div className="row px-5 py-2 justify-content-between">
                 <div className="col-5"></div>
                 <div className="col-5">
-                  <InputTitle>Deposit Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
+                  <InputTitle>Receive Amount</InputTitle>
+                  <CurrencyInput
+                    currencyText="XUSD"
+                    value={new BigNumber(0)}
+                    onChange={() => console.log('object')}
+                  />
                   <InputSubtext>Transaction fee: XXXXX</InputSubtext>
                   <ButtonPrimary style={{marginTop: '30px'}} className="w-100">
                     Redeem

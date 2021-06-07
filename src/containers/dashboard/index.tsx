@@ -6,7 +6,12 @@ import {
   Card,
   Table,
 } from '../../lib/components';
-import {CardDepositRedeem, CardFishBalance, CardUsdBalance} from './styles';
+import {
+  CardDepositRedeem,
+  CardFishBalance,
+  CardUsdBalance,
+  DashboardContainer,
+} from './styles';
 import {dataTable} from './table/data';
 
 const columns = [
@@ -39,7 +44,7 @@ const columns = [
 
 export const Dashboard = () => {
   return (
-    <div className="row g-3 align-items-start">
+    <DashboardContainer className="row g-3 align-items-start">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0 h-100">
         <CardDepositRedeem className="px-3 py-4">
           <span className="mb-3">You can deposit or redeem anytime</span>
@@ -77,6 +82,6 @@ export const Dashboard = () => {
           <Table columns={columns} data={dataTable} />
         </Card>
       </div>
-    </div>
+    </DashboardContainer>
   );
 };

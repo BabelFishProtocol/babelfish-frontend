@@ -29,13 +29,13 @@ export const CardTitled = ({title, children}: ICardTitledProps) => {
 
 interface ITransactionCardProps {
   transactionData: {name: string; value: string}[];
-  loading: boolean;
+  loading?: boolean;
   status?: 'success' | 'failed' | 'unknown';
 }
 //To Do move styles to styled component
 export const TransactionCard = ({
   transactionData,
-  loading,
+  loading = false,
   status = 'unknown',
 }: ITransactionCardProps) => {
   return (

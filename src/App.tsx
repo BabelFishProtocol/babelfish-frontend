@@ -49,7 +49,7 @@ function App() {
               <Redeem />
             </Route>
             <Route path="/" exact>
-              <Redirect to="/deposit" />
+              <Redirect to="/dashboard" />
             </Route>
           </Switch>
         </Router>

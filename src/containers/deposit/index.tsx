@@ -5,12 +5,11 @@ import {
   Card,
   CardTitled,
   CurrencyInput,
+  TransactionCard,
 } from '../../lib/components';
-import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
-import {BigNumber} from 'bignumber.js';
-import {Dropdown} from '../../lib/components/Dropdown';
-import {tokens} from '../../config/Tokens';
-import {DepositContent, InputSubtext, InputTitle} from './styles';
+import {DepositContent} from './styles';
+import {SendDeposit} from './steps/sendDeposit';
+import {ChainGroup} from '../../components/SelectChain';
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -20,7 +19,7 @@ export const Deposit = () => {
     'Minting Process',
     'Minting Complete',
   ];
-
+  const transactionData = [{name: 'eth', value: '200'}];
   return (
     <div className="row g-3 align-items-start h-100">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0 h-100">
@@ -36,38 +35,13 @@ export const Deposit = () => {
         <CardTitled title="Deposit to BabelFish from ETH Network">
           <div className="h-100 position-relative">
             <DepositContent>
-              <div className="row px-5 py-4 justify-content-between">
-                <div className="col-5">
-                  <InputTitle>Deposit Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-                <div className="col-5">
-                  <InputTitle>Receive Amount</InputTitle>
-                  <CurrencyInput
-                    currencyText="XUSD"
-                    value={new BigNumber(0)}
-                    onChange={() => console.log('object')}
-                  />
-                  <InputSubtext>Transaction fee: XXXXX</InputSubtext>
-                </div>
-              </div>
-              <div className="row px-5 py-4 justify-content-between">
-                <div className="col-5">
-                  <InputTitle>Deposit Amount</InputTitle>
-                  <InputButtonPillGroup
-                    currency="USDT"
-                    totalAmount={new BigNumber(100)}
-                    availablePercentValues={[10, 25, 50, 75, 100]}
-                    defaultValue={new BigNumber(10)}
-                  />
-                </div>
-                <div className="col-5">
-                  <ButtonPrimary style={{marginTop: '30px'}} className="w-100">
-                    Deposit
-                  </ButtonPrimary>
-                </div>
-              </div>
+              {
+                {
+                  0: <ChainGroup />,
+                  1: <SendDeposit />,
+                  2: <TransactionCard transactionData={transactionData} />,
+                }[currentStep]
+              }
             </DepositContent>
           </div>
         </CardTitled>

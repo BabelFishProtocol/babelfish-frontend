@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import {CardStyled} from '../../lib/components/Card/styles';
 
+export const DashboardContainer = styled.div``;
+
 export const CardDepositRedeem = styled(CardStyled)`
   height: 100% !important;
   display: flex;
