@@ -31,7 +31,7 @@ export const SendDeposit = () => {
           <InputButtonPillGroup
             currency="USDT"
             totalAmount={new BigNumber(100)}
-            availablePercentValues={[10, 25, 50, 75, 100]}
+            availablePercentValues={[20, 40, 60, 80, 100]}
             defaultValue={new BigNumber(10)}
           />
         </div>

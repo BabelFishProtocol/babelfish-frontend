@@ -32,9 +32,9 @@ function App() {
           }
         />
       )}
-      <Header />
-      <Content className="row g-0">
-        <Router>
+      <Router>
+        <Header />
+        <Content className="row g-0">
           <Switch>
             <Route path="/landing" exact render={() => <Landing />}></Route>
             <Route path="/dashboard" exact render={() => <Dashboard />}></Route>
@@ -44,8 +44,8 @@ function App() {
               <Redirect to="/landing" />
             </Route>
           </Switch>
-        </Router>
-      </Content>
+        </Content>
+      </Router>
     </Body>
   );
 }

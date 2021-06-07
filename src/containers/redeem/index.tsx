@@ -42,7 +42,7 @@ export const Redeem = () => {
                   <InputButtonPillGroup
                     currency="USDT"
                     totalAmount={new BigNumber(100)}
-                    availablePercentValues={[10, 25, 50, 75, 100]}
+                    availablePercentValues={[20, 40, 60, 80, 100]}
                     defaultValue={new BigNumber(10)}
                   />
                   <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
