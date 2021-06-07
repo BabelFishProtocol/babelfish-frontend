@@ -31,9 +31,20 @@ export const CardNeum = styled.div`
 `;
 
 //Titled Card Styles
-export const TitledHeader = styled.div``;
+export const TitledHeader = styled.div`
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  text-transform: uppercase;
+`;
 
-export const TitledBody = styled.div``;
+export const TitledBody = styled.div`
+  height: 100%;
+`;
 
 export const LineBreak = styled.div`
   width: 100%;

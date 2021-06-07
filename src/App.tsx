@@ -9,6 +9,7 @@ import {Header} from './components/Header';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
 import {Landing} from './containers/landing';
+import {Redeem} from './containers/redeem';
 import {Banner} from './lib/components/Banner';
 import {Body, Content} from './styles';
 
@@ -44,8 +45,11 @@ function App() {
             <Route path="/deposit" exact>
               <Deposit />
             </Route>
+            <Route path="/redeem" exact>
+              <Redeem />
+            </Route>
             <Route path="/" exact>
-              <Redirect to="/dashboard" />
+              <Redirect to="/deposit" />
             </Route>
           </Switch>
         </Router>

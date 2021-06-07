@@ -16,5 +16,6 @@ export const Body = styled.div`
 export const Content = styled.div`
   display: flex;
   justify-content: center;
+  height: calc(100% - 200px);
   padding: 0 10vw;
 `;

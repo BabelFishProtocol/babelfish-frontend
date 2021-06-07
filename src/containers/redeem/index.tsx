@@ -10,13 +10,13 @@ import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGrou
 import {BigNumber} from 'bignumber.js';
 import {Dropdown} from '../../lib/components/Dropdown';
 import {tokens} from '../../config/Tokens';
-import {DepositContent, InputSubtext, InputTitle} from './styles';
+import {RedeemContent, InputSubtext, InputTitle} from './styles';
 
-export const Deposit = () => {
+export const Redeem = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const steps = [
-    'Select Deposit Network',
-    'Deposit to sovryn',
+    'Select Redeem Network',
+    'Redeem to sovryn',
     'Minting Process',
     'Minting Complete',
   ];
@@ -33,42 +33,38 @@ export const Deposit = () => {
         </Card>
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
-        <CardTitled title="Deposit to BabelFish from ETH Network">
+        <CardTitled title="Redeem to BabelFish from ETH Network">
           <div className="h-100 position-relative">
-            <DepositContent>
-              <div className="row px-5 py-4 justify-content-between">
+            <RedeemContent>
+              <div className="row px-5 py-2 justify-content-between">
                 <div className="col-5">
-                  <InputTitle>Deposit Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-                <div className="col-5">
-                  <InputTitle>Receive Amount</InputTitle>
-                  <CurrencyInput
-                    currencyText="XUSD"
-                    value={new BigNumber(0)}
-                    onChange={() => console.log('object')}
-                  />
-                  <InputSubtext>Transaction fee: XXXXX</InputSubtext>
-                </div>
-              </div>
-              <div className="row px-5 py-4 justify-content-between">
-                <div className="col-5">
-                  <InputTitle>Deposit Amount</InputTitle>
+                  <InputTitle>Redeem Amount</InputTitle>
                   <InputButtonPillGroup
                     currency="USDT"
                     totalAmount={new BigNumber(100)}
                     availablePercentValues={[10, 25, 50, 75, 100]}
                     defaultValue={new BigNumber(10)}
                   />
+                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
                 </div>
                 <div className="col-5">
+                  <InputTitle>Redeem Token</InputTitle>
+                  <Dropdown name="Select Token" items={tokens} />
+                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
+                </div>
+              </div>
+              <div className="row px-5 py-2 justify-content-between">
+                <div className="col-5"></div>
+                <div className="col-5">
+                  <InputTitle>Deposit Token</InputTitle>
+                  <Dropdown name="Select Token" items={tokens} />
+                  <InputSubtext>Transaction fee: XXXXX</InputSubtext>
                   <ButtonPrimary style={{marginTop: '30px'}} className="w-100">
-                    Deposit
+                    Redeem
                   </ButtonPrimary>
                 </div>
               </div>
-            </DepositContent>
+            </RedeemContent>
           </div>
         </CardTitled>
       </div>

@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom';
 export const Header = () => {
   const history = useHistory();
   return (
-    <HeaderContainer className="p-4">
+    <HeaderContainer className="px-4">
       <HeaderTitle onClick={() => history.push('/dashboard')}>
         BabelFish.Money
       </HeaderTitle>
