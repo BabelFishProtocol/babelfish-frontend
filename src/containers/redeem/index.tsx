@@ -5,14 +5,32 @@ import {
   Card,
   CardTitled,
   CurrencyInput,
+  TransactionCard,
 } from '../../lib/components';
 import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
 import {BigNumber} from 'bignumber.js';
 import {Dropdown} from '../../lib/components/Dropdown';
 import {tokens} from '../../config/Tokens';
 import {RedeemContent, InputSubtext, InputTitle} from './styles';
+import {RedeemDeposit} from './steps/redeemDeposit';
+import {ChainGroup} from '../../components/SelectChain';
+import {Link} from '../deposit/styles';
 
 export const Redeem = () => {
+  const transactionData = [
+    {name: 'Date/Time', value: '21/01/21'},
+    {name: 'Amount Sent', value: '50.00 USDT'},
+    {name: 'Amount Minted', value: '50.00 XUSD'},
+    {name: 'Gas Fee', value: 'XX ETH'},
+    {
+      name: 'ETH Deposit',
+      value: <Link>0X413.89054</Link>,
+    },
+    {
+      name: 'RSK Relay Hash',
+      value: <Link>0X413.89054</Link>,
+    },
+  ];
   const [currentStep, setCurrentStep] = useState<number>(0);
   const steps = [
     'Select Redeem Network',
@@ -36,38 +54,29 @@ export const Redeem = () => {
         <CardTitled title="Redeem to BabelFish from ETH Network">
           <div className="h-100 position-relative">
             <RedeemContent>
-              <div className="row px-5 py-2 justify-content-between">
-                <div className="col-5">
-                  <InputTitle>Redeem Amount</InputTitle>
-                  <InputButtonPillGroup
-                    currency="USDT"
-                    totalAmount={new BigNumber(100)}
-                    availablePercentValues={[20, 40, 60, 80, 100]}
-                    defaultValue={new BigNumber(10)}
-                  />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-                <div className="col-5">
-                  <InputTitle>Redeem Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-              </div>
-              <div className="row px-5 py-2 justify-content-between">
-                <div className="col-5"></div>
-                <div className="col-5">
-                  <InputTitle>Receive Amount</InputTitle>
-                  <CurrencyInput
-                    currencyText="XUSD"
-                    value={new BigNumber(0)}
-                    onChange={() => console.log('object')}
-                  />
-                  <InputSubtext>Transaction fee: XXXXX</InputSubtext>
-                  <ButtonPrimary style={{marginTop: '30px'}} className="w-100">
-                    Redeem
-                  </ButtonPrimary>
-                </div>
-              </div>
+              {
+                {
+                  0: <ChainGroup />,
+                  1: <RedeemDeposit />,
+                  2: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={true}
+                      />
+                    </div>
+                  ),
+                  3: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={false}
+                        status="success"
+                      />
+                    </div>
+                  ),
+                }[currentStep]
+              }
             </RedeemContent>
           </div>
         </CardTitled>

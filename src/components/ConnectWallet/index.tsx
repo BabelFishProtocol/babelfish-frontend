@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {ButtonPrimary} from '../../lib/components';
 import {wallets, walletType} from '../../config/Wallets';
-
 import {
   ConnectedButton,
   ConnectWalletContainer,
@@ -11,6 +10,8 @@ import {
   WalletIcon,
   WalletsListContainer,
 } from './styles';
+import Web3 from 'web3';
+declare let window: any;
 
 export const WalletConnect = () => {
   interface IConnectedProps {
@@ -18,6 +19,33 @@ export const WalletConnect = () => {
   }
   const [displayList, setDisplayList] = useState(false);
   const [connected, setConnected] = useState<IConnectedProps>();
+  const {ethereum} = window;
+
+  const getWeb3 = () => {
+    return new Promise((resolve, reject) => {
+      if (Boolean(ethereum && ethereum.isMetaMask)) {
+        const web3 = new Web3(window.ethereum);
+        try {
+          // ask user permission to access his accounts
+          window.ethereum
+            .request({method: 'eth_requestAccounts'})
+            .then(() => resolve(web3));
+        } catch (error) {
+          reject(error);
+        }
+      } else {
+        reject(
+          '🦊 You must install Metamask into your browser: https://metamask.io/download.html',
+        );
+      }
+    });
+  };
+
+  const walletConnect = async () => {
+    const web3: any = await getWeb3();
+    const accounts = await web3?.eth.getAccounts();
+    console.log(accounts);
+  };
   return (
     <ConnectWalletContainer>
       {connected?.wallet ? (
@@ -35,9 +63,7 @@ export const WalletConnect = () => {
       <WalletsListContainer
         className={`${!(displayList && !connected) && 'd-none'}`}>
         {wallets.map((wallet) => (
-          <WalletContainer
-            onClick={() => setConnected({wallet: wallet})}
-            key={wallet.id}>
+          <WalletContainer onClick={() => walletConnect()} key={wallet.id}>
             {wallet.name}
             <WalletIcon src={wallet.icon} />
           </WalletContainer>
