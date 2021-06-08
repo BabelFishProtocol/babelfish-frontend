@@ -40,6 +40,7 @@ export const DropdownItemsGroup = styled.div`
   -webkit-backdrop-filter: blur(20px);
   border: solid 1px ${(props) => props.theme.primary};
   border-top: none;
+  z-index: 100;
 `;
 
 export const DropdownItem = styled.div`

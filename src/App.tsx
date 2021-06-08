@@ -9,6 +9,7 @@ import {Header} from './components/Header';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
 import {Landing} from './containers/landing';
+import {Redeem} from './containers/redeem';
 import {Banner} from './lib/components/Banner';
 import {Body, Content} from './styles';
 
@@ -31,25 +32,20 @@ function App() {
           }
         />
       )}
-      <Header />
-      <Content className="row g-0">
-        <Router>
+      <Router>
+        <Header />
+        <Content className="row g-0">
           <Switch>
-            <Route path="/landing" exact>
-              <Landing />
-            </Route>
-            <Route path="/dashboard" exact>
-              <Dashboard />
-            </Route>
-            <Route path="/deposit" exact>
-              <Deposit />
-            </Route>
+            <Route path="/landing" exact render={() => <Landing />}></Route>
+            <Route path="/dashboard" exact render={() => <Dashboard />}></Route>
+            <Route path="/deposit" exact render={() => <Deposit />}></Route>
+            <Route path="/redeem" exact render={() => <Redeem />}></Route>
             <Route path="/" exact>
               <Redirect to="/landing" />
             </Route>
           </Switch>
-        </Router>
-      </Content>
+        </Content>
+      </Router>
     </Body>
   );
 }

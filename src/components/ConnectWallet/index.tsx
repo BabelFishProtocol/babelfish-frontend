@@ -32,21 +32,20 @@ export const WalletConnect = () => {
           Connect Wallet
         </ButtonPrimary>
       )}
-      {displayList && !connected && (
-        <WalletsListContainer>
-          {wallets.map((wallet) => (
-            <WalletContainer
-              onClick={() => setConnected({wallet: wallet})}
-              key={wallet.id}>
-              {wallet.name}
-              <WalletIcon src={wallet.icon} />
-            </WalletContainer>
-          ))}
-          <Info>
+      <WalletsListContainer
+        className={`${!(displayList && !connected) && 'd-none'}`}>
+        {wallets.map((wallet) => (
+          <WalletContainer
+            onClick={() => setConnected({wallet: wallet})}
+            key={wallet.id}>
+            {wallet.name}
+            <WalletIcon src={wallet.icon} />
+          </WalletContainer>
+        ))}
+        {/* <Info>
             <span>What is a wallet?</span>
-          </Info>
-        </WalletsListContainer>
-      )}
+          </Info> */}
+      </WalletsListContainer>
     </ConnectWalletContainer>
   );
 };

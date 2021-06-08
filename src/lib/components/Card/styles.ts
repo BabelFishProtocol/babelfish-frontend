@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 //Default Card Styles
 export const CardStyled = styled.div`
@@ -15,10 +15,36 @@ export const CardStyled = styled.div`
   color: ${(props) => props.theme.color};
 `;
 
-//Titled Card Styles
-export const TitledHeader = styled.div``;
+//Card Neumorphism
+export const CardNeum = styled.div`
+  color: white;
+  border-radius: 35px;
+  background: transparent;
+  box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.7),
+    3px -3px 10px rgba(200, 200, 200, 0.2);
+  transition: 0.3s;
+  border: 2px solid rgba(50, 240, 95, 0.4);
+  cursor: pointer;
+  :hover {
+    border: 2px solid rgba(50, 240, 95, 0.7);
+  }
+`;
 
-export const TitledBody = styled.div``;
+//Titled Card Styles
+export const TitledHeader = styled.div`
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  text-transform: uppercase;
+`;
+
+export const TitledBody = styled.div`
+  height: 100%;
+`;
 
 export const LineBreak = styled.div`
   width: 100%;
@@ -28,6 +54,7 @@ export const LineBreak = styled.div`
 
 //Transaction Card Styles
 export const TransactionCardStyled = styled(CardStyled)`
+  max-width: 450px;
   border-style: solid;
   border-width: 1px;
   border-image-source: linear-gradient(
@@ -44,6 +71,7 @@ export const TransactionCardStyled = styled(CardStyled)`
 `;
 
 export const TransactionLoadingText = styled.span`
+  opacity: 0.6;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -54,12 +82,10 @@ export const TransactionLoadingText = styled.span`
 `;
 
 export const TransactionData = styled.div`
-  .text-left {
+  span.left {
     font-size: 16px;
     font-weight: bold;
-  }
-  .text-right {
-    font-size: 16px;
-    font-weight: normal;
+    text-align: right;
+    white-space: nowrap;
   }
 `;
