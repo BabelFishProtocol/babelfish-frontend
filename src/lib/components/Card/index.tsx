@@ -14,7 +14,7 @@ import {
 export const Card = CardStyled;
 
 interface ICardTitledProps {
-  title: string;
+  title: any;
   children?: any;
 }
 

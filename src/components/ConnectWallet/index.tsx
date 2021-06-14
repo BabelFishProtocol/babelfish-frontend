@@ -29,7 +29,7 @@ export const WalletConnect = () => {
         <ButtonPrimary
           className="position-relative"
           onClick={() => setDisplayList(!displayList)}>
-          Connect Wallet
+          CONNECT WALLET
         </ButtonPrimary>
       )}
       <WalletsListContainer

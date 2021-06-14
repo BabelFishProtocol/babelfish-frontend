@@ -9,6 +9,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderTitle = styled.a`
+  display: flex;
+  align-items: center;
   color: white;
   text-decoration: none;
   font-size: 24px;

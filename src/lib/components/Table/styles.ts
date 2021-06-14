@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TableStyles = styled.div`
   width: 100%;
@@ -6,7 +6,6 @@ export const TableStyles = styled.div`
   table {
     width: 100%;
     border-spacing: 0;
-    border: 1px solid black;
     font-size: 14px;
     font-weight: normal;
     font-stretch: normal;
@@ -26,7 +25,7 @@ export const TableStyles = styled.div`
           color: #ffffff;
         }
         &:first-child {
-          font-family: "ArbelBold";
+          font-family: 'ArbelBold';
           font-weight: bold;
         }
       }
