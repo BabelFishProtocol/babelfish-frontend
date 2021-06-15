@@ -2,15 +2,23 @@ import React from 'react';
 import {WalletConnect} from '../ConnectWallet';
 import {HeaderContainer, HeaderTitle} from './styles';
 import {useHistory} from 'react-router-dom';
+import {ButtonSecondary} from '../../lib/components';
+import logo from '../../resources/svgs/logo-small.svg';
 
 export const Header = () => {
   const history = useHistory();
   return (
     <HeaderContainer className="px-4">
       <HeaderTitle onClick={() => history.push('/dashboard')}>
-        BabelFish.Money
+        <img height="25px" src={logo} />
+        &nbsp;BabelFish.Money
       </HeaderTitle>
-      <WalletConnect />
+      <div className="d-flex">
+        <ButtonSecondary onClick={() => history.push('/governance')}>
+          GO TO GOVERNANCE
+        </ButtonSecondary>
+        <WalletConnect />
+      </div>
     </HeaderContainer>
   );
 };

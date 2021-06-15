@@ -17,6 +17,7 @@ export const ConnectedButton = styled(ButtonStyled)`
 `;
 
 export const ConnectWalletContainer = styled.div`
+  margin-left: 10px;
   position: relative;
   width: fit-content;
   height: fit-content;

@@ -3,8 +3,21 @@ import {CardStyled} from '../../lib/components/Card/styles';
 
 export const DashboardContainer = styled.div``;
 
+export const DashboardRightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+export const FlexCard = styled(CardStyled)`
+  flex: 0 1 auto;
+  height: fit-content;
+`;
+
+export const TableCard = styled(CardStyled)`
+  flex: 1 1 auto;
+`;
+
 export const CardDepositRedeem = styled(CardStyled)`
-  height: 100% !important;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -22,6 +35,7 @@ export const CardDepositRedeem = styled(CardStyled)`
 `;
 
 export const CardUsdBalance = styled(CardStyled)`
+  flex: 0 1 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;

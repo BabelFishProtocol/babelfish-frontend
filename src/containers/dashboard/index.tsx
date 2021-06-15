@@ -7,11 +7,14 @@ import {
   Card,
   Table,
 } from '../../lib/components';
+import {TableCard} from '../governance/styles';
 import {
   CardDepositRedeem,
   CardFishBalance,
   CardUsdBalance,
   DashboardContainer,
+  DashboardRightContainer,
+  FlexCard,
 } from './styles';
 import {dataTable} from './table/data';
 
@@ -62,7 +65,7 @@ export const Dashboard = () => {
           </ButtonSecondary>
         </CardDepositRedeem>
       </div>
-      <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0">
+      <DashboardRightContainer className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
         <div className="row mb-3 g-3">
           <div className="col-6">
             <CardFishBalance className="px-2 py-3">
@@ -78,20 +81,20 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        <Card className="px-2 py-4 mb-3">
+        <FlexCard className="px-2 py-4 mb-3">
           <div className="d-flex justify-content-center">
             <CoinsDeposited />
           </div>
-        </Card>
+        </FlexCard>
 
         <CardUsdBalance className="mb-3 p-3">
           Total #USD Balance: <span>100,000.00</span>
         </CardUsdBalance>
 
-        <Card>
+        <TableCard>
           <Table columns={columns} data={dataTable} />
-        </Card>
-      </div>
+        </TableCard>
+      </DashboardRightContainer>
     </DashboardContainer>
   );
 };
