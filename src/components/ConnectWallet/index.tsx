@@ -6,23 +6,30 @@ import {
   ConnectedButton,
   ConnectWalletContainer,
   Icon,
-  Info,
   WalletContainer,
   WalletIcon,
-  WalletsListContainer,
+  WalletPopUp,
 } from './styles';
+import {connectWallet, suscribeAccount} from '../../web3/api';
+import {useWeb3Context} from '../../web3/context';
+import Web3 from 'web3';
 
 export const WalletConnect = () => {
+  const {
+    state: {account},
+    updateAccount,
+  } = useWeb3Context();
+
   interface IConnectedProps {
-    wallet: walletType | undefined;
+    wallet: walletType;
   }
   const [displayList, setDisplayList] = useState(false);
   const [connected, setConnected] = useState<IConnectedProps>();
   return (
     <ConnectWalletContainer>
       {connected?.wallet ? (
-        <ConnectedButton>
-          03XAS42135Q…
+        <ConnectedButton onClick={() => setDisplayList(!displayList)}>
+          {account}
           <Icon src={connected.wallet.icon} />
         </ConnectedButton>
       ) : (
@@ -32,20 +39,27 @@ export const WalletConnect = () => {
           CONNECT WALLET
         </ButtonPrimary>
       )}
-      <WalletsListContainer
-        className={`${!(displayList && !connected) && 'd-none'}`}>
+      <WalletPopUp className={`${!displayList && 'd-none'}`}>
         {wallets.map((wallet) => (
           <WalletContainer
-            onClick={() => setConnected({wallet: wallet})}
+            connected={connected?.wallet?.id === wallet.id}
+            onClick={() =>
+              connectWallet(wallet.id)?.then(
+                (data: any) => {
+                  setConnected({wallet: wallet});
+                  updateAccount(data);
+                },
+                (error) => {
+                  console.error(error.message);
+                },
+              )
+            }
             key={wallet.id}>
             {wallet.name}
             <WalletIcon src={wallet.icon} />
           </WalletContainer>
         ))}
-        {/* <Info>
-            <span>What is a wallet?</span>
-          </Info> */}
-      </WalletsListContainer>
+      </WalletPopUp>
     </ConnectWalletContainer>
   );
 };
