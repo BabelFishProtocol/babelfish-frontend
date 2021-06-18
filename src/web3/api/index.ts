@@ -1,6 +1,5 @@
 import Web3 from 'web3';
 import Portis from '@portis/web3';
-import detectEthereumProvider from '@metamask/detect-provider';
 import {walletEnum} from '../../config/Wallets';
 
 export const connectMetamask = async () => {
@@ -23,12 +22,20 @@ export const connectPortis = async () => {
   return {web3, account: accounts[0] || ''};
 };
 
+export const connectLiquality = async () => {
+  const {bitcoin} = window as any;
+  const web3 = new Web3(bitcoin as any);
+  await bitcoin.enable();
+};
+
 export const connectWallet = async (wallet: walletEnum) => {
   switch (wallet) {
     case 'Metamask':
       return await connectMetamask();
     case 'Portis':
       return await connectPortis();
+    case 'Liquality':
+      return await connectLiquality();
   }
 };
 
