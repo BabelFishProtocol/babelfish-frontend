@@ -7,7 +7,7 @@ import {INITIAL_STATE} from './state';
 
 export const Web3Context = createContext({
   state: INITIAL_STATE,
-  updateAccount: (_data: {account: string; web3: Web3}) => {},
+  updateAccount: (_data: {account: string; web3?: Web3}) => {},
 });
 
 export const useWeb3Context = () => useContext(Web3Context);
@@ -30,16 +30,23 @@ export const Web3Provider: React.FC<ProviderProps> = ({children}) => {
 };
 
 export const Web3Updater = () => {
-  const {state} = useWeb3Context();
+  const {state, updateAccount} = useWeb3Context();
 
   useEffect(() => {
+    console.log('STATE', state.web3);
+    console.log('ACCOUNT', state.account);
     if (state.web3) {
       const ifAccountChanges = suscribeAccount(state.web3, (error, account) => {
         if (error) {
           console.error(error);
         }
-        if (account !== undefined && account !== state.account) {
-          window.location.reload();
+        console.log(account, state.account);
+        if (
+          account !== undefined &&
+          account !== null &&
+          account !== state.account
+        ) {
+          updateAccount({account});
         }
       });
       return ifAccountChanges;

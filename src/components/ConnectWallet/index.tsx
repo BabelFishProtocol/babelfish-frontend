@@ -24,6 +24,7 @@ export const WalletConnect = () => {
     wallet: walletType;
   }
   const [displayList, setDisplayList] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState<IConnectedProps>();
   return (
     <ConnectWalletContainer>
@@ -40,20 +41,31 @@ export const WalletConnect = () => {
         </ButtonPrimary>
       )}
       <WalletPopUp className={`${!displayList && 'd-none'}`}>
+        {loading && (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
         {wallets.map((wallet) => (
           <WalletContainer
+            className={`${loading && 'd-none'}`}
             connected={connected?.wallet?.id === wallet.id}
-            onClick={() =>
-              connectWallet(wallet.id)?.then(
-                (data: any) => {
-                  setConnected({wallet: wallet});
-                  updateAccount(data);
-                },
-                (error) => {
-                  console.error(error.message);
-                },
-              )
-            }
+            onClick={() => {
+              setLoading(true);
+              connectWallet(wallet.id)
+                ?.then(
+                  (data: any) => {
+                    setConnected({wallet: wallet});
+                    updateAccount(data);
+                    setLoading(false);
+                  },
+                  (error) => {
+                    console.error(error.message);
+                    setLoading(false);
+                  },
+                )
+                .catch(() => console.log('error'));
+            }}
             key={wallet.id}>
             {wallet.name}
             <WalletIcon src={wallet.icon} />
