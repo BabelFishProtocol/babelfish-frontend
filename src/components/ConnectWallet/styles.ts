@@ -23,7 +23,7 @@ export const ConnectWalletContainer = styled.div`
   height: fit-content;
 `;
 
-export const WalletsListContainer = styled(CardStyled)`
+export const WalletPopUp = styled(CardStyled)`
   padding: 15px;
   width: fit-content;
   height: fit-content;
@@ -34,7 +34,7 @@ export const WalletsListContainer = styled(CardStyled)`
   transform: translate(0%, calc(100% + 10px));
 `;
 
-export const WalletContainer = styled.div`
+export const WalletContainer = styled.div<{connected: boolean}>`
   cursor: pointer;
   height: 55px;
   width: 300px;
@@ -50,11 +50,18 @@ export const WalletContainer = styled.div`
   letter-spacing: normal;
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.08);
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  border: ${(props) =>
+    props.connected
+      ? '2px solid #32f05f91'
+      : '2px solid rgba(255, 255, 255, 0.08)'};
   border-radius: 6px;
   transition: 0.3s;
   :hover {
     border: 2px solid #32f05f91;
+  }
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0px;
   }
 `;
 
@@ -64,6 +71,7 @@ export const WalletIcon = styled.img`
   height: 35px;
   width: 35px;
   background: white;
+  object-fit: contain;
 `;
 
 export const Info = styled.div`
@@ -82,5 +90,6 @@ export const Info = styled.div`
 export const Icon = styled.img`
   height: 25px;
   width: 25px;
+  object-fit: contain;
   margin-left: 10px;
 `;

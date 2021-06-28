@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ButtonSecondary,
   Card,
@@ -8,6 +8,8 @@ import {
 import {dataTable} from '../../dashboard/table/data';
 import {TableCard, ViewProposalSpan} from '../styles';
 import {listData} from './listData';
+import {useWeb3Context} from "../../../web3/context";
+import {listProposals} from "../../../web3/service";
 
 const columns = [
   {
@@ -42,13 +44,26 @@ interface IProposalListProps {
 }
 
 export const ProposalList = ({setProposal}: IProposalListProps) => {
+  const {
+    state: {web3},
+  } = useWeb3Context();
+  const [valueProposals, setProposals] = useState<any[]>([]);
+  useEffect(
+    () => {
+      if (!web3) {
+        return;
+      }
+      listProposals(web3).then(setProposals);
+    },
+    [web3]
+  );
   return (
     <CardTitled title="BabelFish Bitocracy">
       <div className="p-4">
         <TableCard>
           <Table
             columns={columns}
-            data={listData.map((data) => {
+            data={valueProposals.map((data) => {
               return {
                 ...data,
                 action: (
@@ -57,7 +72,7 @@ export const ProposalList = ({setProposal}: IProposalListProps) => {
                   </ViewProposalSpan>
                 ),
               };
-            })}></Table>
+            })}/>
         </TableCard>
         <div className="d-flex justify-content-center py-4">
           <ButtonSecondary>Create Proposal</ButtonSecondary>

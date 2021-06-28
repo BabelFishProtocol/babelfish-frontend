@@ -8,12 +8,16 @@ import {ThemeProvider} from 'styled-components';
 import {defaultTheme} from './utils/themes';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
+import {Web3Provider, Web3Updater} from './web3/context';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
-        <App />
+        <Web3Provider>
+          <App />
+          <Web3Updater />
+        </Web3Provider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>,
