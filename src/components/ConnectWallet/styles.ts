@@ -59,8 +59,9 @@ export const WalletContainer = styled.div<{connected: boolean}>`
   :hover {
     border: 2px solid #32f05f91;
   }
-  &:first-child {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0px;
   }
 `;
 
@@ -70,6 +71,7 @@ export const WalletIcon = styled.img`
   height: 35px;
   width: 35px;
   background: white;
+  object-fit: contain;
 `;
 
 export const Info = styled.div`
@@ -88,5 +90,6 @@ export const Info = styled.div`
 export const Icon = styled.img`
   height: 25px;
   width: 25px;
+  object-fit: contain;
   margin-left: 10px;
 `;

@@ -10,7 +10,7 @@ export const connectMetamask = async () => {
     return {web3, account: accounts[0] || ''};
   } else {
     throw new Error(
-      '🦊 You must install Metamask into your browser: https://metamask.io/download.html',
+      '🦊 You must install Metamask into your browser: https://metamask.io/download.html and make sure it is set as the default wallet.',
     );
   }
 };
@@ -23,9 +23,17 @@ export const connectPortis = async () => {
 };
 
 export const connectLiquality = async () => {
-  const {bitcoin} = window as any;
-  const web3 = new Web3(bitcoin as any);
-  await bitcoin.enable();
+  const {ethereum} = window as any;
+  if (!ethereum.isMetaMask){
+  const web3 = new Web3(ethereum as any);
+  await ethereum.enable();
+  const accounts = await web3.eth.getAccounts();
+  return {web3, account: accounts[0] || ''};  
+} else {
+    throw new Error(
+      '🔵🟣 You must install Liquality into your browser: https://liquality.io/wallet.html and make sure it is set as the default wallet.',
+    );
+  }
 };
 
 export const connectWallet = async (wallet: walletEnum) => {

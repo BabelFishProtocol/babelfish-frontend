@@ -60,7 +60,7 @@ export const WalletConnect = () => {
                     setLoading(false);
                   },
                   (error) => {
-                    console.error(error.message);
+                    alert(error.message);
                     setLoading(false);
                   },
                 )
