@@ -1,5 +1,5 @@
 import React from 'react';
-import closeIcon from '../../../resources/svgs/cross.svg';
+import {CrossIcon} from '../../../resources/svgs/cross';
 import {BannerContainer, Close} from './styles';
 
 interface IBannerProps {
@@ -11,7 +11,9 @@ export const Banner = ({onClose, children}: IBannerProps) => {
   return (
     <BannerContainer>
       <span>{children}</span>
-      <Close src={closeIcon} onClick={() => onClose()} />
+      <Close onClick={() => onClose()}>
+        <CrossIcon />
+      </Close>
     </BannerContainer>
   );
 };

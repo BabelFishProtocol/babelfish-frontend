@@ -8,13 +8,14 @@ export const DropdownContainer = styled.div`
 `;
 
 export const DropdownText = styled.div`
-  height: 45px;
+  height: 40px;
   padding: 0 15px;
   display: flex;
   align-items: center;
   width: 100;
   border: solid 1px ${(props) => props.theme.primary};
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
   span {
     padding: 0 10px;
   }
@@ -44,7 +45,7 @@ export const DropdownItemsGroup = styled.div`
 `;
 
 export const DropdownItem = styled.div`
-  height: 45px;
+  height: 40px;
   position: relative;
   background: transparent;
   transition: 0.3s;

@@ -7,7 +7,7 @@ import {
   CurrencyInput,
   TransactionCard,
 } from '../../lib/components';
-import {DepositContent, Link} from './styles';
+import {ChainsContainer, Link} from './styles';
 import {SendDeposit} from './steps/sendDeposit';
 import {ChainGroup} from '../../components/SelectChain';
 
@@ -46,32 +46,34 @@ export const Deposit = () => {
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
         <CardTitled title="Deposit to BabelFish from ETH Network">
-          <div className="h-100 position-relative">
-            <DepositContent>
+          <div>
+            {
               {
-                {
-                  0: <ChainGroup />,
-                  1: <SendDeposit />,
-                  2: (
-                    <div className="d-flex justify-content-center">
-                      <TransactionCard
-                        transactionData={transactionData}
-                        loading={true}
-                      />
-                    </div>
-                  ),
-                  3: (
-                    <div className="d-flex justify-content-center">
-                      <TransactionCard
-                        transactionData={transactionData}
-                        loading={false}
-                        status="success"
-                      />
-                    </div>
-                  ),
-                }[currentStep]
-              }
-            </DepositContent>
+                0: (
+                  <ChainsContainer>
+                    <ChainGroup />
+                  </ChainsContainer>
+                ),
+                1: <SendDeposit />,
+                2: (
+                  <div className="d-flex justify-content-center">
+                    <TransactionCard
+                      transactionData={transactionData}
+                      loading={true}
+                    />
+                  </div>
+                ),
+                3: (
+                  <div className="d-flex justify-content-center">
+                    <TransactionCard
+                      transactionData={transactionData}
+                      loading={false}
+                      status="success"
+                    />
+                  </div>
+                ),
+              }[currentStep]
+            }
           </div>
         </CardTitled>
       </div>

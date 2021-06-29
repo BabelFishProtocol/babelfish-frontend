@@ -43,7 +43,6 @@ export const TitledHeader = styled.div`
 `;
 
 export const TitledBody = styled.div`
-  height: 100%;
 `;
 
 export const LineBreak = styled.div`

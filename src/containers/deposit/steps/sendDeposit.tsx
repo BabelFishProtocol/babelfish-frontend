@@ -12,7 +12,7 @@ export const SendDeposit = () => {
       <div className="row px-5 py-4 justify-content-between">
         <div className="col-5">
           <InputTitle>Deposit Token</InputTitle>
-          <Dropdown name="Select Token" items={tokens} />
+          <Dropdown placeholder="Select Token" items={tokens} />
           <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
         </div>
         <div className="col-5">

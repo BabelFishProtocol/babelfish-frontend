@@ -9,6 +9,7 @@ import {Header} from './components/Header';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
 import {Governance} from './containers/governance';
+import { StakingDashboard } from './containers/governance/stakingDashboard';
 import {Landing} from './containers/landing';
 import {Redeem} from './containers/redeem';
 import {Banner} from './lib/components/Banner';
@@ -45,6 +46,10 @@ function App() {
               path="/governance"
               exact
               render={() => <Governance />}></Route>
+              <Route
+              path="/governance/staking"
+              exact
+              render={() => <StakingDashboard />}></Route>
             <Redirect to="/landing" />
           </Switch>
         </Content>

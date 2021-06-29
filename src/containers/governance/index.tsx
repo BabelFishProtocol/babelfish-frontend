@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {ButtonSecondary, Card, CardTitled, Table} from '../../lib/components';
-import {Proposal} from './steps/proposal';
-import {ProposalList} from './steps/proposalList';
+import {Proposal} from './propousals/proposal';
+import {ProposalList} from './propousals/proposalList';
 
 export const Governance = () => {
   const [proposal, setProposal] = useState(0);

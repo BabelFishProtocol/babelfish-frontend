@@ -10,7 +10,7 @@ import {
 
 const numberMask = createNumberMask({
   prefix: '',
-  suffix: ' $',
+  suffix: '',
   allowDecimal: true,
   decimalLimit: 2,
 });

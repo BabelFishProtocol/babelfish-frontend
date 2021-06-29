@@ -8,11 +8,11 @@ import {
 } from './styles';
 
 interface IDropdownProps {
-  name: string;
+  placeholder: string;
   items: {}[];
 }
 
-export const Dropdown = ({name, items}: IDropdownProps) => {
+export const Dropdown = ({placeholder, items}: IDropdownProps) => {
   const [displayDropdown, setDisplayDropdown] = useState(false);
   const [selectedItem, setSelectedItem] = useState() as any;
   return (
@@ -20,10 +20,11 @@ export const Dropdown = ({name, items}: IDropdownProps) => {
       <DropdownText onClick={() => setDisplayDropdown(!displayDropdown)}>
         {selectedItem ? (
           <>
-            <Icon src={selectedItem.icon} /> <span>{selectedItem.name}</span>
+            <Icon src={selectedItem.icon} />{' '}
+            <span style={{color: 'white'}}>{selectedItem.name}</span>
           </>
         ) : (
-          name
+          placeholder
         )}
       </DropdownText>
       {displayDropdown && (

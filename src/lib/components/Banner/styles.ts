@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const BannerContainer = styled.div`
   height: fit-content;
   width: 100%;
+  min-height: 50px;
   background-color: rgba(255, 255, 255, 0.5);
   font-size: 14px;
   font-weight: normal;
@@ -24,9 +25,6 @@ export const BannerContainer = styled.div`
   }
 `;
 
-export const Close = styled.img`
-  height: 10px;
-  width: 10px;
-  justify-self: flex-end;
+export const Close = styled.div`
   cursor: pointer;
 `;

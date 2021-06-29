@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {
-  ButtonSecondary,
-  Card,
   CardTitled,
   Table,
 } from '../../../lib/components';
-import {dataTable} from '../../dashboard/table/data';
 import {TableCard, ViewProposalSpan} from '../styles';
-import {listData} from './listData';
-import {useWeb3Context} from "../../../web3/context";
-import {listProposals} from "../../../web3/service";
+import {useWeb3Context} from '../../../web3/context';
+import {listProposals} from '../../../web3/service';
+import {PropousalsTitle, StakeDashboard} from './styles';
+import {useHistory} from 'react-router-dom';
 
 const columns = [
   {
@@ -44,21 +42,28 @@ interface IProposalListProps {
 }
 
 export const ProposalList = ({setProposal}: IProposalListProps) => {
+  const history = useHistory();
   const {
     state: {web3},
   } = useWeb3Context();
   const [valueProposals, setProposals] = useState<any[]>([]);
-  useEffect(
-    () => {
-      if (!web3) {
-        return;
-      }
-      listProposals(web3).then(setProposals);
-    },
-    [web3]
-  );
+  useEffect(() => {
+    if (!web3) {
+      return;
+    }
+    listProposals(web3).then(setProposals);
+  }, [web3]);
   return (
-    <CardTitled title="BabelFish Bitocracy">
+    <CardTitled
+      title={
+        <PropousalsTitle>
+          <span>BabelFish Bitocracy</span>
+          <StakeDashboard
+            onClick={() => history.push('/governance/staking')}>
+            Stake Dashboard
+          </StakeDashboard>
+        </PropousalsTitle>
+      }>
       <div className="p-4">
         <TableCard>
           <Table
@@ -72,11 +77,9 @@ export const ProposalList = ({setProposal}: IProposalListProps) => {
                   </ViewProposalSpan>
                 ),
               };
-            })}/>
+            })}
+          />
         </TableCard>
-        <div className="d-flex justify-content-center py-4">
-          <ButtonSecondary>Create Proposal</ButtonSecondary>
-        </div>
       </div>
     </CardTitled>
   );

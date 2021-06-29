@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
-export const DepositContent = styled.div`
-  position: absolute;
+export const ChainsContainer = styled.div`
+  position: relative;
   width: 100%;
-  top: 50%;
-  transform: translateY(-60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const InputTitle = styled.span`

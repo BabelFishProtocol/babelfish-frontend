@@ -49,7 +49,7 @@ export const Redeem = () => {
                 </div>
                 <div className="col-5">
                   <InputTitle>Redeem Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
+                  <Dropdown placeholder="Select Token" items={tokens} />
                   <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
                 </div>
               </div>

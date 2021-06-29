@@ -2,7 +2,7 @@ import MaskedInput from 'react-text-mask';
 import styled from 'styled-components';
 
 export const InputMaskedContainer = styled.div`
-  height: 45px;
+  height: 40px;
   display: flex;
   width: 100%;
   padding: 15px 15px 14px 20px;
