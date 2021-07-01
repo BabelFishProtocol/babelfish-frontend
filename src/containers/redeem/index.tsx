@@ -35,7 +35,7 @@ export const Redeem = () => {
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
         <CardTitled title="Redeem to BabelFish from ETH Network">
           <div className="h-100 position-relative">
-            <RedeemContent>
+            <RedeemContent className="py-4">
               <div className="row px-5 py-2 justify-content-between">
                 <div className="col-5">
                   <InputTitle>Redeem Amount</InputTitle>

@@ -24,6 +24,11 @@ export const ButtonPrimary = styled(ButtonStyled)`
 export const ButtonSecondary = styled(ButtonStyled)`
   background-color: transparent;
   color: ${(props) => props.theme.primary};
+  transition: 0.3s;
+  &:hover{
+    background-color:#32f05e22;
+    transition: 0.3s;
+  }
 `;
 
 export const GroupButtonPillContainer = styled.div`

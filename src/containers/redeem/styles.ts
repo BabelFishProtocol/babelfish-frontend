@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
 export const RedeemContent = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-60%);
 `;
 
 export const InputTitle = styled.span`
