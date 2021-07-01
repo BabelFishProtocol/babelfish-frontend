@@ -15,7 +15,7 @@ const columns = [
     columns: [
       {
         Header: 'Proposal',
-        accessor: 'proposal',
+        accessor: 'id',
       },
       {
         Header: 'Start Block',

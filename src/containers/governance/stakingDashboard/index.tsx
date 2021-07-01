@@ -9,29 +9,95 @@ import {
   StakingDashboardContainer,
 } from './styles';
 
-const columns = [
+const columnsCurrentStakes = [
   {
-    Header: 'Transactions',
+    Header: 'Current Stakes',
     columns: [
-      {
-        Header: 'Event',
-        accessor: 'event',
-      },
       {
         Header: 'Asset',
         accessor: 'asset',
       },
       {
-        Header: 'Amount',
-        accessor: 'amount',
+        Header: 'Locked Amount',
+        accessor: 'lockedAmount',
       },
       {
-        Header: 'Date',
-        accessor: 'date',
+        Header: 'Voting Power',
+        accessor: 'votingPower',
       },
       {
-        Header: 'Action',
-        accessor: 'action',
+        Header: 'Staking Date',
+        accessor: 'stakingDate',
+      },
+      {
+        Header: 'Staking Period',
+        accessor: 'stakingPeriod',
+      },
+      {
+        Header: 'Unlock Date',
+        accessor: 'unlockDate',
+      },
+      {
+        Header: 'Actions',
+        accessor: 'actions',
+      },
+    ],
+  },
+];
+const columnsCurrentVests = [
+  {
+    Header: 'Current Vests',
+    columns: [
+      {
+        Header: 'Asset',
+        accessor: 'asset',
+      },
+      {
+        Header: 'Locked Amount',
+        accessor: 'lockedAmount',
+      },
+      {
+        Header: 'Voting Power',
+        accessor: 'votingPower',
+      },
+      {
+        Header: 'Staking Date',
+        accessor: 'stakingDate',
+      },
+      {
+        Header: 'Staking Period',
+        accessor: 'stakingPeriod',
+      },
+      {
+        Header: 'Unlock Date',
+        accessor: 'unlockDate',
+      },
+      {
+        Header: 'Actions',
+        accessor: 'actions',
+      },
+    ],
+  },
+];
+const columnsHistory = [
+  {
+    Header: 'Staking History',
+    columns: [
+      {
+        Header: 'Asset',
+        accessor: 'asset',
+      },
+      {
+        Header: 'Staked Amount',
+        accessor: 'stakedAmount',
+      },
+      {
+        Header: 'Staking Date',
+        accessor: 'stakingDate',
+      },
+      {
+        Header: 'Total Staked',
+        accessor: 'totalStaked',
       },
     ],
   },
@@ -70,13 +136,13 @@ export const StakingDashboard = () => {
           </div>
         </div>
         <CardTable className="mb-3">
-          <Table columns={columns} data={[]} />
+          <Table columns={columnsCurrentStakes} data={[]} />
         </CardTable>
         <CardTable className="mb-3">
-          <Table columns={columns} data={[]} />
+          <Table columns={columnsCurrentVests} data={[]} />
         </CardTable>
         <CardTable className="mb-3">
-          <Table columns={columns} data={[]} />
+          <Table columns={columnsHistory } data={[]} />
         </CardTable>
       </StakingDashboardContainer>
     </>

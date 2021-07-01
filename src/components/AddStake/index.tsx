@@ -19,7 +19,7 @@ export const AddStake = ({onClose}: IAddStakeProps) => {
       <div className="mb-2">
         <Title>Voting Power Recived</Title>
         <AmountContainer>
-          <Amount>100</Amount>
+          <Amount>0</Amount>
         </AmountContainer>
       </div>
       <div className="mb-4">
