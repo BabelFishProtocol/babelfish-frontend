@@ -14,7 +14,7 @@ export const Header = () => {
         &nbsp;BabelFish.Money
       </HeaderTitle>
       <div className="d-flex">
-        <ButtonSecondary onClick={() => history.push('/governance')}>
+        <ButtonSecondary onClick={() =>  window.location.href = 'https://governance-babelfish.netlify.app/'}>
           GO TO GOVERNANCE
         </ButtonSecondary>
         <WalletConnect />

@@ -41,10 +41,11 @@ function App() {
             <Route path="/dashboard" exact render={() => <Dashboard />}></Route>
             <Route path="/deposit" exact render={() => <Deposit />}></Route>
             <Route path="/redeem" exact render={() => <Redeem />}></Route>
-            <Route
+            {/*Now using an independent governance page*/}
+            {/* <Route
               path="/governance"
               exact
-              render={() => <Governance />}></Route>
+              render={() => <Governance />}></Route> */}
             <Redirect to="/landing" />
           </Switch>
         </Content>
