@@ -22,6 +22,9 @@ export const BannerContainer = styled.div`
     width: 100%;
     text-align: center;
   }
+  a {
+    color: ${(props) => props.theme.primary};
+  }
 `;
 
 export const Close = styled.img`

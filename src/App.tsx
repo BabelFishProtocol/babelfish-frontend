@@ -23,9 +23,13 @@ function App() {
           onClose={() => setShowBanner(!showBanner)}
           children={
             <span>
-              Alpha 0.1: Deposit/withdraw stablecoins from Ethereum and
-              mint/burn meta-stablecoins on Rootstock. Visit our Discord for
-              more information.
+              Alpha 0.1: Deposit or withdraw stablecoins between Ethereum,
+              Binance and RSK. Visit our{' '}
+              <a target="_blank" href="https://discord.com/invite/mEddUjcEfT">
+                Discord
+              </a>{' '}
+              for more information. WARNING: This is an early experiment on DeFi
+              and there is risk of loss of funds.
               <br />
               WARNING: This is an early experiment and there is risk of loss of
               funds. DON'T PANIC!.

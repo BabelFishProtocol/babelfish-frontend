@@ -81,11 +81,11 @@ export const Dashboard = () => {
           </div>
         </div>
 
-        <FlexCard className="px-2 py-4 mb-3">
+        {/* <FlexCard className="px-2 py-4 mb-3">
           <div className="d-flex justify-content-center">
             <CoinsDeposited />
           </div>
-        </FlexCard>
+        </FlexCard> */}
 
         <CardUsdBalance className="mb-3 p-3">
           Total #USD Balance: <span>100,000.00</span>
