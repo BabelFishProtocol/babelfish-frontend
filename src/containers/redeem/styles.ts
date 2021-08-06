@@ -30,3 +30,16 @@ export const InputSubtext = styled.span`
   letter-spacing: normal;
   color: #ffffff;
 `;
+
+export const Link = styled.a`
+  margin: 0;
+  color: ${(props) => props.theme.primary};
+  text-decoration: none;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    opacity: 1;
+    color: ${(props) => props.theme.primary};
+  }
+`;

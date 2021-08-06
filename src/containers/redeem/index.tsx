@@ -1,26 +1,35 @@
 import React, {useState} from 'react';
 import {Steps} from '../../components/steps';
-import {
-  ButtonPrimary,
-  Card,
-  CardTitled,
-  CurrencyInput,
-} from '../../lib/components';
-import InputButtonPillGroup from '../../lib/components/Input/inputButtonPillGroup';
-import {BigNumber} from 'bignumber.js';
-import {Dropdown} from '../../lib/components/Dropdown';
-import {tokens} from '../../config/Tokens';
-import {RedeemContent, InputSubtext, InputTitle} from './styles';
+import {Card, CardTitled, TransactionCard} from '../../lib/components';
+
+import {RedeemContent, Link} from './styles';
+import {ChainGroup} from '../../components/SelectChain';
+import {RedeemBalance} from './steps/redeemBalance';
 
 export const Redeem = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const steps = [
-    'Select Redeem Network',
-    'Redeem to sovryn',
-    'Minting Process',
-    'Minting Complete',
-  ];
+  const [currentNetwork, setCurrentNetwork] = useState<string>('');
 
+  const steps = [
+    'Select Redemption Network',
+    'Withdraw from BabelFish',
+    'Burning Process',
+    'Burning Complete',
+  ];
+  const transactionData = [
+    {name: 'Date/Time', value: '21/01/21'},
+    {name: 'Withdraw Amount', value: '50.00 USDT'},
+    {name: 'Amount Burned', value: '50.00 XUSD'},
+    {name: 'Gas Fee', value: 'XX ETH'},
+    {
+      name: 'ETH Redeem',
+      value: <Link>0X413.89054</Link>,
+    },
+    {
+      name: 'RSK Relay Hash',
+      value: <Link>0X413.89054</Link>,
+    },
+  ];
   return (
     <div className="row g-3 align-items-start h-100">
       <div className="col-12 col-md-5 col-lg-4 col-xl-3 m-0 h-100">
@@ -33,41 +42,42 @@ export const Redeem = () => {
         </Card>
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
-        <CardTitled title="Redeem to BabelFish from ETH Network">
+        <CardTitled
+          title={`REDEEM STABLECOINS OUT OF BABELFISH ${
+            currentNetwork ? `TO ${currentNetwork}` : ''
+          }`}>
           <div className="h-100 position-relative">
             <RedeemContent>
-              <div className="row px-5 py-2 justify-content-between">
-                <div className="col-5">
-                  <InputTitle>Redeem Amount</InputTitle>
-                  <InputButtonPillGroup
-                    currency="USDT"
-                    totalAmount={new BigNumber(100)}
-                    availablePercentValues={[20, 40, 60, 80, 100]}
-                    defaultValue={new BigNumber(10)}
-                  />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-                <div className="col-5">
-                  <InputTitle>Redeem Token</InputTitle>
-                  <Dropdown name="Select Token" items={tokens} />
-                  <InputSubtext>Available Balance: 1000.00 USDT</InputSubtext>
-                </div>
-              </div>
-              <div className="row px-5 py-2 justify-content-between">
-                <div className="col-5"></div>
-                <div className="col-5">
-                  <InputTitle>Receive Amount</InputTitle>
-                  <CurrencyInput
-                    currencyText="XUSD"
-                    value={new BigNumber(0)}
-                    onChange={() => console.log('object')}
-                  />
-                  <InputSubtext>Transaction fee: XXXXX</InputSubtext>
-                  <ButtonPrimary style={{marginTop: '30px'}} className="w-100">
-                    Redeem
-                  </ButtonPrimary>
-                </div>
-              </div>
+              {
+                {
+                  0: (
+                    <ChainGroup
+                      onClick={(name: string) => {
+                        setCurrentNetwork(name);
+                        setCurrentStep(currentStep + 1);
+                      }}
+                    />
+                  ),
+                  1: <RedeemBalance />,
+                  2: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={true}
+                      />
+                    </div>
+                  ),
+                  3: (
+                    <div className="d-flex justify-content-center">
+                      <TransactionCard
+                        transactionData={transactionData}
+                        loading={false}
+                        status="success"
+                      />
+                    </div>
+                  ),
+                }[currentStep]
+              }
             </RedeemContent>
           </div>
         </CardTitled>

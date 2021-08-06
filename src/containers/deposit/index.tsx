@@ -13,6 +13,7 @@ import {ChainGroup} from '../../components/SelectChain';
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [currentNetwork, setCurrentNetwork] = useState<string>('');
   const steps = [
     'Select Deposit Network',
     'Deposit to sovryn',
@@ -45,12 +46,22 @@ export const Deposit = () => {
         </Card>
       </div>
       <div className="col-12 col-md-7 col-lg-8 col-xl-9 m-0 h-100">
-        <CardTitled title="Deposit to BabelFish from ETH Network">
+        <CardTitled
+          title={`DEPOSIT TO BABELFISH ${
+            currentNetwork ? `FROM ${currentNetwork}` : ''
+          }`}>
           <div className="h-100 position-relative">
             <DepositContent>
               {
                 {
-                  0: <ChainGroup />,
+                  0: (
+                    <ChainGroup
+                      onClick={(name: string) => {
+                        setCurrentNetwork(name);
+                        setCurrentStep(currentStep + 1);
+                      }}
+                    />
+                  ),
                   1: <SendDeposit />,
                   2: (
                     <div className="d-flex justify-content-center">
