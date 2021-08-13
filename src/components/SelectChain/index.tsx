@@ -10,25 +10,33 @@ import {chains, chainEnum, chainType} from '../../config/Chains';
 interface IChainProps {
   name: string;
   icon: string;
+  onClick: any;
 }
 
-export const ChainButton = ({name, icon}: IChainProps) => {
+export const ChainButton = ({name, icon, onClick}: IChainProps) => {
   return (
-    <SelectChainContainer>
+    <SelectChainContainer onClick={() => onClick(name)}>
       <ChainIcon src={icon} />
       <ChainName>{name}</ChainName>
     </SelectChainContainer>
   );
 };
 
-interface IChainGroupProps {}
+interface IChainGroupProps {
+  onClick: any;
+}
 
-export const ChainGroup = ({}: IChainGroupProps) => {
+export const ChainGroup = ({onClick}: IChainGroupProps) => {
   return (
     <ChainGroupContainer>
       {chains.map((chain: chainType) => {
         return (
-          <ChainButton key={chain.id} icon={chain.icon} name={chain.name} />
+          <ChainButton
+            onClick={onClick}
+            key={chain.id}
+            icon={chain.icon}
+            name={chain.name}
+          />
         );
       })}
     </ChainGroupContainer>
