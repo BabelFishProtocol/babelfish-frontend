@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {ButtonPrimary} from '../../lib/components';
 import {wallets, walletType} from '../../config/Wallets';
+// @ts-ignore
+import useOnClickOutside from 'use-onclickoutside';
 
 import {
   ConnectedButton,
@@ -26,6 +28,8 @@ export const WalletConnect = () => {
   const [displayList, setDisplayList] = useState(false);
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState<IConnectedProps>();
+  const ref = React.useRef(null);
+  useOnClickOutside(ref, () => displayList && setDisplayList(false));
   return (
     <ConnectWalletContainer>
       {connected?.wallet ? (
@@ -40,7 +44,7 @@ export const WalletConnect = () => {
           CONNECT WALLET
         </ButtonPrimary>
       )}
-      <WalletPopUp className={`${!displayList && 'd-none'}`}>
+      <WalletPopUp ref={ref} className={`${!displayList && 'd-none'}`}>
         {loading && (
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
