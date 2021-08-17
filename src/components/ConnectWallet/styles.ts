@@ -3,7 +3,8 @@ import {ButtonStyled} from '../../lib/components/Button/styles';
 import {CardStyled} from '../../lib/components/Card/styles';
 
 export const ConnectedButton = styled(ButtonStyled)`
-  border: solid 2px rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: auto !important;
   background-color: rgb(56, 56, 56);
   font-weight: 500;
   font-stretch: normal;
@@ -14,6 +15,7 @@ export const ConnectedButton = styled(ButtonStyled)`
   height: 50px;
   padding: 0 0 0 20px;
   display: flex;
+  overflow: hidden;
   align-items: center;
 `;
 
@@ -96,8 +98,16 @@ export const Icon = styled.img`
 `;
 
 export const Disconnect = styled.div`
-  background-color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #686868;
   width: 40px;
   height: 50px;
-  margin-left: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  :hover{
+    background-color: rgba(55, 99, 65);
+  }
 `;
