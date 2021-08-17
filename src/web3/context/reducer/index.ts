@@ -1,4 +1,3 @@
-import Web3 from 'web3';
 import {Action} from '../actions';
 import {State, INITIAL_STATE} from '../state';
 

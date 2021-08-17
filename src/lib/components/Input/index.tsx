@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import {BigNumber} from 'bignumber.js';
 import {

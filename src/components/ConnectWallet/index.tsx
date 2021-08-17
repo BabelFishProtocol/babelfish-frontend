@@ -7,6 +7,7 @@ import useOnClickOutside from 'use-onclickoutside';
 import {
   ConnectedButton,
   ConnectWalletContainer,
+  Disconnect,
   Icon,
   WalletContainer,
   WalletIcon,
@@ -36,6 +37,7 @@ export const WalletConnect = () => {
         <ConnectedButton onClick={() => setDisplayList(!displayList)}>
           {`${account?.slice(0, 4)}...${account?.slice(-4, account?.length)}`}
           <Icon src={connected.wallet.icon} />
+          <Disconnect />
         </ConnectedButton>
       ) : (
         <ButtonPrimary

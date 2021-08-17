@@ -4,14 +4,15 @@ import {CardStyled} from '../../lib/components/Card/styles';
 
 export const ConnectedButton = styled(ButtonStyled)`
   border: solid 2px rgba(255, 255, 255, 0.3);
-  background-color: transparent;
+  background-color: rgb(56, 56, 56);
   font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #ffffff;
-  padding: 10px 20px;
+  height: 50px;
+  padding: 0 0 0 20px;
   display: flex;
   align-items: center;
 `;
@@ -36,7 +37,7 @@ export const WalletPopUp = styled(CardStyled)`
 
 export const WalletContainer = styled.div<{connected: boolean}>`
   cursor: pointer;
-  height: 55px;
+  height: 50px;
   width: 300px;
   display: flex;
   justify-content: space-between;
@@ -91,5 +92,12 @@ export const Icon = styled.img`
   height: 25px;
   width: 25px;
   object-fit: contain;
+  margin-left: 10px;
+`;
+
+export const Disconnect = styled.div`
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 40px;
+  height: 50px;
   margin-left: 10px;
 `;
