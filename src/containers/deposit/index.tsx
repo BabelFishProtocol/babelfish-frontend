@@ -16,7 +16,7 @@ export const Deposit = () => {
   const [currentNetwork, setCurrentNetwork] = useState<string>('');
   const steps = [
     'Select Deposit Network',
-    'Deposit to sovryn',
+    'Deposit to Babelfish',
     'Minting Process',
     'Minting Complete',
   ];
