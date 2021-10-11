@@ -5,8 +5,8 @@ import {tokens, tokenType} from '../../config/Tokens';
 export const CoinsDeposited = () => {
   return (
     <>
-      {tokens.map((token: tokenType) => (
-        <CoinContainer key={token.id}>
+      {tokens.map((token) => (
+        <CoinContainer key={token.address}>
           <CoinIcon src={token.icon} /> 10,000.00
         </CoinContainer>
       ))}

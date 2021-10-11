@@ -15,7 +15,7 @@ interface IChainProps {
 
 export const ChainButton = ({name, icon, onClick}: IChainProps) => {
   return (
-    <SelectChainContainer onClick={() => onClick(name)}>
+    <SelectChainContainer onClick={onClick}>
       <ChainIcon src={icon} />
       <ChainName>{name}</ChainName>
     </SelectChainContainer>
@@ -23,7 +23,7 @@ export const ChainButton = ({name, icon, onClick}: IChainProps) => {
 };
 
 interface IChainGroupProps {
-  onClick: any;
+  onClick: (ch: chainEnum) => void;
 }
 
 export const ChainGroup = ({onClick}: IChainGroupProps) => {
@@ -32,7 +32,7 @@ export const ChainGroup = ({onClick}: IChainGroupProps) => {
       {chains.map((chain: chainType) => {
         return (
           <ChainButton
-            onClick={onClick}
+            onClick={() => onClick(chain.id)}
             key={chain.id}
             icon={chain.icon}
             name={chain.name}

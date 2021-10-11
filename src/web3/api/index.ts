@@ -14,6 +14,8 @@ export const connectWallet = async (wallet: walletEnum) => {
       return await connectLiquality();
     case 'Nifty':
       return await connectNifty();
+    default:
+      throw new Error('unknown wallet. cant happen');
   }
 };
 
@@ -54,7 +56,6 @@ export const connectLiquality = async () => {
 
 export const connectNifty = async () => {
   if (ethereum.isNiftyWallet) {
-    console.log(ethereum.isNiftyWallet, 'Nifty');
     const web3 = new Web3(ethereum as any);
     await ethereum.enable();
     let accounts = await web3.eth.getAccounts();

@@ -16,11 +16,13 @@ import {
 } from './styles';
 import {connectWallet, disconnectWallet} from '../../web3/api';
 import {useWeb3Context} from '../../web3/context';
+import {listBassets} from "../../web3/service";
 
 export const WalletConnect = () => {
   const {
     state: {account, web3},
     updateAccount,
+    updateBassets,
   } = useWeb3Context();
 
   interface IConnectedProps {
@@ -63,7 +65,14 @@ export const WalletConnect = () => {
                 setLoading(true);
                 connectWallet(wallet.id)
                   ?.then(
-                    (data: any) => {
+                    (data) => {
+                      if (!data) {
+                        return;
+                      }
+                      listBassets(data.web3).then(
+                        updateBassets
+                      );
+                      updateAccount(data);
                       setDisplayList(false);
                       setConnected({wallet: wallet});
                       updateAccount(data);

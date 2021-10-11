@@ -23,19 +23,19 @@ export const TokenBar = ({name, icon, value, totalValue}: ITokenBarProps) => {
 };
 
 interface IAllTokensBarProps {
-  balances?: {value: number; totalValue: number; id: tokenEnum}[];
+  balances?: {value: number; totalValue: number; address: string}[];
 }
 
 export const AllTokensBar = ({balances = []}: IAllTokensBarProps) => {
   return (
     <div>
-      {tokens.map((token: tokenType) => {
-        const foundToken = balances.find((balance) => balance.id === token.id);
+      {tokens.map((token) => {
+        const foundToken = balances.find((balance) => balance.address === token.address);
         return (
           <TokenBar
-            key={token.id}
-            name={token.name}
-            icon={token.icon}
+            key={token.address}
+            name={token.name || token.symbol}
+            icon={token.icon || `https://via.placeholder.com/150?text=${token.symbol}`}
             value={foundToken?.value || 0}
             totalValue={foundToken?.totalValue || 1}
           />

@@ -10,10 +10,11 @@ import {
 import {DepositContent, Link} from './styles';
 import {SendDeposit} from './steps/sendDeposit';
 import {ChainGroup} from '../../components/SelectChain';
+import {chainEnum} from "../../config/Chains";
 
 export const Deposit = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [currentNetwork, setCurrentNetwork] = useState<string>('');
+  const [currentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);
   const steps = [
     'Select Deposit Network',
     'Deposit to sovryn',
@@ -56,13 +57,13 @@ export const Deposit = () => {
                 {
                   0: (
                     <ChainGroup
-                      onClick={(name: string) => {
+                      onClick={(name) => {
                         setCurrentNetwork(name);
                         setCurrentStep(currentStep + 1);
                       }}
                     />
                   ),
-                  1: <SendDeposit />,
+                  1: currentNetwork && <SendDeposit network={currentNetwork}/>,
                   2: (
                     <div className="d-flex justify-content-center">
                       <TransactionCard

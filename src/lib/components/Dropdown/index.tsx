@@ -7,23 +7,24 @@ import {
   DropdownText,
 } from './styles';
 
-interface IDropdownProps {
-  name: string;
-  items: {}[];
+interface IDropdownProps<T> {
+  placeholder?: string;
+  items: T[];
+  value: T | undefined,
+  onChange: (tt: T | undefined) => void,
 }
 
-export const Dropdown = ({name, items}: IDropdownProps) => {
+export default function Dropdown<T extends {icon?: string, name?: string, symbol: string}>({placeholder, items, value, onChange}: IDropdownProps<T>) {
   const [displayDropdown, setDisplayDropdown] = useState(false);
-  const [selectedItem, setSelectedItem] = useState() as any;
   return (
     <DropdownContainer>
       <DropdownText onClick={() => setDisplayDropdown(!displayDropdown)}>
-        {selectedItem ? (
+        {value ? (
           <>
-            <Icon src={selectedItem.icon} /> <span>{selectedItem.name}</span>
+            <Icon src={value.icon} /> <span>{value.name}</span>
           </>
         ) : (
-          name
+          placeholder
         )}
       </DropdownText>
       {displayDropdown && (
@@ -31,15 +32,15 @@ export const Dropdown = ({name, items}: IDropdownProps) => {
           {items.map((item: any) => (
             <DropdownItem
               onClick={() => {
-                setSelectedItem(item);
+                onChange(item);
                 setDisplayDropdown(false);
               }}>
-              <Icon src={item.icon} />
-              <span>{item.name}</span>
+              <Icon src={item.icon || `https://via.placeholder.com/150?text=${item.symbol}`} />
+              <span>{item.name || item.symbol}</span>
             </DropdownItem>
           ))}
         </DropdownItemsGroup>
       )}
     </DropdownContainer>
   );
-};
+}

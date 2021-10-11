@@ -1,5 +1,10 @@
 import Web3 from 'web3';
-import GovernorAdminABI from './abi/GovernorAdmin.json'
+import GovernorAdminABI from './abi/GovernorAdmin.json';
+import BasketManagerV3ABI from './abi/BasketManagerV3.json';
+import MassetV3ABI from './abi/MassetV3.json';
+// import MassetProxyABI from './abi/MassetProxy.json';
+import ERC20ABI from './abi/ERC20.json';
+import {tokenType} from "../config/Tokens";
 
 const ADDRESSES = {
   // sovToken: {
@@ -17,6 +22,14 @@ const ADDRESSES = {
   governorOwner: {
     address: '0x058FD3F6a40b92b311B49E5e3E064300600021D7',
     abi: GovernorAdminABI as any,
+  },
+  ETHs_BasketManagerV3: {
+    address: '0xD86C8F0327494034F60e25074420BcCF560D5610',
+    abi: BasketManagerV3ABI as any,
+  },
+  ETHs_MassetV3: {
+    address: '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B',
+    abi: MassetV3ABI as any,
   },
   // vestingRegistry: {
   //   address: '0x80ec7ADd6CC1003BBEa89527ce93722e1DaD5c2a',
@@ -86,6 +99,24 @@ export async function listProposals(web3: Web3, start = 0, end = 10) : Promise<a
   const results = await Promise.all(new Array(end - start).fill(null).map(
     (aux, index) => myContract.methods.proposals(start + index).call()
   ));
-  console.log('aaa', results);
   return results as any[]
+}
+
+export async function listBassets(web3: Web3, start = 0, end = 10) : Promise<tokenType[]> {
+  const myContract = new web3.eth.Contract(ADDRESSES.ETHs_BasketManagerV3.abi, ADDRESSES.ETHs_BasketManagerV3.address);
+  const count = await myContract.methods.getBassets().call();
+  return count;
+}
+
+export async function redeem(web3: Web3) : Promise<any[]> {
+  const myContract = new web3.eth.Contract(ADDRESSES.ETHs_MassetV3.abi, ADDRESSES.ETHs_MassetV3.address);
+  const count = await myContract.methods.redeem().call();
+  return count;
+}
+
+export async function getTokenBalance(web3: Web3, tokenAddress: string) : Promise<number> {
+  const accounts = await web3.eth.getAccounts();
+  const myContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress);
+  const count = await myContract.methods.balanceOf(accounts[0]).call();
+  return count;
 }
