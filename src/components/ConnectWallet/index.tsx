@@ -38,7 +38,7 @@ export const WalletConnect = () => {
       {connected?.wallet ? (
         <ConnectedButton>
           {`${account?.slice(0, 4)} ... ${account?.slice(-4, account?.length)}`}
-          <Icon src={connected.wallet.icon} />
+          {/* <Icon src={connected.wallet.icon} /> */}
           <Disconnect onClick={() => disconnectWallet(web3)}>
             <LogoutLogo />
           </Disconnect>

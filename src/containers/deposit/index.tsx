@@ -17,7 +17,7 @@ export const Deposit = () => {
   const [currentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);
   const steps = [
     'Select Deposit Network',
-    'Deposit to sovryn',
+    'Deposit to Babelfish',
     'Minting Process',
     'Minting Complete',
   ];
