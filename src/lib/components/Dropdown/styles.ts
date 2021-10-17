@@ -60,4 +60,9 @@ export const DropdownItem = styled.div`
   }
 `;
 
-export const Icon = styled.img``;
+export const Icon = styled.img`
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+`;

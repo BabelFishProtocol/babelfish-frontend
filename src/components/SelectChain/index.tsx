@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ChainGroupContainer,
   ChainIcon,
@@ -23,16 +23,59 @@ export const ChainButton = ({name, icon, onClick}: IChainProps) => {
 };
 
 interface IChainGroupProps {
-  onClick: (ch: chainEnum) => void;
+  onChange: (ch: chainEnum) => void;
 }
 
-export const ChainGroup = ({onClick}: IChainGroupProps) => {
+async function addNetworks() {
+  const networkData = chains.filter(({chainId}) => !['0x3'].includes(chainId)).map(
+    ({name, chainId, rpcUrls, nativeCurrency, blockExplorerUrls}) => ({
+      chainId,
+      chainName: name,
+      rpcUrls,
+      nativeCurrency,
+      blockExplorerUrls,
+    })
+  );
+  await (window as any).ethereum.request({
+    method: "wallet_addEthereumChain",
+    params: networkData,
+  });
+}
+
+export const ChainGroup = ({onChange}: IChainGroupProps) => {
+  // const [valueClicked, setClicked] = useState<chainType | undefined>(undefined);
+  // useEffect(
+  //   () => {
+  //     if (valueClicked && (window as any).ethereum) {
+  //       addNetworks().then(
+  //         () => {
+  //           (window as any).ethereum.request({ method: 'wallet_switchEthereumChain', params: [{chainId: valueClicked.chainId}]}).then(
+  //             () => {
+  //               onChange(valueClicked.id);
+  //             },
+  //             () => {},
+  //           ).then(
+  //             () => {
+  //               setClicked(undefined);
+  //             },
+  //           );
+  //         }
+  //       );
+  //     }
+  //   },
+  //   [valueClicked],
+  // );
   return (
     <ChainGroupContainer>
       {chains.map((chain: chainType) => {
         return (
           <ChainButton
-            onClick={() => onClick(chain.id)}
+            onClick={
+              () => {
+                // setClicked(chain);
+                onChange(chain.id);
+              }
+            }
             key={chain.id}
             icon={chain.icon}
             name={chain.name}

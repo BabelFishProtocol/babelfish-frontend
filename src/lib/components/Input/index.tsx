@@ -1,45 +1,46 @@
 import React from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import {BigNumber} from 'bignumber.js';
+import BN from 'bn.js';
 import {
   InputMaskedContainer,
   InputMaskedStyled,
   CurrencyLabel,
   InputTitle,
 } from './styles';
+import Web3 from "web3";
 
 const numberMask = createNumberMask({
   prefix: '',
   suffix: ' $',
   allowDecimal: true,
-  decimalLimit: 2,
+  decimalLimit: 25,
 });
 
 interface IInputProps {
-  onChange: Function;
-  value: BigNumber;
+  onChange?: (a: BN | null) => void;
+  value: BN | null;
   currencyText: string;
   title?: string;
   disabled?: boolean;
 }
 
-export const CurrencyInput = (props: IInputProps) => {
+export const CurrencyInput = ({title, currencyText, onChange, value, ...props}: IInputProps) => {
   const handleChange = (inputValue: string) => {
     const newValue = inputValue && inputValue.replace(/[, \\$]/g, '');
-    const parseValue = newValue ? new BigNumber(newValue): new BigNumber('0');
-    props.onChange(parseValue || null);
+    const parseValue = new BN(newValue ? Web3.utils.toWei(newValue) : 0);
+    onChange && onChange(parseValue || null);
   };
   return (
     <>
-      {props.title && <InputTitle>{props.title}</InputTitle>}
+      {title && <InputTitle>{title}</InputTitle>}
       <InputMaskedContainer>
         <InputMaskedStyled
+          {...props}
           mask={numberMask}
-          value={props.value ? props.value?.toFixed(2) : ''}
-          disabled={props.disabled}
-          onChange={(e) => handleChange(e.target.value)}
+          value={value ? Web3.utils.fromWei(value).toString() : ''}
+          onChange={onChange ? (e) => handleChange(e.target.value) : undefined}
         />
-        <CurrencyLabel>{props.currencyText}</CurrencyLabel>
+        <CurrencyLabel>{currencyText}</CurrencyLabel>
       </InputMaskedContainer>
     </>
   );

@@ -9,7 +9,8 @@ export const reducer = (state: State = INITIAL_STATE, action: Action) => {
       return {...INITIAL_STATE, account, web3};
     case 'UPDATE_BASSETS':
       return {...INITIAL_STATE, bAssets: action.bAssets};
-
+    case 'UPDATE_CHAINID':
+      return {...INITIAL_STATE, chainId: action.chainId};
     default:
       return state;
   }

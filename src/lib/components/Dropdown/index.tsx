@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Icon} from '../../../components/TokenPercentage/styles';
 import {
+  Icon,
   DropdownContainer,
   DropdownItem,
   DropdownItemsGroup,
@@ -14,7 +14,7 @@ interface IDropdownProps<T> {
   onChange: (tt: T | undefined) => void,
 }
 
-export default function Dropdown<T extends {icon?: string, name?: string, symbol: string}>({placeholder, items, value, onChange}: IDropdownProps<T>) {
+export default function Dropdown<T extends {icon?: string, name: string, id: string}>({placeholder, items, value, onChange}: IDropdownProps<T>) {
   const [displayDropdown, setDisplayDropdown] = useState(false);
   return (
     <DropdownContainer>
@@ -31,12 +31,13 @@ export default function Dropdown<T extends {icon?: string, name?: string, symbol
         <DropdownItemsGroup>
           {items.map((item: any) => (
             <DropdownItem
+              key={item.id}
               onClick={() => {
                 onChange(item);
                 setDisplayDropdown(false);
               }}>
-              <Icon src={item.icon || `https://via.placeholder.com/150?text=${item.symbol}`} />
-              <span>{item.name || item.symbol}</span>
+              <Icon src={item.icon || `https://via.placeholder.com/150?text=${item.name}`} />
+              <span>{item.name}</span>
             </DropdownItem>
           ))}
         </DropdownItemsGroup>

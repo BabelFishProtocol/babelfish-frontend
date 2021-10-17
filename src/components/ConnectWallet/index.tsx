@@ -17,12 +17,14 @@ import {
 import {connectWallet, disconnectWallet} from '../../web3/api';
 import {useWeb3Context} from '../../web3/context';
 import {listBassets} from "../../web3/service";
+import {destinationTokenEnum, destinationTokensCatalog} from "../../config/Tokens";
 
 export const WalletConnect = () => {
   const {
     state: {account, web3},
     updateAccount,
-    updateBassets,
+    // updateBassets,
+    updateChainId,
   } = useWeb3Context();
 
   interface IConnectedProps {
@@ -57,39 +59,48 @@ export const WalletConnect = () => {
           </div>
         )}
         {wallets.map((wallet) => (
-          <>
-            <WalletContainer
-              className={`${loading && 'd-none'}`}
-              connected={connected?.wallet?.id === wallet.id}
-              onClick={() => {
-                setLoading(true);
-                connectWallet(wallet.id)
-                  ?.then(
-                    (data) => {
-                      if (!data) {
-                        return;
+          <WalletContainer
+            className={`${loading && 'd-none'}`}
+            connected={connected?.wallet?.id === wallet.id}
+            onClick={() => {
+              setLoading(true);
+              connectWallet(wallet.id)
+                .then(
+                  (data) => {
+                    if (!data) {
+                      return;
+                    }
+                    (async () => {
+                      for (let [destinationTokenId, {address}] of Object.entries(destinationTokensCatalog)) {
+                        console.log('IS', destinationTokenId, address);
+                        await listBassets(data.web3, destinationTokenId as destinationTokenEnum, 0, 10);
                       }
-                      listBassets(data.web3).then(
-                        updateBassets
-                      );
-                      updateAccount(data);
-                      setDisplayList(false);
-                      setConnected({wallet: wallet});
-                      updateAccount(data);
-                      setLoading(false);
-                    },
-                    (error) => {
-                      alert(error.message);
-                      setLoading(false);
-                    },
-                  )
-                  .catch(() => console.log('error'));
-              }}
-              key={wallet.id}>
-              {wallet.name}
-              <WalletIcon src={wallet.icon} />
-            </WalletContainer>
-          </>
+                    })();
+                    // listBassets(data.web3).then(
+                    //   updateBassets
+                    // );
+                    // (window as any)?.ethereum?.on('accountsChanged', function (accounts: any) {
+                    //   console.log('accounts', accounts);
+                    // })
+                    (window as any)?.ethereum?.on('networkChanged', function (networkId: any) {
+                      updateChainId(networkId);
+                    });
+                    updateAccount(data);
+                    setDisplayList(false);
+                    setConnected({wallet: wallet});
+                    setLoading(false);
+                  },
+                  (error) => {
+                    alert(error.message);
+                    setLoading(false);
+                  },
+                )
+                .catch(() => console.log('error'));
+            }}
+            key={wallet.id}>
+            {wallet.name}
+            <WalletIcon src={wallet.icon} />
+          </WalletContainer>
         ))}
         {/* {connected?.wallet && !loading && (
           <ButtonPrimary

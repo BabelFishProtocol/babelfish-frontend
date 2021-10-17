@@ -1,13 +1,9 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {CoinsDeposited} from '../../components/CoinsDeposited';
 import {
   ButtonPrimary,
   ButtonSecondary,
-  Card,
-  Table,
 } from '../../lib/components';
-import {TableCard} from '../governance/styles';
 import {
   CardDepositRedeem,
   CardFishBalance,
@@ -16,7 +12,6 @@ import {
   DashboardRightContainer,
   FlexCard,
 } from './styles';
-import {dataTable} from './table/data';
 
 const columns = [
   {
@@ -90,10 +85,6 @@ export const Dashboard = () => {
         <CardUsdBalance className="mb-3 p-3">
           Total #USD Balance: <span>100,000.00</span>
         </CardUsdBalance>
-
-        <TableCard>
-          <Table columns={columns} data={dataTable} />
-        </TableCard>
       </DashboardRightContainer>
     </DashboardContainer>
   );

@@ -8,7 +8,6 @@ import {
 import {Header} from './components/Header';
 import {Dashboard} from './containers/dashboard';
 import {Deposit} from './containers/deposit';
-import {Governance} from './containers/governance';
 import {Landing} from './containers/landing';
 import {Redeem} from './containers/redeem';
 import {Banner} from './lib/components/Banner';
@@ -41,15 +40,10 @@ function App() {
         <Header />
         <Content className="row g-0">
           <Switch>
-            <Route path="/landing" exact render={() => <Landing />}></Route>
-            <Route path="/dashboard" exact render={() => <Dashboard />}></Route>
-            <Route path="/deposit" exact render={() => <Deposit />}></Route>
-            <Route path="/redeem" exact render={() => <Redeem />}></Route>
-            {/*Now using an independent governance page*/}
-            {/* <Route
-              path="/governance"
-              exact
-              render={() => <Governance />}></Route> */}
+            <Route path="/landing" exact render={() => <Landing />}/>
+            <Route path="/dashboard" exact render={() => <Dashboard />}/>
+            <Route path="/deposit" exact render={() => <Deposit />}/>
+            <Route path="/redeem" exact render={() => <Redeem />}/>
             <Redirect to="/landing" />
           </Switch>
         </Content>

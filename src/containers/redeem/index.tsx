@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
-
 import {RedeemContent, Link} from './styles';
 import {ChainGroup} from '../../components/SelectChain';
 import {RedeemBalance} from './steps/redeemBalance';
+import {chainEnum} from "../../config/Chains";
 
 export const Redeem = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [currentNetwork, setCurrentNetwork] = useState<string>('');
+  const [currentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);
 
   const steps = [
     'Select Redemption Network',
@@ -52,13 +52,13 @@ export const Redeem = () => {
                 {
                   0: (
                     <ChainGroup
-                      onClick={(name: string) => {
+                      onChange={(name) => {
                         setCurrentNetwork(name);
                         setCurrentStep(currentStep + 1);
                       }}
                     />
                   ),
-                  1: <RedeemBalance />,
+                  1: currentNetwork && <RedeemBalance network={currentNetwork} />,
                   2: (
                     <div className="d-flex justify-content-center">
                       <TransactionCard

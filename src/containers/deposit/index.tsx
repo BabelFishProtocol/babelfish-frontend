@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {Steps} from '../../components/steps';
 import {
-  ButtonPrimary,
   Card,
   CardTitled,
-  CurrencyInput,
   TransactionCard,
 } from '../../lib/components';
 import {DepositContent, Link} from './styles';
@@ -57,7 +55,7 @@ export const Deposit = () => {
                 {
                   0: (
                     <ChainGroup
-                      onClick={(name) => {
+                      onChange={(name) => {
                         setCurrentNetwork(name);
                         setCurrentStep(currentStep + 1);
                       }}

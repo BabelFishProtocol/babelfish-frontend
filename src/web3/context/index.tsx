@@ -9,6 +9,7 @@ import {tokenType} from "../../config/Tokens";
 export const Web3Context = createContext({
   state: INITIAL_STATE,
   updateAccount: (_data: {account: string; web3?: Web3}) => {},
+  updateChainId: (_data: string) => {},
   updateBassets: (_data: tokenType[]) => {},
 });
 
@@ -25,10 +26,13 @@ export const Web3Provider: React.FC<ProviderProps> = ({children}) => {
   const updateBassets = (bAssets: tokenType[]) => {
     dispatch({type: 'UPDATE_BASSETS', bAssets});
   };
+  const updateChainId = (chainId: string) => {
+    dispatch({type: 'UPDATE_CHAINID', chainId});
+  };
 
   return (
     <Web3Context.Provider
-      value={useMemo(() => ({state, updateAccount, updateBassets}), [state])}>
+      value={useMemo(() => ({state, updateAccount, updateBassets, updateChainId}), [state])}>
       {children}
     </Web3Context.Provider>
   );

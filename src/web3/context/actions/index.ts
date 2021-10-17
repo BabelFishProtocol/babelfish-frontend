@@ -12,4 +12,9 @@ interface UpdateBassets {
   bAssets: tokenType[];
 }
 
-export type Action = UpdateAccount | UpdateBassets;
+interface UpdateChainId {
+  type: 'UPDATE_CHAINID';
+  chainId: string;
+}
+
+export type Action = UpdateAccount | UpdateBassets | UpdateChainId;
