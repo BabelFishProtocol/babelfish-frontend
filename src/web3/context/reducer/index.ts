@@ -6,11 +6,11 @@ export const reducer = (state: State = INITIAL_STATE, action: Action) => {
     case 'UPDATE_ACCOUNT':
       const web3 = action.web3 || state.web3;
       const {account} = action;
-      return {...INITIAL_STATE, account, web3};
+      return {...state, account, web3};
     case 'UPDATE_BASSETS':
-      return {...INITIAL_STATE, bAssets: action.bAssets};
+      return {...state, bAssets: action.bAssets};
     case 'UPDATE_CHAINID':
-      return {...INITIAL_STATE, chainId: action.chainId};
+      return {...state, chainId: action.chainId};
     default:
       return state;
   }

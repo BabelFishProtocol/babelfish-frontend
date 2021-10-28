@@ -17,13 +17,18 @@ import {
 import {connectWallet, disconnectWallet} from '../../web3/api';
 import {useWeb3Context} from '../../web3/context';
 import {listBassets} from "../../web3/service";
-import {destinationTokenEnum, destinationTokensCatalog} from "../../config/Tokens";
+import {
+  baseTokenCatalog,
+  destinationTokenEnum,
+  destinationTokensCatalog,
+  joinWithAddressList
+} from "../../config/Tokens";
 
 export const WalletConnect = () => {
   const {
     state: {account, web3},
     updateAccount,
-    // updateBassets,
+    updateBassets,
     updateChainId,
   } = useWeb3Context();
 
@@ -70,14 +75,17 @@ export const WalletConnect = () => {
                     if (!data) {
                       return;
                     }
-                    (async () => {
-                      for (let [destinationTokenId, {address}] of Object.entries(destinationTokensCatalog)) {
-                        console.log('IS', destinationTokenId, address);
-                        await listBassets(data.web3, destinationTokenId as destinationTokenEnum, 0, 10);
-                      }
-                    })();
-                    // listBassets(data.web3).then(
-                    //   updateBassets
+                    // (async () => {
+                    //   const tokenList = {};
+                    //   for (let [destinationTokenId] of Object.entries(destinationTokensCatalog)) {
+                    //     Object.assign(tokenList, await listBassets(data.web3, destinationTokenId as destinationTokenEnum));
+                    //   }
+                    //   return tokenList;
+                    // })().then(
+                    //   (tokenList) => {
+                    //     console.log('tokenList', tokenList);
+                    //     updateBassets(joinWithAddressList(baseTokenCatalog, tokenList));
+                    //   }
                     // );
                     // (window as any)?.ethereum?.on('accountsChanged', function (accounts: any) {
                     //   console.log('accounts', accounts);

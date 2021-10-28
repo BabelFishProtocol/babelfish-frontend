@@ -58,7 +58,8 @@ export const RedeemBalance = ({network}: {network: chainEnum}) => {
             value={valueAmount}
             disabled={true}
           />
-          <InputSubtext>Transaction fee: XXXXX</InputSubtext>
+          <InputSubtext>Transaction fee: 0</InputSubtext><br/>
+          <InputSubtext>Bridge fee: 0</InputSubtext>
           <ButtonPrimary
             style={{marginTop: '30px'}}
             className="w-100"

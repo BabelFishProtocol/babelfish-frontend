@@ -44,7 +44,8 @@ export const SendDeposit = ({network}: {network: chainEnum}) => {
             value={valueAmount}
             disabled={true}
           />
-          <InputSubtext>Transaction fee: XXXXX</InputSubtext>
+          <InputSubtext>Transaction fee: 0</InputSubtext><br/>
+          <InputSubtext>Bridge fee: 0</InputSubtext>
         </div>
       </div>
       <div className="row px-5 py-4 justify-content-between">
