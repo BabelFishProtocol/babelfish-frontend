@@ -1,6 +1,5 @@
 import React from 'react';
-import {ButtonPrimary} from '../Button';
-import {CircleWave} from '../Loader';
+import Loader from '../Loader';
 import {
   CardStyled,
   LineBreak,
@@ -41,16 +40,28 @@ export const TransactionCard = ({
   transactionData,
   status = 'pending',
 }: ITransactionCardProps) => {
-  const loading = status === 'pending';
+  let statusText;
+  if (status === 'success') {
+    statusText = null;
+  } else if (status === 'pending') {
+    statusText = (
+      <TransactionLoadingText>
+        Minting can take a couple of minutes…
+      </TransactionLoadingText>
+    );
+  } else {
+    statusText = (
+      <TransactionLoadingText>
+        We encountered an error on the minting process,<br/>
+        please try again
+      </TransactionLoadingText>
+    );
+  }
   return (
     <TransactionCardStyled>
       <div className="d-flex flex-column align-items-center px-4 py-5">
-        <CircleWave isLoading={loading} />
-        {loading && (
-          <TransactionLoadingText className="">
-            Minting can take a couple of minutes…
-          </TransactionLoadingText>
-        )}
+        <Loader status={status} />
+        {statusText}
 
         <div id="transaction-data" className="row mt-2">
           <TransactionData className="col-6 text-right d-flex flex-column flex-wrap">
