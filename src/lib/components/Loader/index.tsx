@@ -1,4 +1,6 @@
 import React from 'react';
+import mined from '../../../resources/svgs/mined.svg';
+import mining from '../../../resources/svgs/mining.svg';
 
 interface ICircleWave {
   isLoading: boolean;
@@ -11,9 +13,14 @@ export const CircleWave = ({isLoading}: ICircleWave) => {
         marginBottom: '20px',
         width: '80px',
         height: '80px',
-        background: !isLoading ? '#32f05f' : 'transparent',
+        backgroundColor: !isLoading ? '#32f05f' : 'transparent',
+        backgroundImage: `url(${isLoading ? mining : mined})`,
+        backgroundSize: '110%',
+        backgroundPosition: 'center',
         borderRadius: '50%',
-        border: !isLoading ? '3px solid#32f05f' : '3px solid white',
+        borderWidth: '3px',
+        borderStyle: 'solid',
+        borderColor: !isLoading ? '#32f05f' : 'white',
       }}
     />
   );

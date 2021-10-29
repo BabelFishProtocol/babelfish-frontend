@@ -29,7 +29,7 @@ export const Redeem = () => {
         return () => valueLiveTransaction.offAll();
       }
     },
-    [valueLiveTransaction],
+    [valueLiveTransaction, setTransactionData],
   );
   let content;
   let currentStep;
@@ -82,7 +82,7 @@ export const Redeem = () => {
               if (newStep === 0) {
                 setCurrentNetwork(undefined);
               } else if (newStep === 1) {
-                setCurrentNetwork(undefined);
+                setTransactionData(undefined);
               } else if (newStep === 2) {
                 // Cant go
               } else {
