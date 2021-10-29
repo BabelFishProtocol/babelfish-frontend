@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import moment from 'moment';
-import BN from 'bn.js';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
-import {RedeemContent, Link} from './styles';
 import {ChainGroup} from '../../components/SelectChain';
-import {RedeemBalance} from './steps/redeemBalance';
 import {chainEnum} from "../../config/Chains";
-import type {CurrencyAmount, EthLiveTransaction} from "../../web3/service";
-import {EthTransaction} from "../../web3/service";
+import type {EthLiveTransaction} from "../../web3/service";
+import {EthTransaction, formatCurrencyAmount, fromWei} from "../../web3/service";
+import {RedeemContent} from './styles';
+import {RedeemBalance} from './steps/redeemBalance';
 
 const STEPS = [
   'Select Redemption Network',
@@ -16,15 +15,6 @@ const STEPS = [
   'Burning Process',
   'Burning Complete',
 ];
-
-function formatCurrencyAmount(inn: CurrencyAmount) {
-  // ToDo: To fixed 2
-  return `${inn.amount.toString(10)} ${inn.currency}`;
-}
-
-function fromWei(inn: BN | number) {
-  return new BN(inn).toString(10);
-}
 
 export const Redeem = () => {
   const [valueCurrentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);

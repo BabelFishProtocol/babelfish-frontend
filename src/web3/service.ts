@@ -221,3 +221,12 @@ export interface EthTransaction {
   destination: CurrencyAmount;
   detectedAt: Date;
 }
+
+export function formatCurrencyAmount(inn: CurrencyAmount) {
+  // ToDo: To fixed 2
+  return `${inn.amount.toString(10)} ${inn.currency}`;
+}
+
+export function fromWei(inn: BN | number) {
+  return new BN(inn).toString(10);
+}

@@ -7,13 +7,14 @@ import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {deposit, getTokenBalance} from '../../../web3/service';
+import {deposit, EthLiveTransaction, getTokenBalance} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
 
-export const SendDeposit = ({network}: {network: chainEnum}) => {
+export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
   const {
     state: {web3, bAssets},
   } = useWeb3Context();
+  const [valueIsDoingAction, setIsDoingAction] = useState<boolean>(false);
   const [valueSelectedToken, setSelectedToken] = useState<tokenType | undefined>(undefined);
   const [valueAmount, setAmount] = useState<BN | null>(new BN(0));
   const [valueAvailableTokenBalance, setAvailableTokenBalance] = useState<BN | undefined>(undefined);
@@ -64,11 +65,18 @@ export const SendDeposit = ({network}: {network: chainEnum}) => {
           <ButtonPrimary
             style={{marginTop: '30px'}}
             className="w-100"
-            disabled={!(web3 && tokenOnNetwork && valueAmount)}
+            disabled={!(web3 && tokenOnNetwork && valueAmount) || valueIsDoingAction}
             onClick={
               () => {
                 if (web3 && tokenOnNetwork && valueSelectedToken && valueAmount) {
-                  deposit(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id);
+                  setIsDoingAction(true);
+                  deposit(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id).then(
+                    onSubmit
+                  ).catch().then(
+                    () => {
+                      setIsDoingAction(false);
+                    }
+                  );
                 }
               }
             }
