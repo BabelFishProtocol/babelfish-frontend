@@ -86,19 +86,138 @@ export async function getTokenBalance(web3: Web3, tokenAddress: string) : Promis
   return balance;
 }
 
-export async function redeem(web3: Web3, bAssetAddress: string, quantity: BN, bridgedTo: destinationTokenEnum) : Promise<any[]> {
-  const account = (await web3.eth.getAccounts())[0];
-  const mAssetContract = new web3.eth.Contract(BRIDGED_ADDRESSES[bridgedTo].MassetV3.abi, BRIDGED_ADDRESSES[bridgedTo].MassetV3.address);
-  const rr = await mAssetContract.methods.redeem(bAssetAddress, quantity).send({from: account});
-  return rr;
+function setEventListeners(rr: any, emitter: EthLiveTransaction) {
+  const confirmationHandler = (confirmation: number, receipt: any) => {
+    if (confirmation > 0) {
+      emitter.emit('success', ({
+        transactionHash: receipt.transactionHash,
+        cumulativeGasUsed: receipt.cumulativeGasUsed,
+        gasUsed: receipt.gasUsed,
+        status: 'failed',
+        source: emitter.source,
+        destination: emitter.destination,
+        detectedAt: emitter.detectedAt,
+      } as EthTransaction));
+      rr.off('confirmation', confirmationHandler);
+    }
+  };
+  rr.on('confirmation', confirmationHandler);
+  rr.once('transactionHash', (transactionHash: string) => {
+    emitter.detectedAt = new Date();
+    emitter.emit('receipt', ({
+      transactionHash,
+      cumulativeGasUsed: undefined,
+      gasUsed: undefined,
+      status: 'pending',
+      source: emitter.source,
+      destination: emitter.destination,
+      detectedAt: emitter.detectedAt,
+    } as EthTransaction));
+  });
+  rr.once('error', (error: Error) => {
+    const receipt = (error as any).receipt;
+    console.log('error', error);
+    emitter.emit('fail', ({
+      transactionHash: receipt.transactionHash,
+      cumulativeGasUsed: receipt.cumulativeGasUsed,
+      gasUsed: receipt.gasUsed,
+      status: 'failed',
+      source: emitter.source,
+      destination: emitter.destination,
+      detectedAt: emitter.detectedAt,
+    } as EthTransaction));
+  });
 }
 
-export async function deposit(web3: Web3, bAssetAddress: string, quantity: BN, bridgedTo: destinationTokenEnum) : Promise<any[]> {
+export async function redeem(
+  web3: Web3, bAssetAddress: string, bAssetName: string, quantity: BN, bridgedTo: destinationTokenEnum,
+) : Promise<EthLiveTransaction> {
+  const account = (await web3.eth.getAccounts())[0];
+  const mAssetContract = new web3.eth.Contract(BRIDGED_ADDRESSES[bridgedTo].MassetV3.abi, BRIDGED_ADDRESSES[bridgedTo].MassetV3.address);
+  const rr = mAssetContract.methods.redeem(bAssetAddress, quantity).send({from: account});
+  const emitter = new EthLiveTransaction({
+    currency: bAssetName,
+    amount: quantity,
+  }, {
+    currency: bridgedTo.toString(),
+    amount: quantity,
+  });
+  setEventListeners(rr, emitter);
+  return emitter;
+}
+
+export async function deposit(
+  web3: Web3, bAssetAddress: string, bAssetName: string, quantity: BN, bridgedTo: destinationTokenEnum,
+) : Promise<EthLiveTransaction> {
   const bAssetContract = new web3.eth.Contract(ERC20ABI as any, bAssetAddress.toUpperCase());
   const mAssetAddress = BRIDGED_ADDRESSES[bridgedTo].MassetV3.address;
   const mAssetContract = new web3.eth.Contract(BRIDGED_ADDRESSES[bridgedTo].MassetV3.abi, mAssetAddress);
   const account = (await web3.eth.getAccounts())[0];
   await bAssetContract.methods.approve(mAssetAddress, quantity).send({from: account});
-  const rr = await mAssetContract.methods.mint(bAssetAddress, quantity).send({from: account});
-  return rr;
+  const rr = mAssetContract.methods.mint(bAssetAddress, quantity).send({from: account});
+  const emitter = new EthLiveTransaction({
+    currency: bAssetName,
+    amount: quantity,
+  }, {
+    currency: bridgedTo.toString(),
+    amount: quantity,
+  });
+  setEventListeners(rr, emitter);
+  return emitter;
+}
+
+export class EthLiveTransaction {
+  private readonly events: Record<string, Function>;
+  private readonly missCalls: Record<string, any>;
+  public source: CurrencyAmount;
+  public destination: CurrencyAmount;
+  public detectedAt?: Date;
+  constructor(source: CurrencyAmount, destination: CurrencyAmount) {
+    this.events = {};
+    this.missCalls = {};
+    this.source = source;
+    this.destination = destination;
+  }
+  on(name: string, listener: Function) {
+    this.events[name] = listener;
+    if (this.missCalls[name]) {
+      this.missCalls[name].forEach(
+        (dd: any) => {
+          listener(dd);
+        },
+      );
+    }
+  }
+  off(name: string) {
+    delete this.events[name];
+  }
+  offAll() {
+    for (let kk in this.events) {
+      delete this.events[kk];
+    }
+  }
+  emit(name: string, data: any) {
+    this.events[name] && this.events[name](data);
+    if (!this.missCalls[name]) {
+      this.missCalls[name] = [];
+    }
+    this.missCalls[name].push(data);
+  }
+}
+
+export interface CurrencyAmount {
+  amount: BN;
+  currency: string;
+}
+
+export type EthTransactionStatus = 'success' | 'failed' | 'pending';
+
+export interface EthTransaction {
+  transactionHash: string;
+  cumulativeGasUsed?: number;
+  gasUsed?: number;
+  status: EthTransactionStatus;
+  source: CurrencyAmount;
+  destination: CurrencyAmount;
+  detectedAt: Date;
 }

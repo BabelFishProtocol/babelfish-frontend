@@ -1,20 +1,20 @@
 import React from 'react';
 
 interface ICircleWave {
-  loading: boolean;
-  status: 'success' | 'failed' | 'unknown';
+  isLoading: boolean;
 }
 
-export const CircleWave = ({loading, status}: ICircleWave) => {
+export const CircleWave = ({isLoading}: ICircleWave) => {
   return (
     <div
       style={{
         marginBottom: '20px',
         width: '80px',
         height: '80px',
-        background: status === 'success' ? '#32f05f' : 'transparent',
+        background: !isLoading ? '#32f05f' : 'transparent',
         borderRadius: '50%',
-        border: status === 'success' ? '3px solid#32f05f' : '3px solid white',
-      }}></div>
+        border: !isLoading ? '3px solid#32f05f' : '3px solid white',
+      }}
+    />
   );
 };

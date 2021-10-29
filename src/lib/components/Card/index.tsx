@@ -10,6 +10,8 @@ import {
   TransactionData,
   TransactionLoadingText,
 } from './styles';
+import {EthTransactionStatus} from "../../../web3/service";
+import {LinkPrimary} from "../Button/styles";
 
 export const Card = CardStyled;
 
@@ -29,20 +31,21 @@ export const CardTitled = ({title, children}: ICardTitledProps) => {
 };
 
 interface ITransactionCardProps {
+  explorerLink: string;
   transactionData: {name: string; value: any}[];
-  loading?: boolean;
-  status?: 'success' | 'failed' | 'unknown';
+  status: EthTransactionStatus;
 }
 //To Do move styles to styled component
 export const TransactionCard = ({
+  explorerLink,
   transactionData,
-  loading = false,
-  status = 'unknown',
+  status = 'pending',
 }: ITransactionCardProps) => {
+  const loading = status === 'pending';
   return (
     <TransactionCardStyled>
       <div className="d-flex flex-column align-items-center px-4 py-5">
-        <CircleWave loading={loading} status={status} />
+        <CircleWave isLoading={loading} />
         {loading && (
           <TransactionLoadingText className="">
             Minting can take a couple of minutes…
@@ -67,12 +70,9 @@ export const TransactionCard = ({
             ))}
           </TransactionData>
         </div>
-
-        {!loading && (
-          <ButtonPrimary className="mt-4" onClick={() => console.log('click')}>
-            view on etherescan
-          </ButtonPrimary>
-        )}
+        <LinkPrimary className="mt-4" target="_blank" href={explorerLink}>
+          view on etherscan
+        </LinkPrimary>
       </div>
     </TransactionCardStyled>
   );

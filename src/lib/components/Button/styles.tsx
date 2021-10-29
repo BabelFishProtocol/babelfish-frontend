@@ -62,3 +62,23 @@ export const TextButtonPill = styled.span`
   text-align: center;
   color: #ffffff;
 `;
+
+export const LinkStyled = styled.a<{backgroundColor?: string}>`
+  min-width: 100px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  border: solid 2px ${(props) => props.theme.primary};
+  text-decoration: none;
+  color: #000000;
+`;
+
+export const LinkPrimary = styled(LinkStyled)`
+  background-color: ${(props) => props.theme.primary};
+`;

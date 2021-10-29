@@ -5,7 +5,7 @@ import { CheckIcon } from "../../resources/svgs/check";
 
 interface IStepsProps {
   steps: React.ReactNode[];
-  onStepChange: Function;
+  onStepChange?: (step: number) => void;
   currentStep: number;
 }
 
@@ -23,7 +23,7 @@ export const Steps = ({ steps, currentStep, onStepChange }: IStepsProps) => {
           <StepRow
             key={index}
             status={stepStatus}
-            onClick={() => onStepChange(index)}
+            onClick={() => onStepChange && onStepChange(index)}
           >
             <StepNumber status={stepStatus}>
               {stepStatus !== "done" ? index + 1 : <CheckIcon />}

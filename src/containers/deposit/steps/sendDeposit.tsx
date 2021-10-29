@@ -68,7 +68,7 @@ export const SendDeposit = ({network}: {network: chainEnum}) => {
             onClick={
               () => {
                 if (web3 && tokenOnNetwork && valueSelectedToken && valueAmount) {
-                  deposit(web3, tokenOnNetwork.address, valueAmount, valueSelectedToken.bridgedTo.id);
+                  deposit(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id);
                 }
               }
             }

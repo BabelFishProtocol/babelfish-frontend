@@ -7,13 +7,14 @@ import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {redeem, getTokenBalance} from '../../../web3/service';
+import {redeem, getTokenBalance, EthLiveTransaction} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
 
-export const RedeemBalance = ({network}: {network: chainEnum}) => {
+export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
   const {
     state: {web3, bAssets},
   } = useWeb3Context();
+  const [valueIsDoingAction, setIsDoingAction] = useState<boolean>(false);
   const [valueSelectedToken, setSelectedToken] = useState<tokenType | undefined>(undefined);
   const [valueAmount, setAmount] = useState<BN | null>(new BN(0));
   const [valueAvailableTokenBalance, setAvailableTokenBalance] = useState<BN | undefined>(undefined);
@@ -63,11 +64,18 @@ export const RedeemBalance = ({network}: {network: chainEnum}) => {
           <ButtonPrimary
             style={{marginTop: '30px'}}
             className="w-100"
-            disabled={!(web3 && valueSelectedToken && valueAmount)}
+            disabled={!(web3 && valueSelectedToken && valueAmount) || valueIsDoingAction}
             onClick={
               () => {
                 if (web3 && tokenOnNetwork && valueSelectedToken && valueAmount) {
-                  redeem(web3, tokenOnNetwork.address, valueAmount, valueSelectedToken.bridgedTo.id);
+                  setIsDoingAction(true);
+                  redeem(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id).then(
+                    onSubmit
+                  ).catch().then(
+                    () => {
+                      setIsDoingAction(false);
+                    }
+                  );
                 }
               }
             }

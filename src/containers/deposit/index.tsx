@@ -66,7 +66,8 @@ export const Deposit = () => {
                     <div className="d-flex justify-content-center">
                       <TransactionCard
                         transactionData={transactionData}
-                        loading={true}
+                        status="pending"
+                        explorerLink={`https://etherscan.io/tx/aaaa`}
                       />
                     </div>
                   ),
@@ -74,8 +75,8 @@ export const Deposit = () => {
                     <div className="d-flex justify-content-center">
                       <TransactionCard
                         transactionData={transactionData}
-                        loading={false}
                         status="success"
+                        explorerLink={`https://etherscan.io/tx/aaaa`}
                       />
                     </div>
                   ),
