@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import BN from 'bn.js';
 import moment from 'moment';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
@@ -47,10 +48,10 @@ export const Redeem = () => {
     content = <RedeemBalance network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
   } else {
     const transactionData = [
-      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).format('DD/MM/YY')},
+      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).utc().format('DD/MM/YY-HH:mm GMT')},
       {name: 'Withdraw Amount', value: formatCurrencyAmount(valueTransactionData.source)},
       {name: 'Amount Burned', value: formatCurrencyAmount(valueTransactionData.destination)},
-      {name: 'Gas Fee', value: `${valueTransactionData.gasUsed ? fromWei(valueTransactionData.gasUsed) : '0'} ETH`},
+      {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueTransactionData?.gasUsed || 0)})}`},
       // {
       //   name: 'ETH Redeem',
       //   value: <Link>0X413.89054</Link>,

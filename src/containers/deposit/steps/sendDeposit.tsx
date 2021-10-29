@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
-import Web3 from 'web3';
 import {tokenType} from '../../../config/Tokens';
 import {ButtonPrimary, CurrencyInput} from '../../../lib/components';
 import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {deposit, EthLiveTransaction, getTokenBalance} from '../../../web3/service';
+import {deposit, EthLiveTransaction, formatCurrencyAmount, getTokenBalance} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
 
 export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
@@ -36,7 +35,9 @@ export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: 
         <div className="col-5">
           <InputTitle>Deposit Token</InputTitle>
           <Dropdown<tokenType> placeholder="Select Token" items={bAssets.filter(({networks}) => networks[network] !== null)} value={valueSelectedToken} onChange={setSelectedToken}/>
-          {valueSelectedToken && valueAvailableTokenBalance !== undefined && <InputSubtext>Available Balance: {Web3.utils.fromWei(valueAvailableTokenBalance).toString()} {valueSelectedToken.name}</InputSubtext>}
+          {valueSelectedToken && valueAvailableTokenBalance !== undefined && (
+            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.name})}</InputSubtext>
+          )}
         </div>
         <div className="col-5">
           <InputTitle>Receive Amount</InputTitle>
@@ -55,7 +56,8 @@ export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: 
           <InputButtonPillGroup
             currency={valueSelectedToken?.name || ''}
             totalAmount={new BN(valueAvailableTokenBalance|| 0)}
-            availablePercentValues={[20, 40, 60, 80, 100]}
+            // ToDo: Intentionally removed 100% option until implementing the 100% is FFFFFF option on a custom amount datatype
+            availablePercentValues={[20, 40, 60, 80]}
             defaultValue={new BN(10)}
             value={valueAmount}
             onChange={setAmount}

@@ -222,11 +222,17 @@ export interface EthTransaction {
   detectedAt: Date;
 }
 
+export function formatAmount(inn: BN) {
+  const st = Web3.utils.fromWei(inn);
+  const [inter, decimals] = st.split('.');
+  return [inter, (decimals || '').padEnd(2, '0').substr(0, 2)].join('.');
+}
+
 export function formatCurrencyAmount(inn: CurrencyAmount) {
-  // ToDo: To fixed 2
-  return `${inn.amount.toString(10)} ${inn.currency}`;
+  return `${formatAmount(inn.amount)} ${inn.currency}`;
 }
 
 export function fromWei(inn: BN | number) {
-  return new BN(inn).toString(10);
+  return Web3.utils.fromWei(new BN(inn));
+  // return new BN(inn).toString(10);
 }

@@ -47,7 +47,7 @@ export const Deposit = () => {
     content = <SendDeposit network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
   } else {
     const transactionData = [
-      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).format('DD/MM/YY')},
+      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).utc().format('DD/MM/YY-HH:mm GMT')},
       {name: 'Amount Sent', value: formatCurrencyAmount(valueTransactionData.source)},
       {name: 'Amount Minted', value: formatCurrencyAmount(valueTransactionData.destination)},
       {name: 'Gas Fee', value: `${valueTransactionData.gasUsed ? fromWei(valueTransactionData.gasUsed) : '0'} ETH`},

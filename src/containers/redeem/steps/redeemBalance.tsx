@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
-import Web3 from 'web3';
 import {tokenType} from '../../../config/Tokens';
 import {ButtonPrimary, CurrencyInput} from '../../../lib/components';
 import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {redeem, getTokenBalance, EthLiveTransaction} from '../../../web3/service';
+import {redeem, getTokenBalance, EthLiveTransaction, formatCurrencyAmount} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
 
 export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
@@ -38,12 +37,15 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
           <InputButtonPillGroup
             currency={valueSelectedToken?.bridgedTo.symbol || ''}
             totalAmount={new BN(valueAvailableTokenBalance|| 0)}
-            availablePercentValues={[20, 40, 60, 80, 100]}
+            // ToDo: Intentionally removed 100% option until implementing the 100% is FFFFFF option on a custom amount datatype
+            availablePercentValues={[20, 40, 60, 80]}
             defaultValue={new BN(10)}
             value={valueAmount}
             onChange={setAmount}
           />
-          {valueSelectedToken && valueAvailableTokenBalance !== undefined && <InputSubtext>Available Balance: {Web3.utils.fromWei(valueAvailableTokenBalance).toString()} {valueSelectedToken.bridgedTo.symbol}</InputSubtext>}
+          {valueSelectedToken && valueAvailableTokenBalance !== undefined && (
+            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.bridgedTo.symbol})}</InputSubtext>
+          )}
         </div>
         <div className="col-5">
           <InputTitle>Redeem Token</InputTitle>
