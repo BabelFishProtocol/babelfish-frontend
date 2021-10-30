@@ -29,9 +29,16 @@ export const CardTitled = ({title, children}: ICardTitledProps) => {
   );
 };
 
+interface DisplayItem {
+  name: string;
+  value: any;
+  style?: any;
+}
+
 interface ITransactionCardProps {
   explorerLink: string;
-  transactionData: {name: string; value: any}[];
+  explorerName: string;
+  transactionData: DisplayItem[];
   status: EthTransactionStatus;
 }
 //To Do move styles to styled component
@@ -39,6 +46,7 @@ export const TransactionCard = ({
   explorerLink,
   transactionData,
   status = 'pending',
+  explorerName,
 }: ITransactionCardProps) => {
   let statusText;
   if (status === 'success') {
@@ -68,21 +76,25 @@ export const TransactionCard = ({
             {transactionData.map((element) => (
               <span
                 className="left"
-                key={`transactionTextRight-${element.name}`}>
+                key={element.name}
+              >
                 {element.name}:
               </span>
             ))}
           </TransactionData>
           <TransactionData className="col-6 text-left d-flex flex-column">
             {transactionData.map((element) => (
-              <span key={`transactionTextLeft-${element.name}`}>
+              <span
+                style={element.style}
+                key={element.name}
+              >
                 {element.value}
               </span>
             ))}
           </TransactionData>
         </div>
         <LinkPrimary className="mt-4" target="_blank" href={explorerLink}>
-          view on etherscan
+          view on {explorerName}
         </LinkPrimary>
       </div>
     </TransactionCardStyled>

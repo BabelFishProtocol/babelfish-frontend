@@ -5,9 +5,10 @@ import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroup} from '../../components/SelectChain';
 import {chainEnum} from "../../config/Chains";
 import type {EthLiveTransaction} from "../../web3/service";
-import {EthTransaction, formatCurrencyAmount, fromWei} from "../../web3/service";
+import {EthTransaction, formatCurrencyAmount, formatDate} from "../../web3/service";
 import {DepositContent} from './styles';
 import {SendDeposit} from "./steps/sendDeposit";
+import BN from "bn.js";
 
 const STEPS = [
   'Select Deposit Network',
@@ -47,10 +48,10 @@ export const Deposit = () => {
     content = <SendDeposit network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
   } else {
     const transactionData = [
-      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).utc().format('DD/MM/YY-HH:mm GMT')},
+      {name: 'Date/Time', value: formatDate(valueTransactionData.detectedAt)},
       {name: 'Amount Sent', value: formatCurrencyAmount(valueTransactionData.source)},
       {name: 'Amount Minted', value: formatCurrencyAmount(valueTransactionData.destination)},
-      {name: 'Gas Fee', value: `${valueTransactionData.gasUsed ? fromWei(valueTransactionData.gasUsed) : '0'} ETH`},
+      {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueTransactionData?.gasUsed || 0)})}`},
       // {
       //   name: 'ETH Deposit',
       //   value: <Link>0X413.89054</Link>,
@@ -65,7 +66,8 @@ export const Deposit = () => {
         <TransactionCard
           transactionData={transactionData}
           status={valueTransactionData.status}
-          explorerLink={`https://etherscan.io/tx/${valueTransactionData.transactionHash}`}
+          explorerLink={`https://explorer.rsk.co/tx/${valueTransactionData.transactionHash}`}
+          explorerName="rsk explorer"
         />
       </div>
     );
@@ -83,10 +85,6 @@ export const Deposit = () => {
                 setCurrentNetwork(undefined);
               } else if (newStep === 1) {
                 setTransactionData(undefined);
-              } else if (newStep === 2) {
-                // Cant go
-              } else {
-                // Cant go
               }
             }}
           />

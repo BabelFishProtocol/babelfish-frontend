@@ -6,7 +6,7 @@ import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroup} from '../../components/SelectChain';
 import {chainEnum} from "../../config/Chains";
 import type {EthLiveTransaction} from "../../web3/service";
-import {EthTransaction, formatCurrencyAmount, fromWei} from "../../web3/service";
+import {EthTransaction, formatCurrencyAmount, formatDate} from "../../web3/service";
 import {RedeemContent} from './styles';
 import {RedeemBalance} from './steps/redeemBalance';
 
@@ -48,7 +48,7 @@ export const Redeem = () => {
     content = <RedeemBalance network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
   } else {
     const transactionData = [
-      {name: 'Date/Time', value: moment(valueTransactionData.detectedAt).utc().format('DD/MM/YY-HH:mm GMT')},
+      {name: 'Date/Time', value: formatDate(valueTransactionData.detectedAt), style: {whiteSpace: 'nowrap'}},
       {name: 'Withdraw Amount', value: formatCurrencyAmount(valueTransactionData.source)},
       {name: 'Amount Burned', value: formatCurrencyAmount(valueTransactionData.destination)},
       {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueTransactionData?.gasUsed || 0)})}`},
@@ -66,7 +66,8 @@ export const Redeem = () => {
         <TransactionCard
           transactionData={transactionData}
           status={valueTransactionData.status}
-          explorerLink={`https://etherscan.io/tx/${valueTransactionData.transactionHash}`}
+          explorerLink={`https://explorer.rsk.co/tx/${valueTransactionData.transactionHash}`}
+          explorerName="rsk explorer"
         />
       </div>
     );
@@ -84,10 +85,6 @@ export const Redeem = () => {
                 setCurrentNetwork(undefined);
               } else if (newStep === 1) {
                 setTransactionData(undefined);
-              } else if (newStep === 2) {
-                // Cant go
-              } else {
-                // Cant go
               }
             }}
           />

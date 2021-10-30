@@ -14,6 +14,7 @@ import {Banner} from './lib/components/Banner';
 import {Body, Content} from './styles';
 
 function App() {
+  console.log('process.env.REACT_APP_BASE_PATH', process.env.REACT_APP_BASE_PATH);
   const [showBanner, setShowBanner] = useState(true);
   return (
     <Body>
@@ -40,11 +41,11 @@ function App() {
         <Header />
         <Content className="row g-0">
           <Switch>
-            <Route path="/landing" exact render={() => <Landing />}/>
-            <Route path="/dashboard" exact render={() => <Dashboard />}/>
-            <Route path="/deposit" exact render={() => <Deposit />}/>
-            <Route path="/redeem" exact render={() => <Redeem />}/>
-            <Redirect to="/landing" />
+            <Route path={`${process.env.REACT_APP_BASE_PATH}/landing`} exact render={() => <Landing />}/>
+            <Route path={`${process.env.REACT_APP_BASE_PATH}/dashboard`} exact render={() => <Dashboard />}/>
+            <Route path={`${process.env.REACT_APP_BASE_PATH}/deposit`} exact render={() => <Deposit />}/>
+            <Route path={`${process.env.REACT_APP_BASE_PATH}/redeem`} exact render={() => <Redeem />}/>
+            <Redirect to={`${process.env.REACT_APP_BASE_PATH}/landing`} />
           </Switch>
         </Content>
       </Router>

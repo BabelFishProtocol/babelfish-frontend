@@ -23,6 +23,7 @@ export const Steps = ({ steps, currentStep, onStepChange }: IStepsProps) => {
           <StepRow
             key={index}
             status={stepStatus}
+            disabled={!onStepChange}
             onClick={() => onStepChange && onStepChange(index)}
           >
             <StepNumber status={stepStatus}>

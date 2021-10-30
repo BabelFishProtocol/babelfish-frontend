@@ -13,7 +13,7 @@ const Loader = ({status}: ICircleWave) => {
   let backgroundColor;
   let borderColor;
   if (status === 'success') {
-    backgroundColor = '#32f05f';
+    backgroundColor = 'transparent';
     bgImage = mined;
     borderColor = backgroundColor;
   } else if (status === 'pending') {

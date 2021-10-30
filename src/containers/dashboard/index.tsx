@@ -50,12 +50,12 @@ export const Dashboard = () => {
           <span className="mb-3">You can deposit or redeem anytime</span>
           <ButtonPrimary
             className="w-100 mb-3"
-            onClick={() => history.push('/deposit')}>
+            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/deposit`)}>
             Deposit
           </ButtonPrimary>
           <ButtonSecondary
             className="w-100"
-            onClick={() => history.push('/redeem')}>
+            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/redeem`)}>
             Redeem
           </ButtonSecondary>
         </CardDepositRedeem>

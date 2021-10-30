@@ -10,7 +10,8 @@ import {chainEnum} from '../Chains';
 import ERC20ABI from "../../web3/abi/ERC20.json";
 
 // const IS_TESTNET = process.env.REACT_APP_CHAIN_ID === '31';
-const IS_LOCALNET = process.env.REACT_APP_CHAIN_ID !== '31';
+const IS_LOCALNET = !['31', '30'].includes(process.env.REACT_APP_CHAIN_ID || '');
+const IS_MAINNET = process.env.REACT_APP_CHAIN_ID === '30';
 
 export enum tokenEnum {
   USDT = 'USDT',
@@ -72,15 +73,15 @@ export type tokenType = {
 export const destinationTokensCatalog = {
   [destinationTokenEnum.XUSD]: {
     symbol: 'XUSD',
-    address: IS_LOCALNET ? '0x0290FB167208Af455bB137780163b7B7a9a10C16' : '0x152123ec3D9fe2Cf57aBc09917C1ba51324EA8dE',
+    address: IS_LOCALNET ? '0x0290FB167208Af455bB137780163b7B7a9a10C16' : (IS_MAINNET ? '0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F' : '0x152123ec3D9fe2Cf57aBc09917C1ba51324EA8dE'),
   },
   [destinationTokenEnum.ETHs]: {
     symbol: 'ETHs',
-    address: IS_LOCALNET ? '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24' : '0xfBe460669bb911281417a5D76372668d1E4c3BF9',
+    address: IS_LOCALNET ? '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24' : (IS_MAINNET ? '' : '0xfBe460669bb911281417a5D76372668d1E4c3BF9'),
   },
   [destinationTokenEnum.BNBs]: {
     symbol: 'BNBs',
-    address: IS_LOCALNET ? '0x0E696947A06550DEf604e82C26fd9E493e576337' : '0xbe50c3820d3234dca77AdD17F38DF25DEbE7567D',
+    address: IS_LOCALNET ? '0x0E696947A06550DEf604e82C26fd9E493e576337' : (IS_MAINNET ? '' : '0xbe50c3820d3234dca77AdD17F38DF25DEbE7567D'),
   },
 } as const;
 
@@ -96,7 +97,7 @@ export const tokensOrder = [
   tokenEnum.DUMMY3,
 ];
 
-const offlineTokenAddresses = {
+const offlineTokenAddresses = IS_LOCALNET ? {
   'DUMMY1e': '0x86072CbFF48dA3C1F01824a6761A03F105BCC697',
   'DUMMY1b': '0xFF6049B87215476aBf744eaA3a476cBAd46fB1cA',
   'DUMMY1': '0xA586074FA4Fe3E546A132a16238abe37951D41fE',
@@ -106,21 +107,34 @@ const offlineTokenAddresses = {
   'DUMMY3e': '0xb4fFe5983B0B748124577Af4d16953bd096b6897',
   'DUMMY3b': '0xFF5181e2210AB92a5c9db93729Bc47332555B9E9',
   'DUMMY3': '0x6f84742680311CEF5ba42bc10A71a4708b4561d1',
-
-  'DOC': '0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0',
-  'rDOC': '0xC3De9F38581f83e281f260d0DdbaAc0e102ff9F8',
-  'USDTes': '0x10c5a7930fc417e728574e334b1488b7895c4b81',
-  'bsUSDT': '0x43bc3f0ffff6c9bbf3c2eafe464c314d43f561de',
-  'USDT': '0x4d5a316d23ebe168d8f887b4447bf8dbfa4901cc', // rUSDT
-  'USDCes': '0xcc8eec21ae75f1a2de4ac7b32a7de888a45cf859',
-  'bsUSDC': '0x3e2cf87e7ff4048a57f9cdde9368c9f4bfb43adf',
-  'DAIes': '0xcb92c8d49ec01b92f2a766c7c3c9c501c45271e0',
-  'bsDAI': '0x407ff7d4760d3a81b4740d268eb04490c7dfe7f2',
-  'esETH': '0x4f2fc8d55c1888a5aca2503e2f3e5d74eef37c33',
-  'bsETH': '0x793ce6f95912d5b43532c2116e1b68993d902272',
-  'bsBNB': '0xafa6a1eb7e2282e8854822d2bb412b6db2caba4e',
-  'bsBUSD': '0x8c9abb6c9d8d15ddb7ada2e50086e1050ab32688',
-};
+} : (
+  IS_MAINNET ? ({
+    'DOC': '0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db',
+    'RDOC': '0x2d919f19D4892381d58EdEbEcA66D5642ceF1A1F',
+    'USDTes': '0xD9665EA8F5fF70Cf97E1b1Cd1B4Cd0317b0976e8',
+    'USDTbs': '0xFf4299bCA0313C20A61dc5eD597739743BEf3f6d',
+    'rUSDT': '0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96',
+    'USDCes': '0x8D1f7CbC6391D95E2774380e80A666FEbf655D6b',
+    'USDCbs': '0x91EDceE9567cd5612c9DEDeaAE24D5e574820af1',
+    'DAIes': '0x1A37c482465e78E6DAbE1Ec77B9a24D4236D2A11',
+    'DAIbs': '0x6A42Ff12215a90f50866A5cE43A9c9C870116e76',
+    'BUSDbs': '0x61e9604e31a736129d7f5C58964c75935b2d80D6',
+  }) : ({
+    'DOC': '0xCB46c0ddc60D18eFEB0E586C17Af6ea36452Dae0',
+    'rDOC': '0xC3De9F38581f83e281f260d0DdbaAc0e102ff9F8',
+    'USDTes': '0x10c5a7930fc417e728574e334b1488b7895c4b81',
+    'bsUSDT': '0x43bc3f0ffff6c9bbf3c2eafe464c314d43f561de',
+    'USDT': '0x4d5a316d23ebe168d8f887b4447bf8dbfa4901cc', // rUSDT
+    'USDCes': '0xcc8eec21ae75f1a2de4ac7b32a7de888a45cf859',
+    'bsUSDC': '0x3e2cf87e7ff4048a57f9cdde9368c9f4bfb43adf',
+    'DAIes': '0xcb92c8d49ec01b92f2a766c7c3c9c501c45271e0',
+    'bsDAI': '0x407ff7d4760d3a81b4740d268eb04490c7dfe7f2',
+    'esETH': '0x4f2fc8d55c1888a5aca2503e2f3e5d74eef37c33',
+    'bsETH': '0x793ce6f95912d5b43532c2116e1b68993d902272',
+    'bsBNB': '0xafa6a1eb7e2282e8854822d2bb412b6db2caba4e',
+    'bsBUSD': '0x8c9abb6c9d8d15ddb7ada2e50086e1050ab32688',
+  })
+);
 
 export const tokensCatalog = {
   ...(IS_LOCALNET ? {
@@ -153,6 +167,67 @@ export const tokensCatalog = {
         [chainEnum.RSK]: 'DUMMY3',
       },
       bridgedTo: destinationTokenEnum.BNBs,
+    },
+  } : (IS_MAINNET ? {
+    [tokenEnum.DOC]: {
+      name: 'DOC',
+      icon: docIcon,
+      networks: {
+        [chainEnum.ETH]: null,
+        [chainEnum.BSC]: null,
+        [chainEnum.RSK]: 'DOC',
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
+    },
+    [tokenEnum.RDOC]: {
+      name: 'rDOC',
+      icon: rdocIcon,
+      networks: {
+        [chainEnum.ETH]: null,
+        [chainEnum.BSC]: null,
+        [chainEnum.RSK]: 'RDOC',
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
+    },
+    [tokenEnum.USDT]: {
+      name: 'USDT',
+      icon: usdtIcon,
+      networks: {
+        [chainEnum.ETH]: 'USDTes',
+        [chainEnum.BSC]: 'USDTbs',
+        [chainEnum.RSK]: 'rUSDT',
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
+    },
+    [tokenEnum.USDC]: {
+      name: 'USDC',
+      icon: usdcIcon,
+      networks: {
+        [chainEnum.ETH]: 'USDCes',
+        [chainEnum.BSC]: 'USDCbs',
+        [chainEnum.RSK]: null,
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
+    },
+    [tokenEnum.DAI]: {
+      name: 'DAI',
+      icon: daiIcon,
+      networks: {
+        [chainEnum.ETH]: 'DAIes',
+        [chainEnum.BSC]: 'DAIbs',
+        [chainEnum.RSK]: null,
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
+    },
+    [tokenEnum.BUSD]: {
+      name: 'BUSD',
+      icon: busdIcon,
+      networks: {
+        [chainEnum.ETH]: null,
+        [chainEnum.BSC]: 'BUSDbs',
+        [chainEnum.RSK]: null,
+      },
+      bridgedTo: destinationTokenEnum.XUSD,
     },
   } : {
     [tokenEnum.DOC]: {
@@ -235,7 +310,7 @@ export const tokensCatalog = {
       },
       bridgedTo: destinationTokenEnum.XUSD,
     },
-  }),
+  })),
 };
 
 export function joinWithAddress(symbol: string | null, addresses: Record<string, string>) {
@@ -245,7 +320,7 @@ export function joinWithAddress(symbol: string | null, addresses: Record<string,
   return addresses[symbol] ? {symbol, address: addresses[symbol]} : null;
 }
 
-export function joinWithAddressList(baseCatalog: tokenTypeBase[], addresses: Record<string, string>): tokenType[] {
+export function joinWithAddressList(baseCatalog: tokenTypeBase[], addresses: any): tokenType[] {
   return baseCatalog.map(
     ({networks, ...vv}) => ({
       networks: {

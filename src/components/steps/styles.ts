@@ -3,6 +3,7 @@ import { StepStatusType } from "./types";
 
 export const StepRow = styled.div.attrs({})<{
   status: StepStatusType;
+  disabled?: boolean;
 }>`
   position: relative;
   height: 35px;
@@ -11,7 +12,7 @@ export const StepRow = styled.div.attrs({})<{
   width: 100%;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: ${(props) => props?.disabled ? 'none' : 'pointer'};
   z-index: 2;
   &:before {
     content: "";

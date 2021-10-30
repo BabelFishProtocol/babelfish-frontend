@@ -77,8 +77,20 @@ export const LinkStyled = styled.a<{backgroundColor?: string}>`
   border: solid 2px ${(props) => props.theme.primary};
   text-decoration: none;
   color: #000000;
+  cursor: pointer;
 `;
 
 export const LinkPrimary = styled(LinkStyled)`
   background-color: ${(props) => props.theme.primary};
+  &:hover {
+    color: #000000;
+  }
+`;
+
+export const LinkSecondary = styled(LinkStyled)`
+  background-color: transparent;
+  color: ${(props) => props.theme.primary};
+  &:hover {
+    color: ${(props) => props.theme.primary};
+  }
 `;
