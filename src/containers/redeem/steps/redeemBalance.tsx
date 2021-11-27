@@ -6,8 +6,9 @@ import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {redeem, getTokenBalance, EthLiveTransaction, formatCurrencyAmount} from '../../../web3/service';
+import {redeem, getTokenBalance} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
+import {EthLiveTransaction, formatCurrencyAmount} from "../../../utils/themes/ethLiveTransaction";
 
 export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
   const {
@@ -43,8 +44,8 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
             value={valueAmount}
             onChange={setAmount}
           />
-          {valueSelectedToken && valueAvailableTokenBalance !== undefined && (
-            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.bridgedTo.symbol})}</InputSubtext>
+          {valueSelectedToken && tokenOnNetwork && valueAvailableTokenBalance !== undefined && (
+            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.bridgedTo.symbol, decimals: tokenOnNetwork.decimals})}</InputSubtext>
           )}
         </div>
         <div className="col-5">
@@ -71,7 +72,7 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
               () => {
                 if (web3 && tokenOnNetwork && valueSelectedToken && valueAmount) {
                   setIsDoingAction(true);
-                  redeem(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id).then(
+                  redeem(web3, network, valueSelectedToken, valueAmount).then(
                     onSubmit
                   ).catch().then(
                     () => {

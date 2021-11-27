@@ -2,7 +2,7 @@ import React from 'react';
 import mined from '../../../resources/svgs/mined.svg';
 import mining from '../../../resources/svgs/mining.svg';
 import minedFailed from '../../../resources/svgs/mined-failed.svg';
-import {EthTransactionStatus} from "../../../web3/service";
+import {EthTransactionStatus} from "../../../utils/themes/ethLiveTransaction";
 
 interface ICircleWave {
   status: EthTransactionStatus;

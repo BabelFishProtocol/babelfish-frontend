@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import ButtonPillGroup from '../Button/buttonPillGroup';
 import {CurrencyInput} from './';
 
@@ -14,18 +14,22 @@ interface IInputButtonPillGroupProps {
 }
 
 const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
-  const [percentSelected, setPercentSelected] = useState<number | null>(null);
   const {totalAmount, availablePercentValues, currency, value, onChange, ...inputProps} = props;
+  const [percentSelected, setPercentSelected] = useState<number | null>(null);
+  const onChangeIn = useCallback(
+    (value) => {
+      setPercentSelected(null);
+      onChange && onChange(value);
+    },
+    [setPercentSelected, onChange],
+  );
   return (
     <div>
       <div>
         <CurrencyInput
           {...inputProps}
           title={props.title}
-          onChange={(value) => {
-            setPercentSelected(null);
-            onChange && onChange(value);
-          }}
+          onChange={onChangeIn}
           value={value}
           currencyText={currency}
         />

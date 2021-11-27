@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
 import {tokenType} from '../../../config/Tokens';
-import {ButtonPrimary, CurrencyInput} from '../../../lib/components';
+import {ButtonPrimary, CurrencyInputUncontrolled} from '../../../lib/components';
 import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {deposit, EthLiveTransaction, formatCurrencyAmount, getTokenBalance} from '../../../web3/service';
+import {
+  deposit,
+  getTokenBalance,
+} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
+import {EthLiveTransaction, formatCurrencyAmount} from "../../../utils/themes/ethLiveTransaction";
 
 export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
   const {
@@ -23,7 +27,7 @@ export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: 
       if (!web3 || !tokenOnNetwork) {
         return;
       }
-      getTokenBalance(web3, tokenOnNetwork.address).then(
+      getTokenBalance(web3, tokenOnNetwork.oAddress || tokenOnNetwork.address).then(
         setAvailableTokenBalance
       );
     },
@@ -34,14 +38,19 @@ export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: 
       <div className="row px-5 py-4 justify-content-between">
         <div className="col-5">
           <InputTitle>Deposit Token</InputTitle>
-          <Dropdown<tokenType> placeholder="Select Token" items={bAssets.filter(({networks}) => networks[network] !== null)} value={valueSelectedToken} onChange={setSelectedToken}/>
-          {valueSelectedToken && valueAvailableTokenBalance !== undefined && (
-            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.name})}</InputSubtext>
+          <Dropdown<tokenType>
+            placeholder="Select Token"
+            items={bAssets.filter(({networks}) => networks[network] !== null)}
+            value={valueSelectedToken}
+            onChange={setSelectedToken}
+          />
+          {valueSelectedToken && tokenOnNetwork && valueAvailableTokenBalance !== undefined && (
+            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.name, decimals: tokenOnNetwork.decimals})}</InputSubtext>
           )}
         </div>
         <div className="col-5">
           <InputTitle>Receive Amount</InputTitle>
-          <CurrencyInput
+          <CurrencyInputUncontrolled
             currencyText={valueSelectedToken?.bridgedTo.symbol || ''}
             value={valueAmount}
             disabled={true}
@@ -72,7 +81,7 @@ export const SendDeposit = ({network, onSubmit}: {network: chainEnum; onSubmit: 
               () => {
                 if (web3 && tokenOnNetwork && valueSelectedToken && valueAmount) {
                   setIsDoingAction(true);
-                  deposit(web3, tokenOnNetwork.address, valueSelectedToken.name, valueAmount, valueSelectedToken.bridgedTo.id).then(
+                  deposit(web3, network, valueSelectedToken, valueAmount).then(
                     onSubmit
                   ).catch().then(
                     () => {

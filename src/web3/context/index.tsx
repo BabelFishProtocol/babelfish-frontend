@@ -39,8 +39,7 @@ export const Web3Provider: React.FC<ProviderProps> = ({children}) => {
 };
 
 export const Web3Updater = () => {
-  const {state, updateAccount} = useWeb3Context();
-
+  const {state, updateAccount, updateChainId} = useWeb3Context();
   useEffect(() => {
     if (state.web3) {
       const ifAccountChanges = suscribeAccount(state.web3, (error, account) => {
@@ -55,7 +54,12 @@ export const Web3Updater = () => {
           updateAccount({account});
         }
       });
-      return ifAccountChanges;
+      const ethereumP = (window as any)?.ethereum;
+      ethereumP?.on('networkChanged', updateChainId);
+      return () => {
+        ifAccountChanges();
+        ethereumP?.off('networkChanged', updateChainId);
+      };
     }
   }, [state.web3, state.account]);
 

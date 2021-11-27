@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
-import moment from 'moment';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroup} from '../../components/SelectChain';
 import {chainEnum} from "../../config/Chains";
-import type {EthLiveTransaction} from "../../web3/service";
-import {EthTransaction, formatCurrencyAmount, formatDate} from "../../web3/service";
 import {RedeemContent} from './styles';
 import {RedeemBalance} from './steps/redeemBalance';
+import {
+  EthLiveTransaction,
+  EthTransaction,
+  formatCurrencyAmount,
+  formatDate
+} from "../../utils/themes/ethLiveTransaction";
 
 const STEPS = [
   'Select Redemption Network',
@@ -64,6 +67,7 @@ export const Redeem = () => {
     content = (
       <div className="d-flex justify-content-center">
         <TransactionCard
+          processName="redeeming"
           transactionData={transactionData}
           status={valueTransactionData.status}
           explorerLink={`https://explorer.rsk.co/tx/${valueTransactionData.transactionHash}`}

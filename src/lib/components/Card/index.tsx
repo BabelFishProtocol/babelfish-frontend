@@ -9,8 +9,8 @@ import {
   TransactionData,
   TransactionLoadingText,
 } from './styles';
-import {EthTransactionStatus} from "../../../web3/service";
 import {LinkPrimary} from "../Button/styles";
+import {EthTransactionStatus} from "../../../utils/themes/ethLiveTransaction";
 
 export const Card = CardStyled;
 
@@ -36,31 +36,35 @@ interface DisplayItem {
 }
 
 interface ITransactionCardProps {
+  processName: string;
   explorerLink: string;
   explorerName: string;
   transactionData: DisplayItem[];
   status: EthTransactionStatus;
 }
 //To Do move styles to styled component
-export const TransactionCard = ({
-  explorerLink,
-  transactionData,
-  status = 'pending',
-  explorerName,
-}: ITransactionCardProps) => {
+export const TransactionCard = (
+  {
+    processName,
+    explorerLink,
+    transactionData,
+    status = 'pending',
+    explorerName,
+  }: ITransactionCardProps
+) => {
   let statusText;
   if (status === 'success') {
     statusText = null;
   } else if (status === 'pending') {
     statusText = (
       <TransactionLoadingText>
-        Minting can take a couple of minutes…
+        {processName} can take a couple of minutes…
       </TransactionLoadingText>
     );
   } else {
     statusText = (
       <TransactionLoadingText>
-        We encountered an error on the minting process,<br/>
+        We encountered an error on the {processName} process,<br/>
         please try again
       </TransactionLoadingText>
     );

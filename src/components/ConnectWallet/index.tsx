@@ -90,9 +90,6 @@ export const WalletConnect = () => {
                     // (window as any)?.ethereum?.on('accountsChanged', function (accounts: any) {
                     //   console.log('accounts', accounts);
                     // })
-                    (window as any)?.ethereum?.on('networkChanged', function (networkId: any) {
-                      updateChainId(networkId);
-                    });
                     updateAccount(data);
                     setDisplayList(false);
                     setConnected({wallet: wallet});

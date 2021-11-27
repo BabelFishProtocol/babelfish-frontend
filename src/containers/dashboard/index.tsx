@@ -65,13 +65,13 @@ export const Dashboard = () => {
           <div className="col-6">
             <CardFishBalance className="px-2 py-3">
               <span>Total Fish Rewarded</span>
-              <h2>200,000 FISH</h2>
+              <h2>0 FISH</h2>
             </CardFishBalance>
           </div>
           <div className="col-6">
             <CardFishBalance className="px-2 py-3">
               <span>Earned Fish Today</span>
-              <h2>100,000 FISH</h2>
+              <h2>0 FISH</h2>
             </CardFishBalance>
           </div>
         </div>
@@ -83,7 +83,7 @@ export const Dashboard = () => {
         </FlexCard> */}
 
         <CardUsdBalance className="mb-3 p-3">
-          Total #USD Balance: <span>100,000.00</span>
+          Total #USD Balance: <span>0</span>
         </CardUsdBalance>
       </DashboardRightContainer>
     </DashboardContainer>

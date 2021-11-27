@@ -1,36 +1,67 @@
 import React, {useEffect, useState} from 'react';
-import moment from 'moment';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroup} from '../../components/SelectChain';
 import {chainEnum} from "../../config/Chains";
-import type {EthLiveTransaction} from "../../web3/service";
-import {EthTransaction, formatCurrencyAmount, formatDate} from "../../web3/service";
 import {DepositContent} from './styles';
 import {SendDeposit} from "./steps/sendDeposit";
 import BN from "bn.js";
+import {
+  EthLiveTransaction,
+  EthTransaction,
+  formatCurrencyAmount,
+  formatDate
+} from "../../utils/themes/ethLiveTransaction";
 
 const STEPS = [
   'Select Deposit Network',
   'Deposit to Babelfish',
+  'Approving Process',
+  'Approving Complete',
   'Minting Process',
   'Minting Complete',
 ];
 
 export const Deposit = () => {
   const [valueCurrentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);
-  const [valueLiveTransaction, setLiveTransaction] = useState<EthLiveTransaction | undefined>(undefined);
-  const [valueTransactionData, setTransactionData] = useState<EthTransaction | undefined>(undefined);
+  const [valueLiveApproveTransaction, setLiveApproveTransaction] = useState<EthLiveTransaction | undefined>(undefined);
+  const [valueLiveMintTransaction, setLiveMintTransaction] = useState<EthLiveTransaction | undefined>(undefined);
+  const [valueApproveTransactionData, setApproveTransactionData] = useState<EthTransaction | undefined>(undefined);
+  const [valueMintTransactionData, setMintTransactionData] = useState<EthTransaction | undefined>(undefined);
   useEffect(
     () => {
-      if (valueLiveTransaction) {
-        valueLiveTransaction.on('receipt', setTransactionData);
-        valueLiveTransaction.on('success', setTransactionData);
-        valueLiveTransaction.on('fail', setTransactionData);
-        return () => valueLiveTransaction.offAll();
+      if (valueLiveApproveTransaction) {
+        valueLiveApproveTransaction.on('receipt', setApproveTransactionData);
+        valueLiveApproveTransaction.on(
+          'success',
+          (dd: any) => {
+            setApproveTransactionData(dd);
+            setLiveMintTransaction(valueLiveApproveTransaction.getNext() || undefined);
+            valueLiveApproveTransaction.offAll();
+          }
+        );
+        valueLiveApproveTransaction.on(
+          'fail',
+          (dd: any) => {
+            setApproveTransactionData(dd);
+            valueLiveApproveTransaction.offAll();
+          },
+        );
+        return () => valueLiveApproveTransaction.offAll();
       }
     },
-    [valueLiveTransaction, setTransactionData],
+    [valueLiveApproveTransaction, setApproveTransactionData],
+  );
+  useEffect(
+    () => {
+      if (valueLiveMintTransaction) {
+        valueLiveMintTransaction.on('receipt', setMintTransactionData);
+        valueLiveMintTransaction.on('success', setMintTransactionData);
+        valueLiveMintTransaction.on('fail', setMintTransactionData);
+        return () => valueLiveMintTransaction.offAll();
+      }
+    },
+    [valueLiveMintTransaction, setMintTransactionData],
   );
   let content;
   let currentStep;
@@ -43,35 +74,65 @@ export const Deposit = () => {
         }}
       />
     );
-  } else if (!valueTransactionData) {
-    currentStep = 1;
-    content = <SendDeposit network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
   } else {
-    const transactionData = [
-      {name: 'Date/Time', value: formatDate(valueTransactionData.detectedAt)},
-      {name: 'Amount Sent', value: formatCurrencyAmount(valueTransactionData.source)},
-      {name: 'Amount Minted', value: formatCurrencyAmount(valueTransactionData.destination)},
-      {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueTransactionData?.gasUsed || 0)})}`},
-      // {
-      //   name: 'ETH Deposit',
-      //   value: <Link>0X413.89054</Link>,
-      // },
-      // {
-      //   name: 'RSK Relay Hash',
-      //   value: <Link>0X413.89054</Link>,
-      // },
-    ];
-    content = (
-      <div className="d-flex justify-content-center">
-        <TransactionCard
-          transactionData={transactionData}
-          status={valueTransactionData.status}
-          explorerLink={`https://explorer.rsk.co/tx/${valueTransactionData.transactionHash}`}
-          explorerName="rsk explorer"
-        />
-      </div>
-    );
-    currentStep = valueTransactionData.status === 'pending' ? 2 : 3;
+    if (!valueMintTransactionData) {
+      if (!valueApproveTransactionData) {
+        currentStep = 1;
+        content = <SendDeposit network={valueCurrentNetwork} onSubmit={setLiveApproveTransaction}/>;
+      } else {
+        content = (
+          <div className="d-flex justify-content-center">
+            <TransactionCard
+              processName="approval"
+              transactionData={[
+                {name: 'Date/Time', value: formatDate(valueApproveTransactionData.detectedAt)},
+                {name: 'Amount Sent', value: formatCurrencyAmount(valueApproveTransactionData.source)},
+                {name: 'Amount Minted', value: formatCurrencyAmount(valueApproveTransactionData.destination)},
+                {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueApproveTransactionData?.gasUsed || 0)})}`},
+                // {
+                //   name: 'ETH Deposit',
+                //   value: <Link>0X413.89054</Link>,
+                // },
+                // {
+                //   name: 'RSK Relay Hash',
+                //   value: <Link>0X413.89054</Link>,
+                // },
+              ]}
+              status={valueApproveTransactionData.status}
+              explorerLink={`https://explorer.rsk.co/tx/${valueApproveTransactionData.transactionHash}`}
+              explorerName="rsk explorer"
+            />
+          </div>
+        );
+        currentStep = valueApproveTransactionData.status === 'pending' ? 2 : 3;
+      }
+    } else {
+      content = (
+        <div className="d-flex justify-content-center">
+          <TransactionCard
+            processName="minting"
+            transactionData={[
+              {name: 'Date/Time', value: formatDate(valueMintTransactionData.detectedAt)},
+              {name: 'Amount Sent', value: formatCurrencyAmount(valueMintTransactionData.source)},
+              {name: 'Amount Minted', value: formatCurrencyAmount(valueMintTransactionData.destination)},
+              {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueMintTransactionData?.gasUsed || 0)})}`},
+              // {
+              //   name: 'ETH Deposit',
+              //   value: <Link>0X413.89054</Link>,
+              // },
+              // {
+              //   name: 'RSK Relay Hash',
+              //   value: <Link>0X413.89054</Link>,
+              // },
+            ]}
+            status={valueMintTransactionData.status}
+            explorerLink={`https://explorer.rsk.co/tx/${valueMintTransactionData.transactionHash}`}
+            explorerName="rsk explorer"
+          />
+        </div>
+      );
+      currentStep = valueMintTransactionData.status === 'pending' ? 4 : 5;
+    }
   }
   return (
     <div className="row g-3 align-items-start h-100">
@@ -83,8 +144,11 @@ export const Deposit = () => {
             onStepChange={(newStep) => {
               if (newStep === 0) {
                 setCurrentNetwork(undefined);
+                setMintTransactionData(undefined);
+                setApproveTransactionData(undefined);
               } else if (newStep === 1) {
-                setTransactionData(undefined);
+                setMintTransactionData(undefined);
+                setApproveTransactionData(undefined);
               }
             }}
           />
