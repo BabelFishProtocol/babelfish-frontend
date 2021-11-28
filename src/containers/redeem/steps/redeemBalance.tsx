@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
 import {tokenType} from '../../../config/Tokens';
-import {ButtonPrimary, CurrencyInput} from '../../../lib/components';
+import {ButtonPrimary, CurrencyInputUncontrolled} from '../../../lib/components';
 import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
@@ -44,8 +44,8 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
             value={valueAmount}
             onChange={setAmount}
           />
-          {valueSelectedToken && tokenOnNetwork && valueAvailableTokenBalance !== undefined && (
-            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.bridgedTo.symbol, decimals: tokenOnNetwork.decimals})}</InputSubtext>
+          {valueSelectedToken && valueAvailableTokenBalance !== undefined && (
+            <InputSubtext>Available Balance: {formatCurrencyAmount({amount: valueAvailableTokenBalance, currency: valueSelectedToken.bridgedTo.symbol, decimals: 18})}</InputSubtext>
           )}
         </div>
         <div className="col-5">
@@ -57,7 +57,7 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
         <div className="col-5"/>
         <div className="col-5">
           <InputTitle>Receive Amount</InputTitle>
-          <CurrencyInput
+          <CurrencyInputUncontrolled
             currencyText={valueSelectedToken?.name || ''}
             value={valueAmount}
             disabled={true}

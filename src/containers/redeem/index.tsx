@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import BN from 'bn.js';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
-import {ChainGroup} from '../../components/SelectChain';
+import {ChainGroupNoSwitch} from '../../components/SelectChain';
 import {chainEnum} from "../../config/Chains";
 import {RedeemContent} from './styles';
 import {RedeemBalance} from './steps/redeemBalance';
@@ -28,8 +28,20 @@ export const Redeem = () => {
     () => {
       if (valueLiveTransaction) {
         valueLiveTransaction.on('receipt', setTransactionData);
-        valueLiveTransaction.on('success', setTransactionData);
-        valueLiveTransaction.on('fail', setTransactionData);
+        valueLiveTransaction.on(
+          'success',
+          (dd: any) => {
+            setTransactionData(dd);
+            valueLiveTransaction.offAll();
+          }
+        );
+        valueLiveTransaction.on(
+          'fail',
+          (dd: any) => {
+            setTransactionData(dd);
+            valueLiveTransaction.offAll();
+          }
+        );
         return () => valueLiveTransaction.offAll();
       }
     },
@@ -40,7 +52,7 @@ export const Redeem = () => {
   if (!valueCurrentNetwork) {
     currentStep = 0;
     content = (
-      <ChainGroup
+      <ChainGroupNoSwitch
         onChange={(name) => {
           setCurrentNetwork(name);
         }}

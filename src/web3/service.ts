@@ -22,7 +22,7 @@ export async function listBassets(web3: Web3, bridgedTo: destinationTokenEnum) {
 
 export async function getTokenBalance(web3: Web3, tokenAddress: string) : Promise<BN> {
   const account = (await web3.eth.getAccounts())[0];
-  const tokenContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress.toUpperCase());
+  const tokenContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress);
   const balance = await tokenContract.methods.balanceOf(account).call();
   return new BN(balance);
 }
@@ -38,15 +38,13 @@ export async function redeem(
   const receiverAddress = _receiverAddress ? _receiverAddress : account;
   const mAssetAddress = BRIDGED_ADDRESSES[bridgedTo].MassetV3.address;
   const mAssetContract = new web3.eth.Contract(BRIDGED_ADDRESSES[bridgedTo].MassetV3.abi, mAssetAddress);
-  const bAssetContract = new web3.eth.Contract(ERC20ABI as any, bAssetAddress);
 
   return new EthLiveTransaction(
     () => {
       if (sourceNetwork === chainEnum.RSK) {
         return mAssetContract.methods.redeemTo(bAssetAddress, quantity, receiverAddress).send({from: account});
       }
-      const bridgeSpec = FROM_RSK_BRIDGE_ADDRESSES[sourceNetwork];
-      return bAssetContract.methods.approve(bridgeSpec.address, quantity).send({from: account});
+      return mAssetContract.methods.redeemToBridge(bAssetAddress, quantity, receiverAddress).send({from: account});
     },
     {
       currency: bAssetName,
@@ -56,29 +54,6 @@ export async function redeem(
       currency: bridgedTo.toString(),
       amount: quantity,
     },
-    () => new EthLiveTransaction(
-      () => {
-        if (sourceNetwork === chainEnum.RSK) {
-          return null;
-          // return mAssetContract.methods.redeemTo(bAssetAddress, quantity, receiverAddress).send({from: account});
-        }
-        const bridgeSpec = FROM_RSK_BRIDGE_ADDRESSES[sourceNetwork];
-        const bridgeContract = new web3.eth.Contract(bridgeSpec.abi as any, bridgeSpec.address);
-        const extraData = web3.eth.abi.encodeParameters(
-          ['address'],
-          [receiverAddress],
-        );
-        return bridgeContract.methods.receiveTokensAt(bAssetAddress, quantity, mAssetAddress, extraData).send({from: account});
-      },
-      {
-        currency: bAssetName,
-        amount: quantity,
-      },
-      {
-        currency: bridgedTo.toString(),
-        amount: quantity,
-      },
-    ),
   );
 }
 

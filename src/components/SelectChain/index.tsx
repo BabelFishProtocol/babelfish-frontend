@@ -103,7 +103,27 @@ export const ChainGroup = ({onChange}: IChainGroupProps) => {
             onClick={
               () => {
                 setClicked(chain);
-                // onChange(chain.id);
+              }
+            }
+            key={chain.id}
+            icon={chain.icon}
+            name={chain.name}
+          />
+        );
+      })}
+    </ChainGroupContainer>
+  );
+};
+
+export const ChainGroupNoSwitch = ({onChange}: IChainGroupProps) => {
+  return (
+    <ChainGroupContainer>
+      {chains.map((chain: chainType) => {
+        return (
+          <ChainButton
+            onClick={
+              () => {
+                onChange(chain.id);
               }
             }
             key={chain.id}
