@@ -6,9 +6,10 @@ import Dropdown from '../../../lib/components/Dropdown';
 import InputButtonPillGroup from '../../../lib/components/Input/inputButtonPillGroup';
 import {InputSubtext, InputTitle} from '../styles';
 import {chainEnum} from "../../../config/Chains";
-import {redeem, getTokenBalance} from '../../../web3/service';
+import {bridgeFees, getTokenBalance, redeem, redeemEstimateGas} from '../../../web3/service';
 import {useWeb3Context} from "../../../web3/context";
 import {EthLiveTransaction, formatCurrencyAmount} from "../../../utils/themes/ethLiveTransaction";
+import {gasAsset} from "../../../web3/Contracts";
 
 export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit: (trx: EthLiveTransaction) => void}) => {
   const {
@@ -18,6 +19,8 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
   const [valueSelectedToken, setSelectedToken] = useState<tokenType | undefined>(undefined);
   const [valueAmount, setAmount] = useState<BN | null>(new BN(0));
   const [valueAvailableTokenBalance, setAvailableTokenBalance] = useState<BN | undefined>(undefined);
+  const [valueGasEstimate, setGasEstimate] = useState<BN | undefined>(undefined);
+  const [valueBridgeFee, setBridgeFee] = useState<BN | undefined>(undefined);
   const tokenOnNetwork = valueSelectedToken?.networks?.[network];
   useEffect(
     () => {
@@ -30,6 +33,29 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
     },
     [web3, valueSelectedToken, setAvailableTokenBalance],
   );
+  useEffect(
+    () => {
+      if (!web3 || !network || !valueSelectedToken || !valueAmount) {
+        return;
+      }
+      redeemEstimateGas(web3, network, valueSelectedToken, valueAmount).then(
+        setGasEstimate
+      );
+    },
+    [web3, network, valueSelectedToken, setGasEstimate, valueAmount],
+  );
+  useEffect(
+    () => {
+      if (!web3 || !network) {
+        return;
+      }
+      bridgeFees(web3, network, false).then(
+        setBridgeFee
+      );
+    },
+    [web3, network, setBridgeFee],
+  );
+
   return (
     <>
       <div className="row px-5 py-2 justify-content-between">
@@ -62,8 +88,8 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
             value={valueAmount}
             disabled={true}
           />
-          <InputSubtext>Transaction fee: 0</InputSubtext><br/>
-          <InputSubtext>Bridge fee: 0</InputSubtext>
+          <InputSubtext>Transaction fee: {valueGasEstimate && valueSelectedToken && formatCurrencyAmount({amount: valueGasEstimate, currency: gasAsset(chainEnum.RSK), decimals: 18})}</InputSubtext><br/>
+          <InputSubtext>Bridge fee: {valueBridgeFee && valueSelectedToken && formatCurrencyAmount({amount: valueBridgeFee, currency: valueSelectedToken.name, decimals: 18})}</InputSubtext>
           <ButtonPrimary
             style={{marginTop: '30px'}}
             className="w-100"

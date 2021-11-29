@@ -12,6 +12,7 @@ import {
   formatCurrencyAmount,
   formatDate
 } from "../../utils/themes/ethLiveTransaction";
+import {trxExplorerLink} from "../../web3/Contracts";
 
 const STEPS = [
   'Select Deposit Network',
@@ -99,8 +100,8 @@ export const Deposit = () => {
                 // },
               ]}
               status={valueApproveTransactionData.status}
-              explorerLink={`https://explorer.rsk.co/tx/${valueApproveTransactionData.transactionHash}`}
-              explorerName="rsk explorer"
+              explorerLink={trxExplorerLink(valueCurrentNetwork, valueApproveTransactionData.transactionHash)}
+              explorerName="see on explorer"
             />
           </div>
         );
@@ -126,8 +127,8 @@ export const Deposit = () => {
               // },
             ]}
             status={valueMintTransactionData.status}
-            explorerLink={`https://explorer.rsk.co/tx/${valueMintTransactionData.transactionHash}`}
-            explorerName="rsk explorer"
+            explorerLink={trxExplorerLink(valueCurrentNetwork, valueMintTransactionData.transactionHash)}
+            explorerName="explorer"
           />
         </div>
       );

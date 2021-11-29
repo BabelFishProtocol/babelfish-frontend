@@ -12,6 +12,7 @@ import {
   formatCurrencyAmount,
   formatDate
 } from "../../utils/themes/ethLiveTransaction";
+import {trxExplorerLink} from "../../web3/Contracts";
 
 const STEPS = [
   'Select Redemption Network',
@@ -82,8 +83,8 @@ export const Redeem = () => {
           processName="redeeming"
           transactionData={transactionData}
           status={valueTransactionData.status}
-          explorerLink={`https://explorer.rsk.co/tx/${valueTransactionData.transactionHash}`}
-          explorerName="rsk explorer"
+          explorerLink={trxExplorerLink(chainEnum.RSK, valueTransactionData.transactionHash)}
+          explorerName="explorer"
         />
       </div>
     );
