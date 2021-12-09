@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroup} from '../../components/SelectChain';
-import {chainEnum} from "../../config/Chains";
+import {chainEnum, trxExplorerLink} from "../../config/Chains";
 import {DepositContent} from './styles';
 import {SendDeposit} from "./steps/sendDeposit";
 import BN from "bn.js";
@@ -12,7 +12,6 @@ import {
   formatCurrencyAmount,
   formatDate
 } from "../../utils/themes/ethLiveTransaction";
-import {trxExplorerLink} from "../../web3/Contracts";
 
 const STEPS = [
   'Select Deposit Network',

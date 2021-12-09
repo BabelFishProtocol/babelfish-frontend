@@ -3,7 +3,7 @@ import BN from 'bn.js';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroupNoSwitch} from '../../components/SelectChain';
-import {chainEnum} from "../../config/Chains";
+import {chainEnum, trxExplorerLink} from "../../config/Chains";
 import {RedeemContent} from './styles';
 import {RedeemBalance} from './steps/redeemBalance';
 import {
@@ -12,7 +12,6 @@ import {
   formatCurrencyAmount,
   formatDate
 } from "../../utils/themes/ethLiveTransaction";
-import {trxExplorerLink} from "../../web3/Contracts";
 
 const STEPS = [
   'Select Redemption Network',

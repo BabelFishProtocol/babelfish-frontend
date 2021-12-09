@@ -14,7 +14,6 @@ import {Banner} from './lib/components/Banner';
 import {Body, Content} from './styles';
 
 function App() {
-  console.log('process.env.REACT_APP_BASE_PATH', process.env.REACT_APP_BASE_PATH);
   const [showBanner, setShowBanner] = useState(true);
   return (
     <Body>

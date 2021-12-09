@@ -24,9 +24,7 @@ export async function listBassets(web3: Web3, bridgedTo: destinationTokenEnum) {
 export async function getTokenBalance(web3: Web3, tokenAddress: string) : Promise<BN> {
   const account = (await web3.eth.getAccounts())[0];
   const tokenContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress);
-  console.log('tokenAddress', tokenAddress);
   const balance = await tokenContract.methods.balanceOf(account.toLowerCase()).call();
-  console.log('balance', balance);
   return new BN(balance);
 }
 
@@ -124,12 +122,16 @@ export async function deposit(
   const receiverAddress = _receiverAddress ? _receiverAddress : account;
   const mAssetAddress = BRIDGED_ADDRESSES[bridgedTo].MassetV3.address;
   const mAssetContract = new web3.eth.Contract(BRIDGED_ADDRESSES[bridgedTo].MassetV3.abi, mAssetAddress);
-  const bAssetContract = new web3.eth.Contract(ERC20ABI as any, bAssetAddress);
-  const assetContract = new web3.eth.Contract(ERC20ABI as any, tokenOnNetwork.oAddress);
+  let assetContract: any;
+  if (sourceNetwork === chainEnum.RSK) {
+    assetContract = new web3.eth.Contract(ERC20ABI as any, bAssetAddress);
+  } else {
+    assetContract = new web3.eth.Contract(ERC20ABI as any, tokenOnNetwork.oAddress);
+  }
   return new EthLiveTransaction(
     () => {
       if (sourceNetwork === chainEnum.RSK) {
-        return bAssetContract.methods.approve(mAssetAddress, quantity2).send({from: account});
+        return assetContract.methods.approve(mAssetAddress, quantity2).send({from: account});
       }
       const bridgeSpec = FROM_RSK_BRIDGE_ADDRESSES[sourceNetwork];
       return assetContract.methods.approve(bridgeSpec.address, quantity2).send({from: account});
