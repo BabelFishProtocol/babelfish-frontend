@@ -39,6 +39,12 @@ export const CurrencyInput = ({onChange, value, ...props}: IInputProps) => {
     },
     [valueTmp, onChange],
   );
+  React.useEffect(
+    () => {
+      setTmp(value ? Web3.utils.fromWei(value).toString() : '');
+    },
+    [value, setTmp],
+  );
   const onChangeCb = React.useCallback((e: any) => {
     const newValue = e.target.value && e.target.value.replace(/[, \\$_]/g, '');
     isPartialValid(newValue) && setTmp(newValue);
