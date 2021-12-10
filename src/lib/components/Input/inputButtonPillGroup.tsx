@@ -23,6 +23,13 @@ const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
     },
     [setPercentSelected, onChange],
   );
+  const onChangePercent = useCallback(
+    (value) => {
+      setPercentSelected(value);
+      onChange && onChange(totalAmount.mul(new BN(value)).div(new BN(100)));
+    },
+    [totalAmount, onChange, percentSelected],
+  );
   return (
     <div>
       <div>
@@ -36,12 +43,7 @@ const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
         <ButtonPillGroup
           availableValues={availablePercentValues}
           selected={percentSelected}
-          onChangeSelected={(percent: number) => {
-            setPercentSelected(percent);
-            if (percent) {
-              onChange && onChange(totalAmount.mul(new BN(percent)).div(new BN(100)));
-            }
-          }}
+          onChangeSelected={onChangePercent}
         />
       </div>
     </div>
