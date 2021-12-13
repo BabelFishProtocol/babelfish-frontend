@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "ArbelRegular";
-  src: local("ArbelHagildaRegular"),
-    url(./ArbelHagildaRegular.otf) format("opentype");
+  font-family: 'ArbelRegular';
+  src: local('ArbelHagildaRegular'),
+    url(./ArbelHagildaRegular.otf) format('opentype');
 }
 
 @font-face {
-  font-family: "ArbelBold";
-  src: local("ArbelHagildaBold"), url(./ArbelHagildaBold.otf) format("opentype");
+  font-family: 'ArbelBold';
+  src: local('ArbelHagildaBold'), url(./ArbelHagildaBold.otf) format('opentype');
 }

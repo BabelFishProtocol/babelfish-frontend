@@ -28,7 +28,7 @@ export const connectMetamask = async () => {
     const web3 = new Web3(ethereum as any);
     const accounts = await web3.eth.requestAccounts();
     const chainId = await (await web3.eth.getChainId()).toString();
-    console.log(chainId)
+    console.log(chainId);
     return {web3, account: accounts[0] || '', chainId};
   } else {
     throw new Error(

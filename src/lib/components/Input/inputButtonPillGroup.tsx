@@ -14,7 +14,14 @@ interface IInputButtonPillGroupProps {
 }
 
 const InputButtonPillGroup = (props: IInputButtonPillGroupProps) => {
-  const {totalAmount, availablePercentValues, currency, value, onChange, ...inputProps} = props;
+  const {
+    totalAmount,
+    availablePercentValues,
+    currency,
+    value,
+    onChange,
+    ...inputProps
+  } = props;
   const [percentSelected, setPercentSelected] = useState<number | null>(null);
   const onChangeIn = useCallback(
     (value) => {

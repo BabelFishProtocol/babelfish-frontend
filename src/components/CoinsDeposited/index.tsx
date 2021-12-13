@@ -1,6 +1,6 @@
 import React from 'react';
 import {CoinContainer, CoinIcon} from './styles';
-import {useWeb3Context} from "../../web3/context";
+import {useWeb3Context} from '../../web3/context';
 
 export const CoinsDeposited = () => {
   const {

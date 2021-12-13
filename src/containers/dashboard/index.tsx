@@ -1,9 +1,6 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import {
-  ButtonPrimary,
-  ButtonSecondary,
-} from '../../lib/components';
+import {ButtonPrimary, ButtonSecondary} from '../../lib/components';
 import {
   CardDepositRedeem,
   CardFishBalance,
@@ -50,12 +47,18 @@ export const Dashboard = () => {
           <span className="mb-3">You can deposit or redeem anytime</span>
           <ButtonPrimary
             className="w-100 mb-3"
-            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/deposit`)}>
+            onClick={() =>
+              history.push(`${process.env.REACT_APP_BASE_PATH}/deposit`)
+            }
+          >
             Deposit
           </ButtonPrimary>
           <ButtonSecondary
             className="w-100"
-            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/redeem`)}>
+            onClick={() =>
+              history.push(`${process.env.REACT_APP_BASE_PATH}/redeem`)
+            }
+          >
             Redeem
           </ButtonSecondary>
         </CardDepositRedeem>

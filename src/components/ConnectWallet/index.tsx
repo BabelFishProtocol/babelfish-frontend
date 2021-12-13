@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { ButtonPrimary } from '../../lib/components';
-import { wallets, walletType } from '../../config/Wallets';
-import { ReactComponent as LogoutLogo } from '../../resources/svgs/log-out.svg';
+import React, {useState} from 'react';
+import {ButtonPrimary} from '../../lib/components';
+import {wallets, walletType} from '../../config/Wallets';
+import {ReactComponent as LogoutLogo} from '../../resources/svgs/log-out.svg';
 // @ts-ignore
 import useOnClickOutside from 'use-onclickoutside';
 
@@ -14,19 +14,19 @@ import {
   WalletIcon,
   WalletPopUp,
 } from './styles';
-import { connectWallet, disconnectWallet } from '../../web3/api';
-import { useWeb3Context } from '../../web3/context';
-import { listBassets } from "../../web3/service";
+import {connectWallet, disconnectWallet} from '../../web3/api';
+import {useWeb3Context} from '../../web3/context';
+import {listBassets} from '../../web3/service';
 import {
   baseTokenCatalog,
   destinationTokenEnum,
   destinationTokensCatalog,
-  joinWithAddressList
-} from "../../config/Tokens";
+  joinWithAddressList,
+} from '../../config/Tokens';
 
 export const WalletConnect = () => {
   const {
-    state: { account, web3 },
+    state: {account, web3},
     updateAccount,
     updateBassets,
     updateChainId,
@@ -53,7 +53,8 @@ export const WalletConnect = () => {
       ) : (
         <ButtonPrimary
           className="position-relative"
-          onClick={() => setDisplayList(!displayList)}>
+          onClick={() => setDisplayList(!displayList)}
+        >
           CONNECT WALLET
         </ButtonPrimary>
       )}
@@ -91,9 +92,9 @@ export const WalletConnect = () => {
                     //   console.log('accounts', accounts);
                     // })
                     updateAccount(data);
-                    updateChainId(data.chainId)
+                    updateChainId(data.chainId);
                     setDisplayList(false);
-                    setConnected({ wallet: wallet });
+                    setConnected({wallet: wallet});
                     setLoading(false);
                   },
                   (error) => {
@@ -103,7 +104,8 @@ export const WalletConnect = () => {
                 )
                 .catch(() => console.log('error'));
             }}
-            key={wallet.id}>
+            key={wallet.id}
+          >
             {wallet.name}
             <WalletIcon src={wallet.icon} />
           </WalletContainer>

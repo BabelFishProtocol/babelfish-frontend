@@ -6,7 +6,7 @@ import {
   SelectChainContainer,
 } from './styles';
 import {chains, chainEnum, chainType} from '../../config/Chains';
-import {useWeb3Context} from "../../web3/context";
+import {useWeb3Context} from '../../web3/context';
 
 interface IChainProps {
   name: string;
@@ -27,24 +27,32 @@ interface IChainGroupProps {
   onChange: (ch: chainEnum) => void;
 }
 
-async function addNetwork(ethereumProvider: any, {chainId, name, rpcUrls, nativeCurrency, blockExplorerUrls}: chainType) {
+async function addNetwork(
+  ethereumProvider: any,
+  {chainId, name, rpcUrls, nativeCurrency, blockExplorerUrls}: chainType,
+) {
   if (['0x3', '0x1'].includes(chainId)) {
     return;
   }
   await ethereumProvider.request({
-    method: "wallet_addEthereumChain",
-    params: [{
-      chainId,
-      chainName: name,
-      rpcUrls,
-      nativeCurrency,
-      blockExplorerUrls,
-    }],
+    method: 'wallet_addEthereumChain',
+    params: [
+      {
+        chainId,
+        chainName: name,
+        rpcUrls,
+        nativeCurrency,
+        blockExplorerUrls,
+      },
+    ],
   });
 }
 
 async function switchNetwork(ethereumProvider: any, chainId: string) {
-  return ethereumProvider.request({ method: 'wallet_switchEthereumChain', params: [{chainId}]});
+  return ethereumProvider.request({
+    method: 'wallet_switchEthereumChain',
+    params: [{chainId}],
+  });
 }
 
 export const ChainGroup = ({onChange}: IChainGroupProps) => {
@@ -55,56 +63,47 @@ export const ChainGroup = ({onChange}: IChainGroupProps) => {
     },
   } = useWeb3Context();
   const [valueClicked, setClicked] = useState<chainType | undefined>(undefined);
-  useEffect(
-    () => {
-      if (valueClicked && web3) {
-        web3.eth.getChainId().then(
-          (chainId) => {
-            if (chainId) {
-              if (chainId === parseInt(valueClicked.chainId, 16)) {
-                setClicked(undefined);
-                onChange(valueClicked.id);
-                return;
-              }
-              const ethereumP = (window as any).ethereum;
-              const currentProvider = web3?.currentProvider as any;
-              if (currentProvider?.isMetaMask && ethereumP) {
-                addNetwork(ethereumP, valueClicked).then(
+  useEffect(() => {
+    if (valueClicked && web3) {
+      web3.eth.getChainId().then((chainId) => {
+        if (chainId) {
+          if (chainId === parseInt(valueClicked.chainId, 16)) {
+            setClicked(undefined);
+            onChange(valueClicked.id);
+            return;
+          }
+          const ethereumP = (window as any).ethereum;
+          const currentProvider = web3?.currentProvider as any;
+          if (currentProvider?.isMetaMask && ethereumP) {
+            addNetwork(ethereumP, valueClicked).then(() => {
+              switchNetwork(ethereumP, valueClicked.chainId)
+                .then(
                   () => {
-                    switchNetwork(ethereumP, valueClicked.chainId).then(
-                      () => {
-                        onChange(valueClicked.id);
-                      },
-                      () => {},
-                    ).then(
-                      () => {
-                        setClicked(undefined);
-                      },
-                    );
-                  }
-                );
-              }
-            }
-          },
-        );
-      }
-    },
-    [
-      valueClicked,
-      web3,
-      // chainId,
-    ],
-  );
+                    onChange(valueClicked.id);
+                  },
+                  () => {},
+                )
+                .then(() => {
+                  setClicked(undefined);
+                });
+            });
+          }
+        }
+      });
+    }
+  }, [
+    valueClicked,
+    web3,
+    // chainId,
+  ]);
   return (
     <ChainGroupContainer>
       {chains.map((chain: chainType) => {
         return (
           <ChainButton
-            onClick={
-              () => {
-                setClicked(chain);
-              }
-            }
+            onClick={() => {
+              setClicked(chain);
+            }}
             key={chain.id}
             icon={chain.icon}
             name={chain.name}
@@ -121,11 +120,9 @@ export const ChainGroupNoSwitch = ({onChange}: IChainGroupProps) => {
       {chains.map((chain: chainType) => {
         return (
           <ChainButton
-            onClick={
-              () => {
-                onChange(chain.id);
-              }
-            }
+            onClick={() => {
+              onChange(chain.id);
+            }}
             key={chain.id}
             icon={chain.icon}
             name={chain.name}

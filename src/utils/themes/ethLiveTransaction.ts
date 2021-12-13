@@ -1,15 +1,20 @@
-import BN from "bn.js";
-import Web3 from "web3";
-import moment from "moment";
+import BN from 'bn.js';
+import Web3 from 'web3';
+import moment from 'moment';
 
 export class EthLiveTransaction {
   private readonly events: Record<string, Function>;
   private readonly missCalls: Record<string, any>;
-  public getNext: () => (EthLiveTransaction | null);
+  public getNext: () => EthLiveTransaction | null;
   public source: CurrencyAmount;
   public destination: CurrencyAmount;
   public detectedAt?: Date;
-  constructor(ethCall: () => any, source: CurrencyAmount, destination: CurrencyAmount, getNext: () => (EthLiveTransaction | null) = () => null) {
+  constructor(
+    ethCall: () => any,
+    source: CurrencyAmount,
+    destination: CurrencyAmount,
+    getNext: () => EthLiveTransaction | null = () => null,
+  ) {
     this.getNext = getNext;
     this.events = {};
     this.missCalls = {};
@@ -20,7 +25,7 @@ export class EthLiveTransaction {
   private setEventListeners(rr: any) {
     const confirmationHandler = (confirmation: number, receipt: any) => {
       if (confirmation > 0) {
-        this.emit('success', ({
+        this.emit('success', {
           transactionHash: receipt.transactionHash,
           cumulativeGasUsed: receipt.cumulativeGasUsed,
           gasUsed: receipt.gasUsed,
@@ -28,14 +33,14 @@ export class EthLiveTransaction {
           source: this.source,
           destination: this.destination,
           detectedAt: this.detectedAt,
-        } as EthTransaction));
+        } as EthTransaction);
         rr.off('confirmation', confirmationHandler);
       }
     };
     rr.on('confirmation', confirmationHandler);
     rr.once('transactionHash', (transactionHash: string) => {
       this.detectedAt = new Date();
-      this.emit('receipt', ({
+      this.emit('receipt', {
         transactionHash,
         cumulativeGasUsed: undefined,
         gasUsed: undefined,
@@ -43,12 +48,12 @@ export class EthLiveTransaction {
         source: this.source,
         destination: this.destination,
         detectedAt: this.detectedAt,
-      } as EthTransaction));
+      } as EthTransaction);
     });
     rr.once('error', (error: Error) => {
       const receipt = (error as any).receipt;
       console.log('error', error);
-      this.emit('fail', ({
+      this.emit('fail', {
         transactionHash: receipt?.transactionHash,
         cumulativeGasUsed: receipt?.cumulativeGasUsed,
         gasUsed: receipt?.gasUsed,
@@ -56,17 +61,15 @@ export class EthLiveTransaction {
         source: this.source,
         destination: this.destination,
         detectedAt: this.detectedAt,
-      } as EthTransaction));
+      } as EthTransaction);
     });
   }
   on(name: string, listener: Function) {
     this.events[name] = listener;
     if (this.missCalls[name]) {
-      this.missCalls[name].forEach(
-        (dd: any) => {
-          listener(dd);
-        },
-      );
+      this.missCalls[name].forEach((dd: any) => {
+        listener(dd);
+      });
     }
   }
   off(name: string) {
@@ -124,7 +127,10 @@ export function formatAmount(inn: Amount): string {
 }
 
 export function formatCurrencyAmount(inn: CurrencyAmount): string {
-  return `${formatAmount({...inn, decimals: inn.decimals === undefined ? 18 : inn.decimals})} ${inn.currency}`;
+  return `${formatAmount({
+    ...inn,
+    decimals: inn.decimals === undefined ? 18 : inn.decimals,
+  })} ${inn.currency}`;
 }
 
 export function formatDate(inn: Date): string {

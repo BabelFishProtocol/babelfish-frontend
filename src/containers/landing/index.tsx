@@ -17,14 +17,20 @@ export const Landing = () => {
         <div className="col-6">
           <ButtonPrimary
             className="w-100"
-            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/deposit`)}>
+            onClick={() =>
+              history.push(`${process.env.REACT_APP_BASE_PATH}/deposit`)
+            }
+          >
             Deposit
           </ButtonPrimary>
         </div>
         <div className="col-6">
           <ButtonSecondary
             className="w-100"
-            onClick={() => history.push(`${process.env.REACT_APP_BASE_PATH}/redeem`)}>
+            onClick={() =>
+              history.push(`${process.env.REACT_APP_BASE_PATH}/redeem`)
+            }
+          >
             Redeem
           </ButtonSecondary>
         </div>

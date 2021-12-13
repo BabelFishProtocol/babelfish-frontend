@@ -1,7 +1,7 @@
-import React from "react";
-import { StepRow, StepNumber, StepText } from "./styles";
-import { StepStatusType } from "./types";
-import { CheckIcon } from "../../resources/svgs/check";
+import React from 'react';
+import {StepRow, StepNumber, StepText} from './styles';
+import {StepStatusType} from './types';
+import {CheckIcon} from '../../resources/svgs/check';
 
 interface IStepsProps {
   steps: React.ReactNode[];
@@ -9,15 +9,15 @@ interface IStepsProps {
   currentStep: number;
 }
 
-export const Steps = ({ steps, currentStep, onStepChange }: IStepsProps) => {
+export const Steps = ({steps, currentStep, onStepChange}: IStepsProps) => {
   return (
     <>
       {steps.map((step, index) => {
-        let stepStatus: StepStatusType = "none";
+        let stepStatus: StepStatusType = 'none';
         if (currentStep > index) {
-          stepStatus = "done";
+          stepStatus = 'done';
         } else if (currentStep === index) {
-          stepStatus = "active";
+          stepStatus = 'active';
         }
         return (
           <StepRow
@@ -27,7 +27,7 @@ export const Steps = ({ steps, currentStep, onStepChange }: IStepsProps) => {
             onClick={() => onStepChange && onStepChange(index)}
           >
             <StepNumber status={stepStatus}>
-              {stepStatus !== "done" ? index + 1 : <CheckIcon />}
+              {stepStatus !== 'done' ? index + 1 : <CheckIcon />}
             </StepNumber>
             <StepText status={stepStatus}>{step}</StepText>
           </StepRow>

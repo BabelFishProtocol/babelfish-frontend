@@ -2,34 +2,50 @@ import BridgeABI from './abi/Bridge.json';
 import BasketManagerABI from './abi/BasketManager.json';
 import BasketManagerV3ABI from './abi/BasketManagerV3.json';
 import MassetV3ABI from './abi/MassetV3.json';
-import {destinationTokenEnum} from "../config/Tokens";
-import {chainEnum} from "../config/Chains";
+import {destinationTokenEnum} from '../config/Tokens';
+import {chainEnum} from '../config/Chains';
 
 const IS_MAINNET = process.env.REACT_APP_PRODUCTION_CHAINS === 'TRUE';
 
 export const TO_RSK_BRIDGE_ADDRESSES = {
   [chainEnum.BSC]: {
-    address: IS_MAINNET ? '0xdfc7127593c8af1a17146893f10e08528f4c2aa7' : '0x862e8aff917319594cc7faaae5350d21196c086f',
+    address: IS_MAINNET
+      ? '0xdfc7127593c8af1a17146893f10e08528f4c2aa7'
+      : '0x862e8aff917319594cc7faaae5350d21196c086f',
     abi: BridgeABI as any,
-    allowTokenAddress: IS_MAINNET ? '0x05b68e70168e876b2025f837bc8e0b2312d5327d' : '0xeb23e848ceca88b7d0c019c7186bb86cefadd0bd',
+    allowTokenAddress: IS_MAINNET
+      ? '0x05b68e70168e876b2025f837bc8e0b2312d5327d'
+      : '0xeb23e848ceca88b7d0c019c7186bb86cefadd0bd',
   },
   [chainEnum.ETH]: {
-    address: IS_MAINNET ? '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581' : '0xc0e7a7fff4aba5e7286d5d67dd016b719dcc9156',
+    address: IS_MAINNET
+      ? '0x1CcAd820B6d031B41C54f1F3dA11c0d48b399581'
+      : '0xc0e7a7fff4aba5e7286d5d67dd016b719dcc9156',
     abi: BridgeABI as any,
-    allowTokenAddress: IS_MAINNET ? '0xd2090fe759613C3A3E2962c6bB2ad046f62d32fF' : '0x918b9fd8c2e9cf5625ea00ca6cfa270a44050d01',
+    allowTokenAddress: IS_MAINNET
+      ? '0xd2090fe759613C3A3E2962c6bB2ad046f62d32fF'
+      : '0x918b9fd8c2e9cf5625ea00ca6cfa270a44050d01',
   },
 };
 
 export const FROM_RSK_BRIDGE_ADDRESSES = {
   [chainEnum.BSC]: {
-    address: IS_MAINNET ? '0x971b97c8cc82e7d27bc467c2dc3f219c6ee2e350' : '0x2b2bcad081fa773dc655361d1bb30577caa556f8',
+    address: IS_MAINNET
+      ? '0x971b97c8cc82e7d27bc467c2dc3f219c6ee2e350'
+      : '0x2b2bcad081fa773dc655361d1bb30577caa556f8',
     abi: BridgeABI as any,
-    allowTokenAddress: IS_MAINNET ? '0xa2f50a2c699c1aa3b9089f6b565d4999d45d8983' : '0xa9f2ccb27fe01479a1f21f3a236989c614f801bc',
+    allowTokenAddress: IS_MAINNET
+      ? '0xa2f50a2c699c1aa3b9089f6b565d4999d45d8983'
+      : '0xa9f2ccb27fe01479a1f21f3a236989c614f801bc',
   },
   [chainEnum.ETH]: {
-    address: IS_MAINNET ? '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1' : '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
+    address: IS_MAINNET
+      ? '0x33C0D33a0d4312562ad622F91d12B0AC47366EE1'
+      : '0x2b456e230225C4670FBF10b9dA506C019a24cAC7',
     abi: BridgeABI as any,
-    allowTokenAddress: IS_MAINNET ? '0x8DF20c2c85Bee0c3DA250dA96D892598C70aA1bE' : '0x9bc4243880730a9Bca69addB0f971700d39D1646',
+    allowTokenAddress: IS_MAINNET
+      ? '0x8DF20c2c85Bee0c3DA250dA96D892598C70aA1bE'
+      : '0x9bc4243880730a9Bca69addB0f971700d39D1646',
   },
 };
 
@@ -58,7 +74,9 @@ export const BRIDGED_ADDRESSES = {
       abi: BasketManagerV3ABI as any,
     },
     MassetV3: {
-      address: IS_MAINNET ? '0x1440d19436bEeaF8517896bffB957a88EC95a00F' : '0xca8b437d9d586b938CE000e765476A0594856b51',
+      address: IS_MAINNET
+        ? '0x1440d19436bEeaF8517896bffB957a88EC95a00F'
+        : '0xca8b437d9d586b938CE000e765476A0594856b51',
       abi: MassetV3ABI as any,
     },
   },
