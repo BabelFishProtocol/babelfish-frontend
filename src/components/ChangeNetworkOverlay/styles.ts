@@ -4,7 +4,13 @@ export const OverlayContainer = styled.div`
   height: 100%;
   width: 100%;
   position: absolute;
-  background-color: rgba(60, 60, 60, 1);
+  background-image: linear-gradient(
+    223deg,
+    #32f05f 0%,
+    #425b47 0%,
+    #424040 30%,
+    #272626 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
