@@ -36,6 +36,7 @@ export const WalletPopUp = styled(CardStyled)`
   border-radius: 15px;
   right: 0;
   transform: translate(0%, calc(100% + 10px));
+  z-index: 100;
 `;
 
 export const WalletContainer = styled.div<{connected: boolean}>`
@@ -108,7 +109,7 @@ export const Disconnect = styled.div`
   margin-left: 20px;
   cursor: pointer;
   transition: 0.3s;
-  :hover{
+  :hover {
     background-color: rgba(55, 99, 65);
   }
 `;

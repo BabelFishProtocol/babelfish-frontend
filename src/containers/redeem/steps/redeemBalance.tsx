@@ -56,7 +56,7 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
   );
 
   return (
-    <>
+    <div className='w-100'>
       <div className="row px-5 py-2 justify-content-between">
         <div className="col-5">
           <InputTitle>Redeem Amount</InputTitle>
@@ -112,6 +112,6 @@ export const RedeemBalance = ({network, onSubmit}: {network: chainEnum; onSubmit
           </ButtonPrimary>
         </div>
       </div>
-    </>
+    </div>
   );
 };

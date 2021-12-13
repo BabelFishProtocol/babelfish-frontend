@@ -27,7 +27,9 @@ export const connectMetamask = async () => {
   if (Boolean(ethereum && ethereum.isMetaMask)) {
     const web3 = new Web3(ethereum as any);
     const accounts = await web3.eth.requestAccounts();
-    return {web3, account: accounts[0] || ''};
+    const chainId = await (await web3.eth.getChainId()).toString();
+    console.log(chainId)
+    return {web3, account: accounts[0] || '', chainId};
   } else {
     throw new Error(
       '🦊 You must install Metamask into your browser: https://metamask.io/download.html and make sure it is set as the default wallet.',
@@ -38,7 +40,8 @@ export const connectMetamask = async () => {
 export const connectPortis = async () => {
   const web3 = new Web3(portis.provider);
   const accounts = await web3.eth.getAccounts();
-  return {web3, account: accounts[0] || ''};
+  const chainId = await web3.eth.getChainId().toString();
+  return {web3, account: accounts[0] || '', chainId};
 };
 
 export const connectLiquality = async () => {
@@ -46,7 +49,8 @@ export const connectLiquality = async () => {
     const web3 = new Web3(ethereum as any);
     await ethereum.enable();
     const accounts = await web3.eth.getAccounts();
-    return {web3, account: accounts[0] || ''};
+    const chainId = await web3.eth.getChainId().toString();
+    return {web3, account: accounts[0] || '', chainId};
   } else {
     throw new Error(
       '🔵🟣 You must install Liquality into your browser: https://liquality.io/wallet.html and make sure it is set as the default wallet.',
@@ -60,28 +64,11 @@ export const connectNifty = async () => {
     await ethereum.enable();
     let accounts = await web3.eth.getAccounts();
     accounts = await web3.eth.requestAccounts();
-    return {web3, account: accounts[0] || ''};
+    const chainId = await web3.eth.getChainId().toString();
+    return {web3, account: accounts[0] || '', chainId};
   } else {
     throw new Error(
       '👛 You must install Nifty into your browser: https://bit.ly/3k1lBqP and make sure it is set as the default wallet.',
     );
   }
-};
-
-export const suscribeAccount = (
-  web3: Web3,
-  callback: (error: Error | null, account: string | null) => any,
-) => {
-  const loop = setInterval(async () => {
-    try {
-      const accounts = await web3.eth.getAccounts();
-      callback(null, accounts[0]);
-    } catch (error) {
-      callback(error, null);
-    }
-  }, 1000);
-
-  return () => {
-    clearInterval(loop);
-  };
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from '../Loader';
+import styled from 'styled-components'
 import {
   CardStyled,
   LineBreak,
@@ -9,8 +10,8 @@ import {
   TransactionData,
   TransactionLoadingText,
 } from './styles';
-import {LinkPrimary} from "../Button/styles";
-import {EthTransactionStatus} from "../../../utils/themes/ethLiveTransaction";
+import { LinkPrimary } from "../Button/styles";
+import { EthTransactionStatus } from "../../../utils/themes/ethLiveTransaction";
 
 export const Card = CardStyled;
 
@@ -19,13 +20,18 @@ interface ICardTitledProps {
   children?: any;
 }
 
-export const CardTitled = ({title, children}: ICardTitledProps) => {
+const CardTitledContainer = styled(CardStyled)`
+  display: flex;
+  flex-direction:column;
+`;
+
+export const CardTitled = ({ title, children }: ICardTitledProps) => {
   return (
-    <Card>
+    <CardTitledContainer>
       <TitledHeader className="px-4 py-3">{title}</TitledHeader>
       <LineBreak />
       <TitledBody>{children}</TitledBody>
-    </Card>
+    </CardTitledContainer>
   );
 };
 
@@ -64,7 +70,7 @@ export const TransactionCard = (
   } else {
     statusText = (
       <TransactionLoadingText>
-        We encountered an error on the {processName} process,<br/>
+        We encountered an error on the {processName} process,<br />
         please try again
       </TransactionLoadingText>
     );
