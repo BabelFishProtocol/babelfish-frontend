@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from '../Loader';
+import styled from 'styled-components';
 import {
   CardStyled,
   LineBreak,
@@ -9,8 +10,8 @@ import {
   TransactionData,
   TransactionLoadingText,
 } from './styles';
-import {LinkPrimary} from "../Button/styles";
-import {EthTransactionStatus} from "../../../utils/themes/ethLiveTransaction";
+import {LinkPrimary} from '../Button/styles';
+import {EthTransactionStatus} from '../../../utils/themes/ethLiveTransaction';
 
 export const Card = CardStyled;
 
@@ -19,13 +20,18 @@ interface ICardTitledProps {
   children?: any;
 }
 
+const CardTitledContainer = styled(CardStyled)`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const CardTitled = ({title, children}: ICardTitledProps) => {
   return (
-    <Card>
+    <CardTitledContainer>
       <TitledHeader className="px-4 py-3">{title}</TitledHeader>
       <LineBreak />
       <TitledBody>{children}</TitledBody>
-    </Card>
+    </CardTitledContainer>
   );
 };
 
@@ -43,15 +49,13 @@ interface ITransactionCardProps {
   status: EthTransactionStatus;
 }
 //To Do move styles to styled component
-export const TransactionCard = (
-  {
-    processName,
-    explorerLink,
-    transactionData,
-    status = 'pending',
-    explorerName,
-  }: ITransactionCardProps
-) => {
+export const TransactionCard = ({
+  processName,
+  explorerLink,
+  transactionData,
+  status = 'pending',
+  explorerName,
+}: ITransactionCardProps) => {
   let statusText;
   if (status === 'success') {
     statusText = null;
@@ -64,7 +68,8 @@ export const TransactionCard = (
   } else {
     statusText = (
       <TransactionLoadingText>
-        We encountered an error on the {processName} process,<br/>
+        We encountered an error on the {processName} process,
+        <br />
         please try again
       </TransactionLoadingText>
     );
@@ -78,20 +83,14 @@ export const TransactionCard = (
         <div id="transaction-data" className="row mt-2">
           <TransactionData className="col-6 text-right d-flex flex-column flex-wrap">
             {transactionData.map((element) => (
-              <span
-                className="left"
-                key={element.name}
-              >
+              <span className="left" key={element.name}>
                 {element.name}:
               </span>
             ))}
           </TransactionData>
           <TransactionData className="col-6 text-left d-flex flex-column">
             {transactionData.map((element) => (
-              <span
-                style={element.style}
-                key={element.name}
-              >
+              <span style={element.style} key={element.name}>
                 {element.value}
               </span>
             ))}

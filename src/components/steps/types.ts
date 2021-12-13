@@ -1,1 +1,1 @@
-export type StepStatusType = "none" | "done" | "active";
+export type StepStatusType = 'none' | 'done' | 'active';

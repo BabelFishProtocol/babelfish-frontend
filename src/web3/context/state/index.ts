@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {offlineTokenList, tokenType} from "../../../config/Tokens";
+import {offlineTokenList, tokenType} from '../../../config/Tokens';
 
 export interface State {
   account: string;

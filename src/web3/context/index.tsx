@@ -1,10 +1,9 @@
 import React, {createContext, useContext, useMemo, useReducer} from 'react';
 import {useEffect} from 'react';
 import Web3 from 'web3';
-import {suscribeAccount} from '../api';
 import {reducer} from './reducer';
 import {INITIAL_STATE} from './state';
-import {tokenType} from "../../config/Tokens";
+import {tokenType} from '../../config/Tokens';
 
 export const Web3Context = createContext({
   state: INITIAL_STATE,
@@ -32,7 +31,11 @@ export const Web3Provider: React.FC<ProviderProps> = ({children}) => {
 
   return (
     <Web3Context.Provider
-      value={useMemo(() => ({state, updateAccount, updateBassets, updateChainId}), [state])}>
+      value={useMemo(
+        () => ({state, updateAccount, updateBassets, updateChainId}),
+        [state],
+      )}
+    >
       {children}
     </Web3Context.Provider>
   );
@@ -40,28 +43,15 @@ export const Web3Provider: React.FC<ProviderProps> = ({children}) => {
 
 export const Web3Updater = () => {
   const {state, updateAccount, updateChainId} = useWeb3Context();
-  useEffect(() => {
-    if (state.web3) {
-      const ifAccountChanges = suscribeAccount(state.web3, (error, account) => {
-        if (error) {
-          console.error(error);
-        }
-        if (
-          account !== undefined &&
-          account !== null &&
-          account !== state.account
-        ) {
-          updateAccount({account});
-        }
-      });
-      const ethereumP = (window as any)?.ethereum;
-      ethereumP?.on('networkChanged', updateChainId);
-      return () => {
-        ifAccountChanges();
-        ethereumP?.off('networkChanged', updateChainId);
-      };
-    }
-  }, [state.web3, state.account]);
+  if (state.web3) {
+    const ethereum = (window as any)?.ethereum;
+
+    ethereum.on('accountsChanged', function (accounts: string[]) {
+      updateAccount({account: accounts[0]});
+    });
+
+    ethereum.on('networkChanged', updateChainId);
+  }
 
   return null;
 };

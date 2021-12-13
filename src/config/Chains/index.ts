@@ -24,13 +24,17 @@ export type chainType = {
   blockExplorerUrls: string[];
 };
 
-export const chains = [
+export const chains: chainType[] = [
   {
     name: 'ETH Network',
     id: chainEnum.ETH,
     icon: ethIcon,
     chainId: '0x' + Number(IS_MAINNET ? 1 : 3).toString(16),
-    rpcUrls: [IS_MAINNET ? 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161' : 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
+    rpcUrls: [
+      IS_MAINNET
+        ? 'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+        : 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+    ],
     nativeCurrency: {
       name: gasAsset(chainEnum.ETH),
       symbol: gasAsset(chainEnum.ETH),
@@ -43,7 +47,11 @@ export const chains = [
     id: chainEnum.BSC,
     icon: bscIcon,
     chainId: '0x' + Number(IS_MAINNET ? 56 : 97).toString(16),
-    rpcUrls: [IS_MAINNET ? 'https://bsc-dataseed.binance.org' : 'https://data-seed-prebsc-2-s3.binance.org:8545'],
+    rpcUrls: [
+      IS_MAINNET
+        ? 'https://bsc-dataseed.binance.org'
+        : 'https://data-seed-prebsc-2-s3.binance.org:8545',
+    ],
     nativeCurrency: {
       name: gasAsset(chainEnum.BSC),
       symbol: gasAsset(chainEnum.BSC),
@@ -56,7 +64,11 @@ export const chains = [
     id: chainEnum.RSK,
     icon: rskIcon,
     chainId: '0x' + Number(IS_MAINNET ? 30 : 31).toString(16),
-    rpcUrls: [IS_MAINNET ? 'https://public-node.rsk.co' : 'https://testnet.sovryn.app/rpc'],
+    rpcUrls: [
+      IS_MAINNET
+        ? 'https://public-node.rsk.co'
+        : 'https://testnet.sovryn.app/rpc',
+    ],
     nativeCurrency: {
       name: gasAsset(chainEnum.RSK),
       symbol: gasAsset(chainEnum.RSK),
@@ -68,7 +80,9 @@ export const chains = [
 
 export function chainExplorer(network: chainEnum): string {
   if (network === chainEnum.RSK) {
-    return `https://${IS_MAINNET ? 'explorer.rsk.co' : 'explorer.testnet.rsk.co'}`;
+    return `https://${
+      IS_MAINNET ? 'explorer.rsk.co' : 'explorer.testnet.rsk.co'
+    }`;
   }
   if (network === chainEnum.BSC) {
     return `https://${IS_MAINNET ? 'bscscan.com' : 'testnet.bscscan.com'}`;

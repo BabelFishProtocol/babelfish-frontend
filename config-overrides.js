@@ -7,8 +7,8 @@ module.exports = {
       ...config,
       output: {
         ...config.output,
-        // publicPath: '/',
-        publicPath: '/money/',
+        publicPath: '/',
+        // publicPath: '/money/',
       },
     };
   },

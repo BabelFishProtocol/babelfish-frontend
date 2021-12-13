@@ -3,15 +3,16 @@ import BN from 'bn.js';
 import {Steps} from '../../components/steps';
 import {Card, CardTitled, TransactionCard} from '../../lib/components';
 import {ChainGroupNoSwitch} from '../../components/SelectChain';
-import {chainEnum, trxExplorerLink} from "../../config/Chains";
+import {chains, chainEnum, trxExplorerLink} from '../../config/Chains';
 import {RedeemContent} from './styles';
 import {RedeemBalance} from './steps/redeemBalance';
 import {
   EthLiveTransaction,
   EthTransaction,
   formatCurrencyAmount,
-  formatDate
-} from "../../utils/themes/ethLiveTransaction";
+  formatDate,
+} from '../../utils/themes/ethLiveTransaction';
+import ChangeNetworkOverlay from '../../components/ChangeNetworkOverlay';
 
 const STEPS = [
   'Select Redemption Network',
@@ -20,33 +21,32 @@ const STEPS = [
   'Burning Complete',
 ];
 
+const IS_MAINNET = process.env.REACT_APP_PRODUCTION_CHAINS === 'TRUE';
+
 export const Redeem = () => {
-  const [valueCurrentNetwork, setCurrentNetwork] = useState<chainEnum | undefined>(undefined);
-  const [valueLiveTransaction, setLiveTransaction] = useState<EthLiveTransaction | undefined>(undefined);
-  const [valueTransactionData, setTransactionData] = useState<EthTransaction | undefined>(undefined);
-  useEffect(
-    () => {
-      if (valueLiveTransaction) {
-        valueLiveTransaction.on('receipt', setTransactionData);
-        valueLiveTransaction.on(
-          'success',
-          (dd: any) => {
-            setTransactionData(dd);
-            valueLiveTransaction.offAll();
-          }
-        );
-        valueLiveTransaction.on(
-          'fail',
-          (dd: any) => {
-            setTransactionData(dd);
-            valueLiveTransaction.offAll();
-          }
-        );
-        return () => valueLiveTransaction.offAll();
-      }
-    },
-    [valueLiveTransaction, setTransactionData],
-  );
+  const [valueCurrentNetwork, setCurrentNetwork] = useState<
+    chainEnum | undefined
+  >(undefined);
+  const [valueLiveTransaction, setLiveTransaction] = useState<
+    EthLiveTransaction | undefined
+  >(undefined);
+  const [valueTransactionData, setTransactionData] = useState<
+    EthTransaction | undefined
+  >(undefined);
+  useEffect(() => {
+    if (valueLiveTransaction) {
+      valueLiveTransaction.on('receipt', setTransactionData);
+      valueLiveTransaction.on('success', (dd: any) => {
+        setTransactionData(dd);
+        valueLiveTransaction.offAll();
+      });
+      valueLiveTransaction.on('fail', (dd: any) => {
+        setTransactionData(dd);
+        valueLiveTransaction.offAll();
+      });
+      return () => valueLiveTransaction.offAll();
+    }
+  }, [valueLiveTransaction, setTransactionData]);
   let content;
   let currentStep;
   if (!valueCurrentNetwork) {
@@ -60,13 +60,34 @@ export const Redeem = () => {
     );
   } else if (!valueTransactionData) {
     currentStep = 1;
-    content = <RedeemBalance network={valueCurrentNetwork} onSubmit={setLiveTransaction}/>;
+    content = (
+      <RedeemBalance
+        network={valueCurrentNetwork}
+        onSubmit={setLiveTransaction}
+      />
+    );
   } else {
     const transactionData = [
-      {name: 'Date/Time', value: formatDate(valueTransactionData.detectedAt), style: {whiteSpace: 'nowrap'}},
-      {name: 'Withdraw Amount', value: formatCurrencyAmount(valueTransactionData.source)},
-      {name: 'Amount Burned', value: formatCurrencyAmount(valueTransactionData.destination)},
-      {name: 'Gas Fee', value: `${formatCurrencyAmount({currency: 'ETH', amount: new BN(valueTransactionData?.gasUsed || 0)})}`},
+      {
+        name: 'Date/Time',
+        value: formatDate(valueTransactionData.detectedAt),
+        style: {whiteSpace: 'nowrap'},
+      },
+      {
+        name: 'Withdraw Amount',
+        value: formatCurrencyAmount(valueTransactionData.source),
+      },
+      {
+        name: 'Amount Burned',
+        value: formatCurrencyAmount(valueTransactionData.destination),
+      },
+      {
+        name: 'Gas Fee',
+        value: `${formatCurrencyAmount({
+          currency: 'ETH',
+          amount: new BN(valueTransactionData?.gasUsed || 0),
+        })}`,
+      },
       // {
       //   name: 'ETH Redeem',
       //   value: <Link>0X413.89054</Link>,
@@ -82,7 +103,10 @@ export const Redeem = () => {
           processName="redeeming"
           transactionData={transactionData}
           status={valueTransactionData.status}
-          explorerLink={trxExplorerLink(chainEnum.RSK, valueTransactionData.transactionHash)}
+          explorerLink={trxExplorerLink(
+            chainEnum.RSK,
+            valueTransactionData.transactionHash,
+          )}
           explorerName="explorer"
         />
       </div>
@@ -110,11 +134,13 @@ export const Redeem = () => {
         <CardTitled
           title={`REDEEM STABLECOINS OUT OF BABELFISH ${
             valueCurrentNetwork ? `TO ${valueCurrentNetwork}` : ''
-          }`}>
+          }`}
+        >
           <div className="h-100 position-relative">
-            <RedeemContent>
-              {content}
-            </RedeemContent>
+            <ChangeNetworkOverlay
+              correctNetwork={(IS_MAINNET ? 30 : 31).toString()}
+            />
+            <RedeemContent>{content}</RedeemContent>
           </div>
         </CardTitled>
       </div>

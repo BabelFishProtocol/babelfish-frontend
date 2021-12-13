@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {tokenType} from "../../../config/Tokens";
+import {tokenType} from '../../../config/Tokens';
 
 interface UpdateAccount {
   type: 'UPDATE_ACCOUNT';

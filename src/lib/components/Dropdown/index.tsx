@@ -10,11 +10,13 @@ import {
 interface IDropdownProps<T> {
   placeholder?: string;
   items: T[];
-  value: T | undefined,
-  onChange: (tt: T | undefined) => void,
+  value: T | undefined;
+  onChange: (tt: T | undefined) => void;
 }
 
-export default function Dropdown<T extends {icon?: string, name: string, id: string}>({placeholder, items, value, onChange}: IDropdownProps<T>) {
+export default function Dropdown<
+  T extends {icon?: string; name: string; id: string},
+>({placeholder, items, value, onChange}: IDropdownProps<T>) {
   const [displayDropdown, setDisplayDropdown] = useState(false);
   return (
     <DropdownContainer>
@@ -35,8 +37,14 @@ export default function Dropdown<T extends {icon?: string, name: string, id: str
               onClick={() => {
                 onChange(item);
                 setDisplayDropdown(false);
-              }}>
-              <Icon src={item.icon || `https://via.placeholder.com/150?text=${item.name}`} />
+              }}
+            >
+              <Icon
+                src={
+                  item.icon ||
+                  `https://via.placeholder.com/150?text=${item.name}`
+                }
+              />
               <span>{item.name}</span>
             </DropdownItem>
           ))}

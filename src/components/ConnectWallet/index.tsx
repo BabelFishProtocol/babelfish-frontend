@@ -16,13 +16,13 @@ import {
 } from './styles';
 import {connectWallet, disconnectWallet} from '../../web3/api';
 import {useWeb3Context} from '../../web3/context';
-import {listBassets} from "../../web3/service";
+import {listBassets} from '../../web3/service';
 import {
   baseTokenCatalog,
   destinationTokenEnum,
   destinationTokensCatalog,
-  joinWithAddressList
-} from "../../config/Tokens";
+  joinWithAddressList,
+} from '../../config/Tokens';
 
 export const WalletConnect = () => {
   const {
@@ -53,7 +53,8 @@ export const WalletConnect = () => {
       ) : (
         <ButtonPrimary
           className="position-relative"
-          onClick={() => setDisplayList(!displayList)}>
+          onClick={() => setDisplayList(!displayList)}
+        >
           CONNECT WALLET
         </ButtonPrimary>
       )}
@@ -91,6 +92,7 @@ export const WalletConnect = () => {
                     //   console.log('accounts', accounts);
                     // })
                     updateAccount(data);
+                    updateChainId(data.chainId);
                     setDisplayList(false);
                     setConnected({wallet: wallet});
                     setLoading(false);
@@ -102,7 +104,8 @@ export const WalletConnect = () => {
                 )
                 .catch(() => console.log('error'));
             }}
-            key={wallet.id}>
+            key={wallet.id}
+          >
             {wallet.name}
             <WalletIcon src={wallet.icon} />
           </WalletContainer>

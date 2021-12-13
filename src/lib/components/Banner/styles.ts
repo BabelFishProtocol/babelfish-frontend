@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const BannerContainer = styled.div`
+  z-index: 10;
   height: fit-content;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.5);

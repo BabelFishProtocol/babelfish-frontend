@@ -15,7 +15,8 @@ const ButtonPillGroup = ({
       <ButtonPill
         key={value}
         selected={selected === value}
-        onClick={() => onChangeSelected(selected !== value ? value : null)}>
+        onClick={() => onChangeSelected(selected !== value ? value : null)}
+      >
         <TextButtonPill>{value}%</TextButtonPill>
       </ButtonPill>
     ))}

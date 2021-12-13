@@ -3,8 +3,10 @@ import styled from 'styled-components';
 export const RedeemContent = styled.div`
   position: absolute;
   width: 100%;
-  top: 50%;
-  transform: translateY(-60%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const InputTitle = styled.span`
