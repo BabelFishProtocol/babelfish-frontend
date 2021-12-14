@@ -27,8 +27,7 @@ function App() {
               <a target="_blank" href="https://discord.com/invite/mEddUjcEfT">
                 Discord
               </a>{' '}
-              for more information. WARNING: This is an early experiment on DeFi
-              and there is risk of loss of funds.
+              for more information.
               <br />
               WARNING: This is an early experiment and there is risk of loss of
               funds. DON'T PANIC!.
