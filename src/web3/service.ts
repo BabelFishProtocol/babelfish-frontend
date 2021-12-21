@@ -42,7 +42,7 @@ export async function getTokenBalance(
   tokenAddress: string,
 ): Promise<BN> {
   const account = (await web3.eth.getAccounts())[0];
-  const tokenContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress);
+  const tokenContract = new web3.eth.Contract(ERC20ABI as any, tokenAddress.toLowerCase());
   const balance = await tokenContract.methods
     .balanceOf(account.toLowerCase())
     .call();
