@@ -12,7 +12,7 @@ import {Web3Provider, Web3Updater} from './web3/context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.REACT_APP_BASE_PATH}>
       <ThemeProvider theme={defaultTheme}>
         <Web3Provider>
           <App />
