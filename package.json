@@ -24,6 +24,7 @@
     "popper.js": "^1.16.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "env-cmd": "10.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-table": "^7.7.0",
@@ -37,7 +38,8 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build:testnet": "env-cmd -f .env.testnet react-app-rewired build",
+    "build:prod": "env-cmd -f .env.prod react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "lint:fix": "eslint \"src/**/*.ts\" --fix"
